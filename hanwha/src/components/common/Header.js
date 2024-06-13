@@ -5,6 +5,10 @@ import { COLORS } from '../../constants/colors';
 import hanwha_logo from '../../assets/hanwha_logo.png';
 
 const HeaderWrap = styled.div`
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 100;
   display: flex;
   justify-content: space-between;
   align-items: center;
