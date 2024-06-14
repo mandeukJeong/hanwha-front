@@ -13,10 +13,10 @@ const FooterTitleWrap = styled.div`
   align-items: center;
   gap: 6px;
   margin-bottom: 15px;
+
   img {
     width: 60px;
   }
-
   h3 {
     font-size: 16px;
     font-weight: 600;

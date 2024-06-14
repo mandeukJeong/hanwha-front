@@ -3,11 +3,14 @@ import styled, { keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
 import Header from '../components/common/Header';
 import Footer from '../components/common/Footer';
+import ImageFrame from '../components/common/ImageFrame';
 import main_bg from '../assets/main_bg.jpeg';
 import player_collection from '../assets/player_collection.png';
-import soori from '../assets/soori.png';
 import produce_101 from '../assets/produce_101.png';
 import gallery_image1 from '../assets/gallery_image1.jpg';
+import gallery_image2 from '../assets/gallery_image2.jpg';
+import gallery_image3 from '../assets/gallery_image3.jpg';
+import gallery_image4 from '../assets/gallery_image4.jpg';
 import { COLORS } from '../constants/colors';
 
 const fadeIn = keyframes`
@@ -19,6 +22,7 @@ const fadeIn = keyframes`
     }
 `;
 const MainWrap = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
 `;
@@ -36,11 +40,10 @@ const IntroduceWrap = styled.div`
 `;
 const DifferentText = styled.h1`
   color: ${COLORS.white};
-  font-size: 100px;
+  font-size: 120px;
   font-weight: 900;
-  letter-spacing: -8.5px;
+  letter-spacing: -10px;
   text-shadow: 0 0 6px ${COLORS.white};
-  opacity: 0;
   animation: ${fadeIn} 2s ease-in-out forwards;
 
   &:last-child {
@@ -52,14 +55,14 @@ const TitleText = styled.h2`
   font-family: 'Audiowide', sans-serif;
   font-weight: 400;
   font-style: normal;
-  font-size: 20px;
+  font-size: 30px;
   color: ${COLORS.orange};
   margin-bottom: 30px;
 `;
 const SubText = styled.h3`
   color: ${COLORS.white};
   font-weight: 600;
-  font-size: 40px;
+  font-size: 45px;
   margin-bottom: 30px;
   line-height: 1.3;
 `;
@@ -68,7 +71,8 @@ const ContentText = styled.p`
   font-weight: 500;
   font-size: 20px;
   line-height: 1.5;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
+  letter-spacing: -0.5px;
 `;
 const CommonWrap = styled.div`
   width: 100%;
@@ -77,26 +81,15 @@ const CommonWrap = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 80px;
   padding: 0 100px;
+  gap: 10%;
 `;
 const PlayerImage = styled.img`
-  width: 50%;
-`;
-const ContentWrap = styled.div`
-  width: 45%;
-`;
-const SooriWrap = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-
-  img {
-    width: 10%;
-  }
+  width: 52%;
 `;
 const VoteImage = styled.img`
-  width: 40%;
+  width: 30%;
+  filter: drop-shadow(0 0 4px ${COLORS.orange});
 `;
 const CommonLink = styled(Link)`
   border: 1px solid ${(props) => props.border};
@@ -105,46 +98,31 @@ const CommonLink = styled(Link)`
   text-decoration: none;
   color: ${(props) => props.fontcolor};
   font-size: 15px;
+  font-weight: 400;
+  background: linear-gradient(
+    to right,
+    ${COLORS.orange} 50%,
+    ${(props) => props.bg} 50%
+  );
+  background-size: 200% 100%;
+  background-position: right bottom;
+  transition: all 0.5s ease-out;
+
+  &:hover {
+    border: ${(props) => props.border};
+    background-position: left bottom;
+    color: ${COLORS.white};
+  }
 `;
 const LinkWrap = styled.div`
   display: flex;
-  gap: 20px;
+  gap: 50px;
 `;
 const GalleryWrap = styled.div`
   width: 50%;
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
-`;
-const ImageWrap = styled.div`
-  width: 45%;
-  background-color: ${COLORS.dark};
-  color: ${COLORS.white};
-  border-radius: 15px 15px 0px 0px;
-
-  img {
-    width: 100%;
-    border-radius: 15px 15px 0px 0px;
-  }
-
-  h3 {
-    font-size: 15px;
-    font-weight: 600;
-    margin-bottom: 12px;
-  }
-
-  div {
-    padding: 15px;
-  }
-
-  p {
-    margin-bottom: 10px;
-    font-size: 12px;
-    &:last-child {
-      color: ${COLORS.orange};
-      margin-bottom: 0;
-    }
-  }
 `;
 
 const Home = () => {
@@ -157,7 +135,7 @@ const Home = () => {
           <DifferentText>US</DifferentText>
         </IntroduceWrap>
         <CommonWrap>
-          <ContentWrap>
+          <div>
             <TitleText>PLAYERS</TitleText>
             <SubText>
               내가 우리 선수들을
@@ -169,18 +147,19 @@ const Home = () => {
               <br />
               한화 이글스의 투수, 포수, 내야수, 외야수를 만나러 가요.
             </ContentText>
-            <SooriWrap>
-              <CommonLink border={COLORS.grey} fontcolor={COLORS.white}>
-                GO TO LIST
-              </CommonLink>
-              <img src={soori} alt="수리" />
-            </SooriWrap>
-          </ContentWrap>
+            <CommonLink
+              border={COLORS.grey}
+              fontcolor={COLORS.white}
+              bg={COLORS.black}
+            >
+              GO TO LIST
+            </CommonLink>
+          </div>
           <PlayerImage src={player_collection} alt="선수 이미지" />
         </CommonWrap>
         <CommonWrap>
           <VoteImage src={produce_101} alt="투표 이미지" />
-          <ContentWrap>
+          <div>
             <TitleText>VOTE</TitleText>
             <SubText>
               당신의 선수에게
@@ -192,17 +171,25 @@ const Home = () => {
               전달해주세요!
             </ContentText>
             <LinkWrap>
-              <CommonLink border={COLORS.grey} fontcolor={COLORS.white}>
+              <CommonLink
+                border={COLORS.grey}
+                fontcolor={COLORS.white}
+                bg={COLORS.black}
+              >
                 GO TO VOTE
               </CommonLink>
-              <CommonLink border={COLORS.orange} fontcolor={COLORS.orange}>
+              <CommonLink
+                border={COLORS.orange}
+                fontcolor={COLORS.orange}
+                bg={COLORS.black}
+              >
                 GO TO RANK
               </CommonLink>
             </LinkWrap>
-          </ContentWrap>
+          </div>
         </CommonWrap>
         <CommonWrap>
-          <ContentWrap>
+          <div>
             <TitleText>GALLERY</TitleText>
             <SubText>
               소중한 추억을
@@ -214,43 +201,51 @@ const Home = () => {
               <br />
               나중에 소중한 추억 상자가 될 거예요.
             </ContentText>
-            <CommonLink border={COLORS.orange} fontcolor={COLORS.orange}>
+            <CommonLink
+              border={COLORS.orange}
+              fontcolor={COLORS.orange}
+              bg={COLORS.black}
+            >
               GALLERY
             </CommonLink>
-          </ContentWrap>
+          </div>
           <GalleryWrap>
-            <ImageWrap>
-              <img src={gallery_image1} alt="갤러리 이미지1" />
-              <div>
-                <h3>2024 스트링 캠프</h3>
-                <p>2024.03.24 16:03:24</p>
-                <p>만득이</p>
-              </div>
-            </ImageWrap>
-            <ImageWrap>
-              <img src={gallery_image1} alt="갤러리 이미지1" />
-              <div>
-                <h3>2024 스트링 캠프</h3>
-                <p>2024.03.24 16:03:24</p>
-                <p>만득이</p>
-              </div>
-            </ImageWrap>
-            <ImageWrap>
-              <img src={gallery_image1} alt="갤러리 이미지1" />
-              <div>
-                <h3>2024 스트링 캠프</h3>
-                <p>2024.03.24 16:03:24</p>
-                <p>만득이</p>
-              </div>
-            </ImageWrap>
-            <ImageWrap>
-              <img src={gallery_image1} alt="갤러리 이미지1" />
-              <div>
-                <h3>2024 스트링 캠프</h3>
-                <p>2024.03.24 16:03:24</p>
-                <p>만득이</p>
-              </div>
-            </ImageWrap>
+            <ImageFrame
+              image={gallery_image1}
+              alt="갤러리 이미지1"
+              title="2024 스트링 캠프"
+              time="2024.03.24 16:03:24"
+              writer="만득이"
+              wd="45%"
+              hg="250px"
+            />
+            <ImageFrame
+              image={gallery_image2}
+              alt="갤러리 이미지2"
+              title="2024 스트링 캠프"
+              time="2024.03.24 16:03:24"
+              writer="만득이"
+              wd="45%"
+              hg="250px"
+            />
+            <ImageFrame
+              image={gallery_image3}
+              alt="갤러리 이미지3"
+              title="2024 스트링 캠프"
+              time="2024.03.24 16:03:24"
+              writer="만득이"
+              wd="45%"
+              hg="250px"
+            />
+            <ImageFrame
+              image={gallery_image4}
+              alt="갤러리 이미지4"
+              title="2024 스트링 캠프"
+              time="2024.03.24 16:03:24"
+              writer="만득이"
+              wd="45%"
+              hg="250px"
+            />
           </GalleryWrap>
         </CommonWrap>
         <Footer />
