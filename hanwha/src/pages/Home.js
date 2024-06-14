@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
 import Header from '../components/common/Header';
+import Footer from '../components/common/Footer';
 import main_bg from '../assets/main_bg.jpeg';
 import player_collection from '../assets/player_collection.png';
 import soori from '../assets/soori.png';
@@ -252,6 +253,7 @@ const Home = () => {
             </ImageWrap>
           </GalleryWrap>
         </CommonWrap>
+        <Footer />
       </MainWrap>
     </>
   );
