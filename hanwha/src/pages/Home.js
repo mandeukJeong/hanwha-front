@@ -5,6 +5,8 @@ import Header from '../components/common/Header';
 import main_bg from '../assets/main_bg.jpeg';
 import player_collection from '../assets/player_collection.png';
 import soori from '../assets/soori.png';
+import produce_101 from '../assets/produce_101.png';
+import gallery_image1 from '../assets/gallery_image1.jpg';
 import { COLORS } from '../constants/colors';
 
 const fadeIn = keyframes`
@@ -24,7 +26,6 @@ const IntroduceWrap = styled.div`
   align-items: center;
   justify-content: center;
   gap: 20px;
-
   width: 100%;
   height: 100vh;
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
@@ -65,41 +66,84 @@ const ContentText = styled.p`
   color: ${COLORS.grey};
   font-weight: 500;
   font-size: 20px;
-  line-height: 1.3;
+  line-height: 1.5;
   margin-bottom: 30px;
 `;
-const PlayerWrap = styled.div`
+const CommonWrap = styled.div`
   width: 100%;
   height: calc(100vh - 75.05px);
   background-color: ${COLORS.black};
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 80px;
   padding: 0 100px;
-
-  img {
-    width: 50%;
-  }
+`;
+const PlayerImage = styled.img`
+  width: 50%;
 `;
 const ContentWrap = styled.div`
   width: 45%;
+`;
+const SooriWrap = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
 
-  div {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
   img {
     width: 10%;
   }
 `;
+const VoteImage = styled.img`
+  width: 40%;
+`;
 const CommonLink = styled(Link)`
-  border: 1px solid ${COLORS.grey};
+  border: 1px solid ${(props) => props.border};
   border-radius: 5px;
-  padding: 12px 35px;
+  padding: 16px 40px;
   text-decoration: none;
-  color: ${COLORS.white};
+  color: ${(props) => props.fontcolor};
   font-size: 15px;
+`;
+const LinkWrap = styled.div`
+  display: flex;
+  gap: 20px;
+`;
+const GalleryWrap = styled.div`
+  width: 50%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+`;
+const ImageWrap = styled.div`
+  width: 45%;
+  background-color: ${COLORS.dark};
+  color: ${COLORS.white};
+  border-radius: 15px 15px 0px 0px;
+
+  img {
+    width: 100%;
+    border-radius: 15px 15px 0px 0px;
+  }
+
+  h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  div {
+    padding: 15px;
+  }
+
+  p {
+    margin-bottom: 10px;
+    font-size: 12px;
+    &:last-child {
+      color: ${COLORS.orange};
+      margin-bottom: 0;
+    }
+  }
 `;
 
 const Home = () => {
@@ -111,7 +155,7 @@ const Home = () => {
           <DifferentText>DIFFERENT</DifferentText>
           <DifferentText>US</DifferentText>
         </IntroduceWrap>
-        <PlayerWrap>
+        <CommonWrap>
           <ContentWrap>
             <TitleText>PLAYERS</TitleText>
             <SubText>
@@ -124,13 +168,90 @@ const Home = () => {
               <br />
               한화 이글스의 투수, 포수, 내야수, 외야수를 만나러 가요.
             </ContentText>
-            <div>
-              <CommonLink>GO TO LIST</CommonLink>
+            <SooriWrap>
+              <CommonLink border={COLORS.grey} fontcolor={COLORS.white}>
+                GO TO LIST
+              </CommonLink>
               <img src={soori} alt="수리" />
-            </div>
+            </SooriWrap>
           </ContentWrap>
-          <img src={player_collection} alt="선수 이미지" />
-        </PlayerWrap>
+          <PlayerImage src={player_collection} alt="선수 이미지" />
+        </CommonWrap>
+        <CommonWrap>
+          <VoteImage src={produce_101} alt="투표 이미지" />
+          <ContentWrap>
+            <TitleText>VOTE</TitleText>
+            <SubText>
+              당신의 선수에게
+              <br />
+              투표하세요!
+            </SubText>
+            <ContentText>
+              매일, 매순간 행복을 가져다 준<br /> 당신의 선수에게 소중한 한 표를
+              전달해주세요!
+            </ContentText>
+            <LinkWrap>
+              <CommonLink border={COLORS.grey} fontcolor={COLORS.white}>
+                GO TO VOTE
+              </CommonLink>
+              <CommonLink border={COLORS.orange} fontcolor={COLORS.orange}>
+                GO TO RANK
+              </CommonLink>
+            </LinkWrap>
+          </ContentWrap>
+        </CommonWrap>
+        <CommonWrap>
+          <ContentWrap>
+            <TitleText>GALLERY</TitleText>
+            <SubText>
+              소중한 추억을
+              <br />
+              공유해주세요.
+            </SubText>
+            <ContentText>
+              수리들의 사진 한 장 한 장이 모여,
+              <br />
+              나중에 소중한 추억 상자가 될 거예요.
+            </ContentText>
+            <CommonLink border={COLORS.orange} fontcolor={COLORS.orange}>
+              GALLERY
+            </CommonLink>
+          </ContentWrap>
+          <GalleryWrap>
+            <ImageWrap>
+              <img src={gallery_image1} alt="갤러리 이미지1" />
+              <div>
+                <h3>2024 스트링 캠프</h3>
+                <p>2024.03.24 16:03:24</p>
+                <p>만득이</p>
+              </div>
+            </ImageWrap>
+            <ImageWrap>
+              <img src={gallery_image1} alt="갤러리 이미지1" />
+              <div>
+                <h3>2024 스트링 캠프</h3>
+                <p>2024.03.24 16:03:24</p>
+                <p>만득이</p>
+              </div>
+            </ImageWrap>
+            <ImageWrap>
+              <img src={gallery_image1} alt="갤러리 이미지1" />
+              <div>
+                <h3>2024 스트링 캠프</h3>
+                <p>2024.03.24 16:03:24</p>
+                <p>만득이</p>
+              </div>
+            </ImageWrap>
+            <ImageWrap>
+              <img src={gallery_image1} alt="갤러리 이미지1" />
+              <div>
+                <h3>2024 스트링 캠프</h3>
+                <p>2024.03.24 16:03:24</p>
+                <p>만득이</p>
+              </div>
+            </ImageWrap>
+          </GalleryWrap>
+        </CommonWrap>
       </MainWrap>
     </>
   );
