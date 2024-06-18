@@ -119,7 +119,7 @@ const LinkWrap = styled.div`
   gap: 50px;
 `;
 const GalleryWrap = styled.div`
-  width: 50%;
+  width: 615px;
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
@@ -147,13 +147,15 @@ const Home = () => {
               <br />
               한화 이글스의 투수, 포수, 내야수, 외야수를 만나러 가요.
             </ContentText>
-            <CommonLink
-              border={COLORS.grey}
-              fontcolor={COLORS.white}
-              bg={COLORS.black}
-            >
-              GO TO LIST
-            </CommonLink>
+            <LinkWrap>
+              <CommonLink
+                border={COLORS.grey}
+                fontcolor={COLORS.white}
+                bg={COLORS.black}
+              >
+                GO TO LIST
+              </CommonLink>
+            </LinkWrap>
           </div>
           <PlayerImage src={player_collection} alt="선수 이미지" />
         </CommonWrap>
@@ -201,13 +203,15 @@ const Home = () => {
               <br />
               나중에 소중한 추억 상자가 될 거예요.
             </ContentText>
-            <CommonLink
-              border={COLORS.orange}
-              fontcolor={COLORS.orange}
-              bg={COLORS.black}
-            >
-              GALLERY
-            </CommonLink>
+            <LinkWrap>
+              <CommonLink
+                border={COLORS.orange}
+                fontcolor={COLORS.orange}
+                bg={COLORS.black}
+              >
+                GALLERY
+              </CommonLink>
+            </LinkWrap>
           </div>
           <GalleryWrap>
             <ImageFrame
@@ -216,8 +220,6 @@ const Home = () => {
               title="2024 스트링 캠프"
               time="2024.03.24 16:03:24"
               writer="만득이"
-              wd="45%"
-              hg="250px"
             />
             <ImageFrame
               image={gallery_image2}
@@ -225,8 +227,6 @@ const Home = () => {
               title="2024 스트링 캠프"
               time="2024.03.24 16:03:24"
               writer="만득이"
-              wd="45%"
-              hg="250px"
             />
             <ImageFrame
               image={gallery_image3}
@@ -234,8 +234,6 @@ const Home = () => {
               title="2024 스트링 캠프"
               time="2024.03.24 16:03:24"
               writer="만득이"
-              wd="45%"
-              hg="250px"
             />
             <ImageFrame
               image={gallery_image4}
@@ -243,8 +241,6 @@ const Home = () => {
               title="2024 스트링 캠프"
               time="2024.03.24 16:03:24"
               writer="만득이"
-              wd="45%"
-              hg="250px"
             />
           </GalleryWrap>
         </CommonWrap>

@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 
 const ImageWrap = styled.div`
-  width: ${(props) => props.wd};
+  width: 300px;
+  height: 280px;
   background-color: ${COLORS.dark};
   color: ${COLORS.white};
   border-radius: 15px 15px 0px 0px;
@@ -13,8 +14,9 @@ const ImageWrap = styled.div`
   }
   img {
     width: 100%;
-    height: ${(props) => props.hg};
+    height: 180px;
     border-radius: 15px 15px 0px 0px;
+    object-fit: cover;
   }
   h3 {
     font-size: 15px;
@@ -32,9 +34,9 @@ const ImageWrap = styled.div`
   }
 `;
 
-const ImageFrame = ({ image, alt, title, time, writer, wd, hg }) => {
+const ImageFrame = ({ image, alt, title, time, writer }) => {
   return (
-    <ImageWrap wd={wd} hg={hg}>
+    <ImageWrap>
       <img src={image} alt={alt} />
       <div>
         <h3>{title}</h3>
