@@ -19,7 +19,6 @@ const fadeIn = keyframes`
         opacity: 1;
     }
 `;
-
 const IntroduceWrap = styled.div`
   display: flex;
   align-items: center;

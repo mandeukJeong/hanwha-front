@@ -59,7 +59,7 @@ const Header = () => {
       </HeaderMenu>
       <HeaderMenu>
         <AuthLink to="/login">LOGIN</AuthLink>
-        <AuthLink>JOIN US</AuthLink>
+        <AuthLink to="/register">JOIN US</AuthLink>
       </HeaderMenu>
     </HeaderWrap>
   );
