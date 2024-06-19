@@ -52,8 +52,8 @@ const Header = () => {
         <Link to="/">
           <img src={hanwha_logo} alt="홈으로" />
         </Link>
-        <MenuLink>EAGLES</MenuLink>
-        <MenuLink>PLAYERS</MenuLink>
+        <MenuLink to="/">EAGLES</MenuLink>
+        <MenuLink to="/player">PLAYERS</MenuLink>
         <MenuLink>VOTE</MenuLink>
         <MenuLink>GALLERY</MenuLink>
       </HeaderMenu>

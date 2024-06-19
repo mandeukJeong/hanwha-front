@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { COLORS } from '../constants/colors';
-import hanwha_wordmark from '../assets/hanwha_wordmark.png';
+import { COLORS } from '../../constants/colors';
+import hanwha_wordmark from '../../assets/hanwha_wordmark.png';
 
-const RegisterWrap = styled.div`
+const LoginWrap = styled.div`
   width: 100%;
-  height: calc(100vh - 50px);
+  height: calc(100vh - 80px);
   padding: 30px 0;
   background-color: ${COLORS.black};
   padding-top: 75.05px;
@@ -35,7 +35,6 @@ const InputWrap = styled.div`
 const AuthInput = styled.input`
   width: 100%;
   background: transparent;
-  margin-bottom: 15px;
   padding: 15px;
   border: 1px solid ${COLORS.grey};
   color: ${COLORS.white};
@@ -46,11 +45,24 @@ const AuthInput = styled.input`
     color: ${COLORS.grey};
     font-weight: 700;
   }
-  &:last-child {
-    margin-bottom: 0;
+  &:first-child {
+    margin-bottom: 15px;
   }
 `;
-const RegisterBtn = styled.button`
+const FindPwWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 40%;
+  max-width: 500px;
+  margin-bottom: 30px;
+  a {
+    color: ${COLORS.orange};
+    font-size: 14px;
+    margin-left: auto;
+  }
+`;
+const LoginBtn = styled.button`
   width: 40%;
   max-width: 500px;
   background-color: ${COLORS.dark};
@@ -60,9 +72,9 @@ const RegisterBtn = styled.button`
   font-weight: 700;
   font-size: 13px;
   cursor: pointer;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
 `;
-const LoginText = styled.p`
+const JoinText = styled.p`
   color: ${COLORS.white};
   text-align: center;
   font-size: 13px;
@@ -70,7 +82,7 @@ const LoginText = styled.p`
   line-height: 1.3;
   margin-bottom: 30px;
 `;
-const LoginLink = styled(Link)`
+const JoinLink = styled(Link)`
   border: 1px solid ${COLORS.grey};
   border-radius: 5px;
   padding: 14px 40px;
@@ -88,7 +100,7 @@ const LoginLink = styled(Link)`
   transition: all 0.5s ease-out;
 
   &:hover {
-    border: ${COLORS.orange};
+    border: 1px solid ${COLORS.orange};
     background-position: left bottom;
   }
 `;
@@ -96,29 +108,33 @@ const ErrorMessage = styled.p`
   color: red;
   font-size: 13px;
   font-weight: 500;
-  margin-bottom: 30px;
 `;
 
-const RegisterPage = () => {
+const LoginPage = () => {
   return (
-    <RegisterWrap>
+    <LoginWrap>
       <LogoLink to="/">
         <img src={hanwha_wordmark} alt="홈으로" />
       </LogoLink>
       <FormWrap>
         <InputWrap>
           <AuthInput placeholder="이메일" />
-          <AuthInput placeholder="닉네임" />
           <AuthInput placeholder="비밀번호" type="password" />
-          <AuthInput placeholder="비밀번호 확인" type="password" />
         </InputWrap>
-        <ErrorMessage>비밀번호가 일치하지 않습니다.</ErrorMessage>
-        <RegisterBtn type="submit">JOIN</RegisterBtn>
+        <FindPwWrap>
+          <ErrorMessage>존재하지 않는 계정입니다.</ErrorMessage>
+          <Link to="/findpw">비밀번호 찾기</Link>
+        </FindPwWrap>
+        <LoginBtn type="submit">LOGIN</LoginBtn>
       </FormWrap>
-      <LoginText>이미 회원이신가요?</LoginText>
-      <LoginLink to="/login">LOGIN</LoginLink>
-    </RegisterWrap>
+      <JoinText>
+        아직 수리가 아니신가요?
+        <br />
+        우리 같이 한화 이글스 응원하러 가요!
+      </JoinText>
+      <JoinLink to="/register">JOIN US</JoinLink>
+    </LoginWrap>
   );
 };
 
-export default RegisterPage;
+export default LoginPage;

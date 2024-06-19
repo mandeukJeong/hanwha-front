@@ -85,24 +85,24 @@ const VoteImage = styled.img`
   filter: drop-shadow(0 0 4px ${COLORS.orange});
 `;
 const CommonLink = styled(Link)`
-  border: 1px solid ${(props) => props.border};
+  border: 1px solid ${(props) => props.$border};
   border-radius: 5px;
   padding: 16px 40px;
   text-decoration: none;
-  color: ${(props) => props.fontcolor};
+  color: ${(props) => props.$fontcolor};
   font-size: 15px;
   font-weight: 400;
   background: linear-gradient(
     to right,
     ${COLORS.orange} 50%,
-    ${(props) => props.bg} 50%
+    ${(props) => props.$bg} 50%
   );
   background-size: 200% 100%;
   background-position: right bottom;
   transition: all 0.5s ease-out;
 
   &:hover {
-    border: ${(props) => props.border};
+    border: 1px solid ${COLORS.orange};
     background-position: left bottom;
     color: ${COLORS.white};
   }
@@ -140,9 +140,10 @@ const Home = () => {
           </ContentText>
           <LinkWrap>
             <CommonLink
-              border={COLORS.grey}
-              fontcolor={COLORS.white}
-              bg={COLORS.black}
+              to="/player"
+              $border={COLORS.grey}
+              $fontcolor={COLORS.white}
+              $bg={COLORS.black}
             >
               GO TO LIST
             </CommonLink>
@@ -165,16 +166,16 @@ const Home = () => {
           </ContentText>
           <LinkWrap>
             <CommonLink
-              border={COLORS.grey}
-              fontcolor={COLORS.white}
-              bg={COLORS.black}
+              $border={COLORS.grey}
+              $fontcolor={COLORS.white}
+              $bg={COLORS.black}
             >
               GO TO VOTE
             </CommonLink>
             <CommonLink
-              border={COLORS.orange}
-              fontcolor={COLORS.orange}
-              bg={COLORS.black}
+              $border={COLORS.orange}
+              $fontcolor={COLORS.orange}
+              $bg={COLORS.black}
             >
               GO TO RANK
             </CommonLink>
@@ -196,9 +197,9 @@ const Home = () => {
           </ContentText>
           <LinkWrap>
             <CommonLink
-              border={COLORS.orange}
-              fontcolor={COLORS.orange}
-              bg={COLORS.black}
+              $border={COLORS.orange}
+              $fontcolor={COLORS.orange}
+              $bg={COLORS.black}
             >
               GALLERY
             </CommonLink>
