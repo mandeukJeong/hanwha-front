@@ -6,6 +6,7 @@ import Footer from './components/common/Footer';
 import Home from './pages/Home';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import FindPwPage from './pages/FindPwPage';
 import NotFound from './pages/NotFound';
 
 const MainWrap = styled.div`
@@ -22,6 +23,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/findpw" element={<FindPwPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
