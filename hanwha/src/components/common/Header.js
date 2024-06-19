@@ -58,7 +58,7 @@ const Header = () => {
         <MenuLink>GALLERY</MenuLink>
       </HeaderMenu>
       <HeaderMenu>
-        <AuthLink>LOGIN</AuthLink>
+        <AuthLink to="/login">LOGIN</AuthLink>
         <AuthLink>JOIN US</AuthLink>
       </HeaderMenu>
     </HeaderWrap>

@@ -1,8 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
-import Header from '../components/common/Header';
-import Footer from '../components/common/Footer';
 import ImageFrame from '../components/common/ImageFrame';
 import main_bg from '../assets/main_bg.jpeg';
 import player_collection from '../assets/player_collection.png';
@@ -21,11 +19,7 @@ const fadeIn = keyframes`
         opacity: 1;
     }
 `;
-const MainWrap = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-`;
+
 const IntroduceWrap = styled.div`
   display: flex;
   align-items: center;
@@ -128,124 +122,120 @@ const GalleryWrap = styled.div`
 const Home = () => {
   return (
     <>
-      <MainWrap>
-        <Header />
-        <IntroduceWrap>
-          <DifferentText>DIFFERENT</DifferentText>
-          <DifferentText>US</DifferentText>
-        </IntroduceWrap>
-        <CommonWrap>
-          <div>
-            <TitleText>PLAYERS</TitleText>
-            <SubText>
-              내가 우리 선수들을
-              <br />
-              소개해줄게!
-            </SubText>
-            <ContentText>
-              수리가 우리 선수단의 정보를 수집했어요!
-              <br />
-              한화 이글스의 투수, 포수, 내야수, 외야수를 만나러 가요.
-            </ContentText>
-            <LinkWrap>
-              <CommonLink
-                border={COLORS.grey}
-                fontcolor={COLORS.white}
-                bg={COLORS.black}
-              >
-                GO TO LIST
-              </CommonLink>
-            </LinkWrap>
-          </div>
-          <PlayerImage src={player_collection} alt="선수 이미지" />
-        </CommonWrap>
-        <CommonWrap>
-          <VoteImage src={produce_101} alt="투표 이미지" />
-          <div>
-            <TitleText>VOTE</TitleText>
-            <SubText>
-              당신의 선수에게
-              <br />
-              투표하세요!
-            </SubText>
-            <ContentText>
-              매일, 매순간 행복을 가져다 준<br /> 당신의 선수에게 소중한 한 표를
-              전달해주세요!
-            </ContentText>
-            <LinkWrap>
-              <CommonLink
-                border={COLORS.grey}
-                fontcolor={COLORS.white}
-                bg={COLORS.black}
-              >
-                GO TO VOTE
-              </CommonLink>
-              <CommonLink
-                border={COLORS.orange}
-                fontcolor={COLORS.orange}
-                bg={COLORS.black}
-              >
-                GO TO RANK
-              </CommonLink>
-            </LinkWrap>
-          </div>
-        </CommonWrap>
-        <CommonWrap>
-          <div>
-            <TitleText>GALLERY</TitleText>
-            <SubText>
-              소중한 추억을
-              <br />
-              공유해주세요.
-            </SubText>
-            <ContentText>
-              수리들의 사진 한 장 한 장이 모여,
-              <br />
-              나중에 소중한 추억 상자가 될 거예요.
-            </ContentText>
-            <LinkWrap>
-              <CommonLink
-                border={COLORS.orange}
-                fontcolor={COLORS.orange}
-                bg={COLORS.black}
-              >
-                GALLERY
-              </CommonLink>
-            </LinkWrap>
-          </div>
-          <GalleryWrap>
-            <ImageFrame
-              image={gallery_image1}
-              alt="갤러리 이미지1"
-              title="2024 스트링 캠프"
-              time="2024.03.24 16:03:24"
-              writer="만득이"
-            />
-            <ImageFrame
-              image={gallery_image2}
-              alt="갤러리 이미지2"
-              title="2024 스트링 캠프"
-              time="2024.03.24 16:03:24"
-              writer="만득이"
-            />
-            <ImageFrame
-              image={gallery_image3}
-              alt="갤러리 이미지3"
-              title="2024 스트링 캠프"
-              time="2024.03.24 16:03:24"
-              writer="만득이"
-            />
-            <ImageFrame
-              image={gallery_image4}
-              alt="갤러리 이미지4"
-              title="2024 스트링 캠프"
-              time="2024.03.24 16:03:24"
-              writer="만득이"
-            />
-          </GalleryWrap>
-        </CommonWrap>
-        <Footer />
-      </MainWrap>
+      <IntroduceWrap>
+        <DifferentText>DIFFERENT</DifferentText>
+        <DifferentText>US</DifferentText>
+      </IntroduceWrap>
+      <CommonWrap>
+        <div>
+          <TitleText>PLAYERS</TitleText>
+          <SubText>
+            내가 우리 선수들을
+            <br />
+            소개해줄게!
+          </SubText>
+          <ContentText>
+            수리가 우리 선수단의 정보를 수집했어요!
+            <br />
+            한화 이글스의 투수, 포수, 내야수, 외야수를 만나러 가요.
+          </ContentText>
+          <LinkWrap>
+            <CommonLink
+              border={COLORS.grey}
+              fontcolor={COLORS.white}
+              bg={COLORS.black}
+            >
+              GO TO LIST
+            </CommonLink>
+          </LinkWrap>
+        </div>
+        <PlayerImage src={player_collection} alt="선수 이미지" />
+      </CommonWrap>
+      <CommonWrap>
+        <VoteImage src={produce_101} alt="투표 이미지" />
+        <div>
+          <TitleText>VOTE</TitleText>
+          <SubText>
+            당신의 선수에게
+            <br />
+            투표하세요!
+          </SubText>
+          <ContentText>
+            매일, 매순간 행복을 가져다 준<br /> 당신의 선수에게 소중한 한 표를
+            전달해주세요!
+          </ContentText>
+          <LinkWrap>
+            <CommonLink
+              border={COLORS.grey}
+              fontcolor={COLORS.white}
+              bg={COLORS.black}
+            >
+              GO TO VOTE
+            </CommonLink>
+            <CommonLink
+              border={COLORS.orange}
+              fontcolor={COLORS.orange}
+              bg={COLORS.black}
+            >
+              GO TO RANK
+            </CommonLink>
+          </LinkWrap>
+        </div>
+      </CommonWrap>
+      <CommonWrap>
+        <div>
+          <TitleText>GALLERY</TitleText>
+          <SubText>
+            소중한 추억을
+            <br />
+            공유해주세요.
+          </SubText>
+          <ContentText>
+            수리들의 사진 한 장 한 장이 모여,
+            <br />
+            나중에 소중한 추억 상자가 될 거예요.
+          </ContentText>
+          <LinkWrap>
+            <CommonLink
+              border={COLORS.orange}
+              fontcolor={COLORS.orange}
+              bg={COLORS.black}
+            >
+              GALLERY
+            </CommonLink>
+          </LinkWrap>
+        </div>
+        <GalleryWrap>
+          <ImageFrame
+            image={gallery_image1}
+            alt="갤러리 이미지1"
+            title="2024 스트링 캠프"
+            time="2024.03.24 16:03:24"
+            writer="만득이"
+          />
+          <ImageFrame
+            image={gallery_image2}
+            alt="갤러리 이미지2"
+            title="2024 스트링 캠프"
+            time="2024.03.24 16:03:24"
+            writer="만득이"
+          />
+          <ImageFrame
+            image={gallery_image3}
+            alt="갤러리 이미지3"
+            title="2024 스트링 캠프"
+            time="2024.03.24 16:03:24"
+            writer="만득이"
+          />
+          <ImageFrame
+            image={gallery_image4}
+            alt="갤러리 이미지4"
+            title="2024 스트링 캠프"
+            time="2024.03.24 16:03:24"
+            writer="만득이"
+          />
+        </GalleryWrap>
+      </CommonWrap>
     </>
   );
 };
