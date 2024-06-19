@@ -104,19 +104,19 @@ const PlayerList = () => {
       <ListWrap>
         <ListItem $bg={pitcher}>
           <CategoryText>PITCHER</CategoryText>
-          <CommonLink>GO TO LIST</CommonLink>
+          <CommonLink to="/player/pitcher">GO TO LIST</CommonLink>
         </ListItem>
         <ListItem $bg={catcher}>
           <CategoryText>CATCHER</CategoryText>
-          <CommonLink>GO TO LIST</CommonLink>
+          <CommonLink to="/player/pitcher">GO TO LIST</CommonLink>
         </ListItem>
         <ListItem $bg={infielder}>
           <CategoryText>INFIELDER</CategoryText>
-          <CommonLink>GO TO LIST</CommonLink>
+          <CommonLink to="/player/pitcher">GO TO LIST</CommonLink>
         </ListItem>
         <ListItem $bg={outfielder}>
           <CategoryText>OUTFIELDER</CategoryText>
-          <CommonLink>GO TO LIST</CommonLink>
+          <CommonLink to="/player/pitcher">GO TO LIST</CommonLink>
         </ListItem>
       </ListWrap>
     </PlayerWrap>

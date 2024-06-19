@@ -8,6 +8,7 @@ import LoginPage from './pages/auth/LoginPage';
 import RegisterPage from './pages/auth/RegisterPage';
 import FindPwPage from './pages/auth/FindPwPage';
 import PlayerList from './pages/players/PlayerList';
+import PositionList from './pages/players/PositionList';
 import NotFound from './pages/NotFound';
 
 const MainWrap = styled.div`
@@ -26,6 +27,7 @@ const App = () => {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/findpw" element={<FindPwPage />} />
         <Route path="/player" element={<PlayerList />} />
+        <Route path="/player/pitcher" element={<PositionList />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
