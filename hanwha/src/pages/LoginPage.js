@@ -51,14 +51,15 @@ const AuthInput = styled.input`
 `;
 const FindPwWrap = styled.div`
   display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
+  justify-content: space-between;
+  align-items: center;
   width: 40%;
   max-width: 500px;
   margin-bottom: 30px;
   a {
     color: ${COLORS.orange};
     font-size: 14px;
+    margin-left: auto;
   }
 `;
 const LoginBtn = styled.button`
@@ -103,6 +104,10 @@ const JoinLink = styled(Link)`
     background-position: left bottom;
   }
 `;
+const ErrorMessage = styled.p`
+  color: red;
+  font-size: 13px;
+`;
 
 const LoginPage = () => {
   return (
@@ -116,6 +121,7 @@ const LoginPage = () => {
           <AuthInput placeholder="비밀번호" type="password" />
         </InputWrap>
         <FindPwWrap>
+          {/* <ErrorMessage>존재하지 않는 계정입니다.</ErrorMessage> */}
           <Link>비밀번호 찾기</Link>
         </FindPwWrap>
         <LoginBtn type="submit">LOGIN</LoginBtn>
