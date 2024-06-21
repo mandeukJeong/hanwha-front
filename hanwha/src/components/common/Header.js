@@ -54,7 +54,7 @@ const Header = () => {
         </Link>
         <MenuLink to="/">EAGLES</MenuLink>
         <MenuLink to="/player">PLAYERS</MenuLink>
-        <MenuLink>VOTE</MenuLink>
+        <MenuLink to="/vote">VOTE</MenuLink>
         <MenuLink>GALLERY</MenuLink>
       </HeaderMenu>
       <HeaderMenu>

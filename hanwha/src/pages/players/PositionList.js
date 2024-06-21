@@ -107,7 +107,7 @@ const PositionList = () => {
       <ListWrap>
         <PlayerWrap>
           <PlayerImageWrap $bg={Ryu}>
-            <CommonLink>PROFILE</CommonLink>
+            <CommonLink to="/player/detail">PROFILE</CommonLink>
           </PlayerImageWrap>
           <InfoWrap>
             <h2>99</h2>
