@@ -9,7 +9,6 @@ import Lee from '../../assets/Lee.png';
 const PositionWrap = styled.div`
   width: 100%;
   background-color: ${COLORS.black};
-  padding-top: 75.05px;
   padding: 75.05px 20px 50px 20px;
 `;
 const TitleText = styled.h1`
