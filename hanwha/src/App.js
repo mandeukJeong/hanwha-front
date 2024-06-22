@@ -11,6 +11,7 @@ import PlayerList from './pages/players/PlayerList';
 import PositionList from './pages/players/PositionList';
 import PlayerDetail from './pages/players/PlayerDetail';
 import VotePage from './pages/vote/VotePage';
+import VoteList from './pages/vote/VoteList';
 import NotFound from './pages/NotFound';
 
 const MainWrap = styled.div`
@@ -32,6 +33,7 @@ const App = () => {
         <Route path="/player/pitcher" element={<PositionList />} />
         <Route path="/player/detail" element={<PlayerDetail />} />
         <Route path="/vote" element={<VotePage />} />
+        <Route path="/vote/list" element={<VoteList />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

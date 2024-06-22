@@ -1,9 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import produce_101 from '../../assets/produce_101.png';
 
+const fadeIn = keyframes`
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+`;
 const VoteWrap = styled.div`
   width: 100%;
   height: 100vh;
@@ -22,6 +30,7 @@ const TitleText = styled.h1`
 const VoteImage = styled.img`
   width: 30%;
   margin-bottom: 40px;
+  animation: ${fadeIn} 1s ease-in-out forwards;
   filter: drop-shadow(0 0 4px ${COLORS.orange});
 `;
 const SubText = styled.p`
@@ -58,7 +67,7 @@ const VotePage = () => {
       <TitleText>당신의 선수에게 투표하세요.</TitleText>
       <VoteImage src={produce_101} alt="투표 이미지" />
       <SubText>지금같이 투표하러 갈까요?</SubText>
-      <CommonLink>START</CommonLink>
+      <CommonLink to="/vote/list">START</CommonLink>
     </VoteWrap>
   );
 };
