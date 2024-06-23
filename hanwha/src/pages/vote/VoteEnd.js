@@ -67,7 +67,7 @@ const VoteEnd = () => {
       <TitleText>모든 투표가 끝났어요.</TitleText>
       <VoteImage src={vote_end} alt="투표 종료" />
       <SubText>수리들이 뽑은 선수들의 순위를 확인하러 갈까요?</SubText>
-      <CommonLink>GO TO RANK</CommonLink>
+      <CommonLink to="/vote/result">GO TO RANK</CommonLink>
     </VoteWrap>
   );
 };

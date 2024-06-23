@@ -141,7 +141,11 @@ const VoteList = () => {
         <CommonLink $border={COLORS.grey} $fontColor={COLORS.white}>
           BEFORE
         </CommonLink>
-        <CommonLink $border={COLORS.orange} $fontColor={COLORS.orange}>
+        <CommonLink
+          to="/vote/end"
+          $border={COLORS.orange}
+          $fontColor={COLORS.orange}
+        >
           NEXT
         </CommonLink>
       </LinkWrap>
