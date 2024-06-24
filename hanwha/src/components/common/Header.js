@@ -55,7 +55,7 @@ const Header = () => {
         <MenuLink to="/">EAGLES</MenuLink>
         <MenuLink to="/player">PLAYERS</MenuLink>
         <MenuLink to="/vote">VOTE</MenuLink>
-        <MenuLink>GALLERY</MenuLink>
+        <MenuLink to="/gallery">GALLERY</MenuLink>
       </HeaderMenu>
       <HeaderMenu>
         <AuthLink to="/login">LOGIN</AuthLink>
