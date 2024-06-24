@@ -129,7 +129,11 @@ const GalleryPage = () => {
       </ImageWrap>
       <MoveWrap>
         <p>더 많은 추억을 보러가고 싶으신가요?</p>
-        <CommonLink $border={COLORS.grey} $fontColor={COLORS.white}>
+        <CommonLink
+          to="/gallery/list"
+          $border={COLORS.grey}
+          $fontColor={COLORS.white}
+        >
           GO TO LIST
         </CommonLink>
       </MoveWrap>
