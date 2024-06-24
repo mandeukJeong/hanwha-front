@@ -97,7 +97,11 @@ const GalleryPage = () => {
           <br />
           추억들을 모아봤어요.
         </h1>
-        <CommonLink $border={COLORS.orange} $fontColor={COLORS.orange}>
+        <CommonLink
+          to="/gallery/write"
+          $border={COLORS.orange}
+          $fontColor={COLORS.orange}
+        >
           WRITE
         </CommonLink>
       </TitleWrap>
