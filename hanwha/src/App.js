@@ -14,6 +14,7 @@ import VotePage from './pages/vote/VotePage';
 import VoteList from './pages/vote/VoteList';
 import VoteEnd from './pages/vote/VoteEnd';
 import VoteResult from './pages/vote/VoteResult';
+import VoteRank from './pages/vote/VoteRank';
 import NotFound from './pages/NotFound';
 
 const MainWrap = styled.div`
@@ -38,6 +39,7 @@ const App = () => {
         <Route path="/vote/list" element={<VoteList />} />
         <Route path="/vote/end" element={<VoteEnd />} />
         <Route path="/vote/result" element={<VoteResult />} />
+        <Route path="/vote/rank" element={<VoteRank />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
