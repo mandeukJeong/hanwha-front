@@ -36,7 +36,7 @@ const App = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/findpw" element={<FindPwPage />} />
-        <Route path="/player" element={<PlayerList />} />
+        <Route path="/players" element={<PlayerList />} />
         <Route path="/player/pitcher" element={<PositionList />} />
         <Route path="/player/detail" element={<PlayerDetail />} />
         <Route path="/vote" element={<VotePage />} />
