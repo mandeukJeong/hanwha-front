@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax } from '../../utils/media';
-import hanwha_symbol from '../../assets/hanwha_symbol.png';
+import hanwha_symbol from '../../assets/logo/hanwha_symbol.png';
 
 const FooterWrap = styled.footer`
   padding: 24px;

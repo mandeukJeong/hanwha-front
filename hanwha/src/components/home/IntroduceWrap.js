@@ -2,7 +2,10 @@ import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { mediaMax, mediaMin } from '../../utils/media';
-import main_bg from '../../assets/main_bg.jpeg';
+import main_bg1 from '../../assets/home/main_bg1.jpeg';
+import main_bg2 from '../../assets/home/main_bg2.JPG';
+import main_bg3 from '../../assets/home/main_bg3.JPG';
+import main_bg4 from '../../assets/home/main_bg4.jpeg';
 
 const fadeIn = keyframes`
   from {
@@ -10,6 +13,23 @@ const fadeIn = keyframes`
   }
   to {
     opacity: 1;
+  }
+`;
+const test = keyframes`
+  0%, 20% {
+    background-image: url(${main_bg1});
+  }
+  25%, 45% {
+    background-image: url(${main_bg2});
+  }
+  50%, 70% {
+    background-image: url(${main_bg3});
+  }
+  75%, 95% {
+    background-image: url(${main_bg4});
+  }
+  100% {
+    background-image: url(${main_bg1});
   }
 `;
 const IntroWrap = styled.section`
@@ -22,7 +42,7 @@ const IntroWrap = styled.section`
 `;
 const IntroMainBg = styled.div`
   position: relative;
-  background-image: url(${main_bg});
+  animation: ${test} 20s infinite;
   background-size: cover;
   background-position: center;
   ${mediaMin.large`

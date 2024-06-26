@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { COLORS } from '../../constants/colors';
-import hanwha_wordmark from '../../assets/hanwha_wordmark.png';
+import hanwha_wordmark from '../../assets/logo/hanwha_wordmark.png';
 
 const FindPwWrap = styled.div`
   width: 100%;

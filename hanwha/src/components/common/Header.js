@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMin, mediaMax } from '../../utils/media';
-import hanwha_logo from '../../assets/hanwha_logo.png';
-import hanwha_wordmark from '../../assets/hanwha_wordmark.png';
+import hanwha_logo from '../../assets/logo/hanwha_logo.png';
+import hanwha_wordmark from '../../assets/logo/hanwha_wordmark.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faHouse, faX } from '@fortawesome/free-solid-svg-icons';
 
