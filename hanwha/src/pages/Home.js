@@ -1,242 +1,321 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-import { Link } from 'react-router-dom';
-import ImageFrame from '../components/common/ImageFrame';
+import { COLORS } from '../constants/colors';
+import { SIZES } from '../constants/size';
+import { mediaMax, mediaMin } from '../utils/media';
 import main_bg from '../assets/main_bg.jpeg';
 import player_collection from '../assets/player_collection.png';
+import soori from '../assets/soori.png';
 import produce_101 from '../assets/produce_101.png';
-import gallery_image1 from '../assets/gallery_image1.jpg';
-import gallery_image2 from '../assets/gallery_image2.jpg';
-import gallery_image3 from '../assets/gallery_image3.jpg';
-import gallery_image4 from '../assets/gallery_image4.jpg';
-import { COLORS } from '../constants/colors';
+import vote_player from '../assets/vote_player.png';
+import CustomBtn from '../components/common/CustomBtn';
 
 const fadeIn = keyframes`
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 `;
-const IntroduceWrap = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  width: 100%;
-  height: 100vh;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url(${main_bg});
+const HomeWrap = styled.main`
+  color: ${COLORS.white};
+  background-color: ${COLORS.black};
+`;
+const IntroWrap = styled.section`
+  height: calc(100vh - 76px);
+  ${mediaMax.small`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  `}
+`;
+const IntroMainBg = styled.div`
+  position: relative;
+  background-image: url(${main_bg});
   background-size: cover;
   background-position: center;
+  ${mediaMin.large`
+    height: 100%;
+  `}
+  ${mediaMax.small`
+    height: 50%;
+  `}
 `;
-const DifferentText = styled.h1`
-  color: ${COLORS.white};
-  font-size: 120px;
-  font-weight: 900;
-  letter-spacing: -10px;
-  text-shadow: 0 0 6px ${COLORS.white};
-  animation: ${fadeIn} 2s ease-in-out forwards;
-
-  &:last-child {
-    color: ${COLORS.orange};
-    text-shadow: 0 0 6px ${COLORS.orange};
-  }
-`;
-const TitleText = styled.h2`
-  font-family: 'Audiowide', sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  font-size: 30px;
-  color: ${COLORS.orange};
-  margin-bottom: 30px;
-`;
-const SubText = styled.h3`
-  color: ${COLORS.white};
-  font-weight: 600;
-  font-size: 45px;
-  margin-bottom: 30px;
-  line-height: 1.3;
-`;
-const ContentText = styled.p`
-  color: ${COLORS.grey};
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 1.5;
-  margin-bottom: 50px;
-  letter-spacing: -0.5px;
-`;
-const CommonWrap = styled.div`
-  width: 100%;
-  height: calc(100vh - 75.05px);
-  background-color: ${COLORS.black};
+const IntroTint = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.67);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 100px;
-  gap: 10%;
 `;
-const PlayerImage = styled.img`
-  width: 52%;
+const IntroText = styled.div`
+  display: inline-flex;
+  gap: 0.3em;
+  font-weight: 800;
+  text-shadow: 0 0 6px ${COLORS.white};
+  animation: ${fadeIn} 2s ease-in-out forwards;
+  span {
+    &:last-child {
+      color: ${COLORS.orange};
+      text-shadow: 0 0 6px ${COLORS.orange};
+    }
+  }
+  ${mediaMin.large`
+    letter-spacing: -10px;
+    font-size: ${SIZES.xlarge};
+  `}
+  ${mediaMax.small`
+    letter-spacing: -5px;
+    font-size: ${SIZES.mdlarge};
+  `}
 `;
-const VoteImage = styled.img`
-  width: 30%;
-  filter: drop-shadow(0 0 4px ${COLORS.orange});
+const CommonSection = styled.section`
+  ${mediaMin.large`
+    display: flex;
+    gap: 50px;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 76px);
+  `}
+  ${mediaMax.small`
+    padding: 30px;
+  `}
 `;
-const CommonLink = styled(Link)`
-  border: 1px solid ${(props) => props.$border};
-  border-radius: 5px;
-  padding: 16px 40px;
-  text-decoration: none;
-  color: ${(props) => props.$fontcolor};
-  font-size: 15px;
-  font-weight: 400;
-  background: linear-gradient(
-    to right,
-    ${COLORS.orange} 50%,
-    ${(props) => props.$bg} 50%
-  );
-  background-size: 200% 100%;
-  background-position: right bottom;
-  transition: all 0.5s ease-out;
-
-  &:hover {
-    border: 1px solid ${COLORS.orange};
-    background-position: left bottom;
-    color: ${COLORS.white};
+const ContentWrap = styled.div`
+  ${mediaMax.small`
+    text-align: center;
+  `}
+  h1 {
+    color: ${COLORS.orange};
+    font-family: 'Audiowide', sans-serif;
+    font-size: ${SIZES.smlarge};
+    margin-bottom: 30px;
+    ${mediaMax.small`
+      display: none;
+    `}
+  }
+  h2 {
+    ${mediaMin.large`
+      font-weight: 700;
+      font-size: ${SIZES.title};
+      letter-spacing: -0.5px;
+      margin-bottom: 30px;
+    `}
+    ${mediaMax.small`
+      text-align: start;
+      font-size: ${SIZES.xslarge};
+      font-weight: 600;
+      margin-bottom: 30px;
+    `}
+  }
+  p {
+    ${mediaMin.large`
+      font-weight: 600;
+      letter-spacing: -0.3px;
+      color: ${COLORS.grey};
+      font-size: ${SIZES.large};
+      margin-bottom: 50px;
+    `}
+    ${mediaMax.small`
+      font-size: ${SIZES.small};
+      font-weight: 500;
+      margin-bottom: 30px;
+    `}
+  }
+  a {
+    ${mediaMax.small`
+      display: none;
+    `}
   }
 `;
-const LinkWrap = styled.div`
+const SooriImg = styled.img`
+  width: 40%;
+  margin-bottom: 30px;
+  ${mediaMin.large`
+    display: none;
+  `}
+`;
+const CommonTint = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
+  align-items: ${(props) => props.$align};
+  justify-content: center;
+  a {
+    margin-bottom: 5em;
+  }
+  ${mediaMin.large`
+    display: none;
+  `}
+`;
+const ImageWrap = styled.div`
+  ${mediaMin.large`
+    width: 40%;
+  `}
+  ${mediaMax.small`
+    width: 100%;
+    margin-bottom: 30px;
+    &:first-child {
+      display: none;
+    }
+  `}
+`;
+const CustomImg = styled.div`
+  background-image: url(${(props) => props.$bg});
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  ${mediaMin.large`
+    height: 50vh;
+  `}
+  ${mediaMax.small`
+    width: 100%;
+    height: 30vh;
+    position: relative;
+  `}
+`;
+const LinkWrap = styled.div`
+  display: inline-flex;
   gap: 50px;
 `;
-const GalleryWrap = styled.div`
-  width: 615px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
+const VoteImg = styled.div`
+  background-image: url(${vote_player});
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
+  height: 20vh;
+  margin-bottom: 30px;
+  ${mediaMin.large`
+    display: none;
+  `}
+`;
+const VoteText = styled.div`
+  display: inline-flex;
+  gap: 0.3em;
+  font-weight: 800;
+  text-shadow: 0 0 6px ${COLORS.white};
+  letter-spacing: -5px;
+  font-size: ${SIZES.mdlarge};
+  span {
+    &:last-child {
+      color: ${COLORS.orange};
+      text-shadow: 0 0 6px ${COLORS.orange};
+    }
+  }
 `;
 
 const Home = () => {
   return (
-    <>
-      <IntroduceWrap>
-        <DifferentText>DIFFERENT</DifferentText>
-        <DifferentText>US</DifferentText>
-      </IntroduceWrap>
-      <CommonWrap>
-        <div>
-          <TitleText>PLAYERS</TitleText>
-          <SubText>
+    <HomeWrap>
+      <IntroWrap>
+        <IntroMainBg>
+          <IntroTint>
+            <IntroText>
+              <span>DIFFERENT</span>
+              <span>US</span>
+            </IntroText>
+          </IntroTint>
+        </IntroMainBg>
+      </IntroWrap>
+      <CommonSection>
+        <ContentWrap>
+          <h1>PLAYERS</h1>
+          <h2>
             내가 우리 선수들을
             <br />
             소개해줄게!
-          </SubText>
-          <ContentText>
+          </h2>
+          <SooriImg src={soori} alt="수리 이미지" />
+          <p>
             수리가 우리 선수단의 정보를 수집했어요!
             <br />
             한화 이글스의 투수, 포수, 내야수, 외야수를 만나러 가요.
-          </ContentText>
-          <LinkWrap>
-            <CommonLink
-              to="/player"
-              $border={COLORS.grey}
-              $fontcolor={COLORS.white}
-              $bg={COLORS.black}
-            >
-              GO TO LIST
-            </CommonLink>
-          </LinkWrap>
-        </div>
-        <PlayerImage src={player_collection} alt="선수 이미지" />
-      </CommonWrap>
-      <CommonWrap>
-        <VoteImage src={produce_101} alt="투표 이미지" />
-        <div>
-          <TitleText>VOTE</TitleText>
-          <SubText>
+          </p>
+          <CustomBtn
+            to="/players"
+            $border={COLORS.grey}
+            $height="25px"
+            $padding="10px 30px"
+            $fontSize={SIZES.medium}
+            $bgColor={COLORS.orange}
+            text="GO TO LIST"
+          />
+        </ContentWrap>
+        <ImageWrap>
+          <CustomImg $bg={player_collection}>
+            <CommonTint $align="flex-end">
+              <CustomBtn
+                to="/players"
+                $border={COLORS.grey}
+                $height="10px"
+                $padding="10px 20px"
+                $fontSize={SIZES.xsmall}
+                $bgColor={COLORS.orange}
+                text="GO TO LIST"
+              />
+            </CommonTint>
+          </CustomImg>
+        </ImageWrap>
+      </CommonSection>
+      <CommonSection>
+        <ImageWrap>
+          <CustomImg $bg={produce_101} />
+        </ImageWrap>
+        <ContentWrap>
+          <h1>VOTE</h1>
+          <h2>
             당신의 선수에게
             <br />
             투표하세요!
-          </SubText>
-          <ContentText>
-            매일, 매순간 행복을 가져다 준<br /> 당신의 선수에게 소중한 한 표를
-            전달해주세요!
-          </ContentText>
+          </h2>
+          <VoteImg>
+            <CommonTint $align="center">
+              <VoteText>
+                <span>LET'S</span>
+                <span>VOTE</span>
+              </VoteText>
+            </CommonTint>
+          </VoteImg>
+          <p>
+            매일, 매순간 행복을 가져다 준
+            <br />
+            당신의 선수에게 소중한 한 표를 전달해주세요!
+          </p>
           <LinkWrap>
-            <CommonLink
+            <CustomBtn
+              to="/vote"
               $border={COLORS.grey}
-              $fontcolor={COLORS.white}
-              $bg={COLORS.black}
-            >
-              GO TO VOTE
-            </CommonLink>
-            <CommonLink
+              $height="25px"
+              $padding="10px 30px"
+              $fontSize={SIZES.medium}
+              $fontColor={COLORS.white}
+              $bgColor={COLORS.orange}
+              text="GO TO VOTE"
+            />
+            <CustomBtn
+              to="/vote/result"
               $border={COLORS.orange}
-              $fontcolor={COLORS.orange}
-              $bg={COLORS.black}
-            >
-              GO TO RANK
-            </CommonLink>
+              $height="25px"
+              $padding="10px 30px"
+              $fontSize={SIZES.medium}
+              $fontColor={COLORS.orange}
+              $bgColor={COLORS.orange}
+              text="GO TO RANK"
+            />
           </LinkWrap>
-        </div>
-      </CommonWrap>
-      <CommonWrap>
-        <div>
-          <TitleText>GALLERY</TitleText>
-          <SubText>
-            소중한 추억을
-            <br />
-            공유해주세요.
-          </SubText>
-          <ContentText>
-            수리들의 사진 한 장 한 장이 모여,
-            <br />
-            나중에 소중한 추억 상자가 될 거예요.
-          </ContentText>
-          <LinkWrap>
-            <CommonLink
-              $border={COLORS.orange}
-              $fontcolor={COLORS.orange}
-              $bg={COLORS.black}
-            >
-              GALLERY
-            </CommonLink>
-          </LinkWrap>
-        </div>
-        <GalleryWrap>
-          <ImageFrame
-            image={gallery_image1}
-            alt="갤러리 이미지1"
-            title="2024 스트링 캠프"
-            time="2024.03.24 16:03:24"
-            writer="만득이"
-          />
-          <ImageFrame
-            image={gallery_image2}
-            alt="갤러리 이미지2"
-            title="2024 스트링 캠프"
-            time="2024.03.24 16:03:24"
-            writer="만득이"
-          />
-          <ImageFrame
-            image={gallery_image3}
-            alt="갤러리 이미지3"
-            title="2024 스트링 캠프"
-            time="2024.03.24 16:03:24"
-            writer="만득이"
-          />
-          <ImageFrame
-            image={gallery_image4}
-            alt="갤러리 이미지4"
-            title="2024 스트링 캠프"
-            time="2024.03.24 16:03:24"
-            writer="만득이"
-          />
-        </GalleryWrap>
-      </CommonWrap>
-    </>
+        </ContentWrap>
+      </CommonSection>
+    </HomeWrap>
   );
 };
 

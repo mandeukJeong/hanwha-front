@@ -1,7 +1,8 @@
 import { css } from 'styled-components';
 
 const sizes = {
-  small: 1047,
+  small: 639,
+  medium: 1047,
   large: 1048,
 };
 
