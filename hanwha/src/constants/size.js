@@ -7,6 +7,7 @@ export const SIZES = {
   tbmedium: '16px',
   tblarge: '20px',
   tbxlarge: '24px',
+  ltxsmall: '14px',
   ltsmall: '16px',
   ltmedium: '20px',
   ltlarge: '24px',
