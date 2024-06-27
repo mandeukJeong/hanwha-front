@@ -1,11 +1,24 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax, mediaMin } from '../../utils/media';
+import useIntersectionObserver from '../../hooks/useIntersectionObserver';
 import CustomBtn from '../common/CustomBtn';
 import player_bg from '../../assets/home/player_bg.JPG';
 
+const fadeInUp = `
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+`;
 const PlayerSection = styled.section`
   display: flex;
   justify-content: center;
@@ -21,7 +34,16 @@ const PlayerSection = styled.section`
     gap: 2em;
   `};
 `;
-const TextWrap = styled.div`
+const AnimatedWrap = styled.div`
+  opacity: 0;
+  transition: opacity 2s ease-out, transform 2s ease-out;
+  ${fadeInUp}
+  &.animation {
+    opacity: 1;
+    animation: fadeInUp 2s ease-out forwards;
+  }
+`;
+const TextWrap = styled(AnimatedWrap)`
   ${mediaMax.medium`
     width: 100%;
     height: auto;
@@ -79,7 +101,7 @@ const TextWrap = styled.div`
     `};
   }
 `;
-const ImageWrap = styled.div`
+const ImageWrap = styled(AnimatedWrap)`
   background-image: url(${player_bg});
   background-size: cover;
   background-position: center;
@@ -95,9 +117,14 @@ const ImageWrap = styled.div`
 `;
 
 const PlayerWrap = () => {
+  const textRef = useRef(null);
+  const imageRef = useRef(null);
+  const isTextInViewport = useIntersectionObserver(textRef);
+  const isImageInViewport = useIntersectionObserver(imageRef);
+
   return (
     <PlayerSection>
-      <TextWrap>
+      <TextWrap ref={textRef} className={isTextInViewport ? 'animation' : ''}>
         <h1>PLAYERS</h1>
         <h2>
           내가 우리 선수들을
@@ -116,7 +143,10 @@ const PlayerWrap = () => {
           text="GO TO LIST"
         />
       </TextWrap>
-      <ImageWrap></ImageWrap>
+      <ImageWrap
+        ref={imageRef}
+        className={isImageInViewport ? 'animation' : ''}
+      ></ImageWrap>
     </PlayerSection>
   );
 };
