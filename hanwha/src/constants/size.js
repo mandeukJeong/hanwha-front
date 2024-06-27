@@ -11,6 +11,6 @@ export const SIZES = {
   ltsmall: '16px',
   ltmedium: '20px',
   ltlarge: '24px',
-  ltxlarge: '28px',
+  ltxlarge: '36px',
   toolbar: '75px',
 };

@@ -6,12 +6,15 @@ import { COLORS } from '../../constants/colors';
 const Button = styled(Link)`
   color: ${(props) => props.$fontColor};
   border: 1px solid ${(props) => props.$border};
+  font-size: ${(props) => props.$fontSize};
+
   border-radius: 5px;
   display: inline-block;
-  height: ${(props) => props.$height};
-  line-height: ${(props) => props.$height};
-  padding: ${(props) => props.$padding};
-  font-size: ${(props) => props.$fontSize};
+  text-align: center;
+  padding: 10px 40px;
+  width: 90px;
+  height: 30px;
+  line-height: 30px;
   font-weight: 400;
   background: linear-gradient(
     to right,
@@ -28,22 +31,11 @@ const Button = styled(Link)`
   }
 `;
 
-const CustomBtn = ({
-  $border,
-  $height,
-  $padding,
-  $fontSize,
-  $fontColor,
-  $bgColor,
-  text,
-  to,
-}) => {
+const CustomBtn = ({ $border, $fontSize, $fontColor, $bgColor, text, to }) => {
   return (
     <Button
       to={to}
       $border={$border}
-      $height={$height}
-      $padding={$padding}
       $fontSize={$fontSize}
       $fontColor={$fontColor}
       $bgColor={$bgColor}
