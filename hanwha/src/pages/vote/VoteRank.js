@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { COLORS } from '../../constants/colors';
-import produce_101 from '../../assets/produce_101.png';
+import produce_101 from '../../assets/home/produce_101.png';
 import Hwang from '../../assets/Hwang.png';
 import Ju from '../../assets/Ju.png';
 import Moon from '../../assets/Moon.png';

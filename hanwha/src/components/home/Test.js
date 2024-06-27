@@ -4,8 +4,8 @@ import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax, mediaMin } from '../../utils/media';
 import CustomBtn from '../common/CustomBtn';
-import player_collection from '../../assets/player_collection.png';
-import soori from '../../assets/soori.png';
+import produce_101 from '../../assets/produce_101.png';
+import vote_player from '../../assets/vote_player.png';
 
 const CommonSection = styled.section`
   ${mediaMin.large`
@@ -66,13 +66,6 @@ const ContentWrap = styled.div`
     `}
   }
 `;
-const SooriImg = styled.img`
-  width: 40%;
-  margin-bottom: 30px;
-  ${mediaMin.large`
-    display: none;
-  `}
-`;
 const CommonTint = styled.div`
   position: absolute;
   top: 0;
@@ -116,50 +109,88 @@ const CustomImg = styled.div`
     position: relative;
   `}
 `;
+const LinkWrap = styled.div`
+  display: inline-flex;
+  gap: 50px;
+`;
+const VoteImg = styled.div`
+  background-image: url(${vote_player});
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
+  height: 20vh;
+  margin-bottom: 30px;
+  ${mediaMin.large`
+    display: none;
+  `}
+`;
+const VoteText = styled.div`
+  display: inline-flex;
+  gap: 0.3em;
+  font-weight: 800;
+  text-shadow: 0 0 6px ${COLORS.white};
+  letter-spacing: -5px;
+  font-size: ${SIZES.mdlarge};
+  span {
+    &:last-child {
+      color: ${COLORS.orange};
+      text-shadow: 0 0 6px ${COLORS.orange};
+    }
+  }
+`;
 
-const PlayerWrap = () => {
+const VoteWrap = () => {
   return (
     <CommonSection>
-      <ContentWrap>
-        <h1>PLAYERS</h1>
-        <h2>
-          내가 우리 선수들을
-          <br />
-          소개해줄게!
-        </h2>
-        <SooriImg src={soori} alt="수리 이미지" />
-        <p>
-          수리가 우리 선수단의 정보를 수집했어요!
-          <br />
-          한화 이글스의 투수, 포수, 내야수, 외야수를 만나러 가요.
-        </p>
-        <CustomBtn
-          to="/players"
-          $border={COLORS.grey}
-          $height="25px"
-          $padding="10px 30px"
-          $fontSize={SIZES.medium}
-          $bgColor={COLORS.orange}
-          text="GO TO LIST"
-        />
-      </ContentWrap>
       <ImageWrap>
-        <CustomImg $bg={player_collection}>
-          <CommonTint $align="flex-end">
-            <CustomBtn
-              to="/players"
-              $border={COLORS.grey}
-              $height="10px"
-              $padding="10px 20px"
-              $fontSize={SIZES.xsmall}
-              $bgColor={COLORS.orange}
-              text="GO TO LIST"
-            />
-          </CommonTint>
-        </CustomImg>
+        <CustomImg $bg={produce_101} />
       </ImageWrap>
+      <ContentWrap>
+        <h1>VOTE</h1>
+        <h2>
+          당신의 선수에게
+          <br />
+          투표하세요!
+        </h2>
+        <VoteImg>
+          <CommonTint $align="center">
+            <VoteText>
+              <span>LET'S</span>
+              <span>VOTE</span>
+            </VoteText>
+          </CommonTint>
+        </VoteImg>
+        <p>
+          매일, 매순간 행복을 가져다 준
+          <br />
+          당신의 선수에게 소중한 한 표를 전달해주세요!
+        </p>
+        <LinkWrap>
+          <CustomBtn
+            to="/vote"
+            $border={COLORS.grey}
+            $height="25px"
+            $padding="10px 30px"
+            $fontSize={SIZES.medium}
+            $fontColor={COLORS.white}
+            $bgColor={COLORS.orange}
+            text="GO TO VOTE"
+          />
+          <CustomBtn
+            to="/vote/result"
+            $border={COLORS.orange}
+            $height="25px"
+            $padding="10px 30px"
+            $fontSize={SIZES.medium}
+            $fontColor={COLORS.orange}
+            $bgColor={COLORS.orange}
+            text="GO TO RANK"
+          />
+        </LinkWrap>
+      </ContentWrap>
     </CommonSection>
   );
 };
 
-export default PlayerWrap;
+export default VoteWrap;

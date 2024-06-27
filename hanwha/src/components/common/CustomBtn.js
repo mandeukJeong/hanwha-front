@@ -26,13 +26,13 @@ const Button = styled(Link)`
     background-position: left bottom;
   }
   padding: 10px 40px;
-  width: 90px;
+  width: 100px;
   height: 30px;
   line-height: 30px;
   font-size: ${SIZES.ltsmall};
   ${mediaMax.medium`
     padding: 10px 30px;
-    width: 85px;
+    width: 95px;
     height: 25px;
     line-height: 25px;
     font-size: ${SIZES.tbmedium};

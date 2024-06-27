@@ -36,11 +36,11 @@ const PlayerSection = styled.section`
 `;
 const AnimatedWrap = styled.div`
   opacity: 0;
-  transition: opacity 2s ease-out, transform 2s ease-out;
+  transition: opacity 1s ease-out, transform 1s ease-out;
   ${fadeInUp}
   &.animation {
     opacity: 1;
-    animation: fadeInUp 2s ease-out forwards;
+    animation: fadeInUp 1s ease-out forwards;
   }
 `;
 const TextWrap = styled(AnimatedWrap)`

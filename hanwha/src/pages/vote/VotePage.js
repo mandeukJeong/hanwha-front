@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 import { COLORS } from '../../constants/colors';
-import produce_101 from '../../assets/produce_101.png';
+import produce_101 from '../../assets/home/produce_101.png';
 
 const fadeIn = keyframes`
     from {
