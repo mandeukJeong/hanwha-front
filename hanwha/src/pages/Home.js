@@ -5,6 +5,7 @@ import IntroduceWrap from '../components/home/IntroduceWrap';
 import OrangeWrap from '../components/home/OrangeWrap';
 import PlayerWrap from '../components/home/PlayerWrap';
 import VoteWrap from '../components/home/VoteWrap';
+import GalleryWrap from '../components/home/GalleryWrap';
 
 const HomeWrap = styled.main`
   color: ${COLORS.white};
@@ -18,6 +19,7 @@ const Home = () => {
       <OrangeWrap />
       <PlayerWrap />
       <VoteWrap />
+      <GalleryWrap />
     </HomeWrap>
   );
 };
