@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
-import { mediaMax } from '../../utils/media';
+import { mediaMax, mediaMin } from '../../utils/media';
 import useIntersectionObserver from '../../hooks/useIntersectionObserver';
 import CustomBtn from '../common/CustomBtn';
 import gallery_1 from '../../assets/home/gallery_1.JPG';
@@ -86,21 +86,42 @@ const TextWrap = styled(AnimatedWrap)`
     `};
   }
 `;
-const ImageWrap = styled(AnimatedWrap)`
-  display: inline-flex;
-  justify-content: center;
-  gap: 30px;
-  ${mediaMax.medium`
-    flex-direction: column;
-    align-items: center;
-  `};
-`;
 const ImageCard = styled.div`
   background-color: ${COLORS.dark};
   width: 25%;
   border-radius: 12px;
   ${mediaMax.medium`
     width: 80%;
+  `};
+  ${mediaMin.large`
+    transition: all 350ms;
+    &:hover {
+      transform: scale(1.04);
+    }
+  `};
+`;
+const ImageWrap = styled(AnimatedWrap)`
+  display: inline-flex;
+  justify-content: center;
+  gap: 30px;
+  ${mediaMin.large`
+    &:hover ${ImageCard}:not(:hover) {
+    transform: scale(0.9);
+    }
+    &:hover ${ImageCard}:not(:hover)::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      -webkit-backdrop-filter: blur(2px);
+      backdrop-filter: blur(2px);
+    }
+  `};
+  ${mediaMax.medium`
+    flex-direction: column;
+    align-items: center;
   `};
 `;
 const GalleryImg = styled.img`
