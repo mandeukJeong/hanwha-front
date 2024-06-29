@@ -184,7 +184,7 @@ const GalleryWrap = () => {
           나중에 소중한 추억 상자가 될 거예요.
         </p>
         <CustomBtn
-          to="/players"
+          to="/gallery"
           $border={COLORS.orange}
           $fontColor={COLORS.orange}
           $bgColor={COLORS.orange}
