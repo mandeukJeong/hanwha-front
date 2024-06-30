@@ -79,6 +79,7 @@ const ErrorWrap = styled.div`
   margin: 30px 0;
   font-size: ${SIZES.ltxsmall};
   font-weight: 600;
+  color: red;
   ${mediaMax.medium`
     margin: 35px 0;
     font-size: ${SIZES.tbmedium};
@@ -87,10 +88,6 @@ const ErrorWrap = styled.div`
     margin: 25px 0;
     font-size: ${SIZES.mbmedium};
   `};
-  p {
-    color: red;
-    flex-grow: 1;
-  }
 `;
 const SubmitBtn = styled.button`
   width: 100%;
