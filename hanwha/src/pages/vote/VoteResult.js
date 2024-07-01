@@ -4,7 +4,7 @@ import { COLORS } from '../../constants/colors';
 import produce_101 from '../../assets/home/produce_101.png';
 import Hwang from '../../assets/Hwang.png';
 import Ju from '../../assets/Ju.png';
-import soori from '../../assets/soori.png';
+import soori from '../../assets/players/soori.png';
 import Choi from '../../assets/Choi.png';
 import Perlaza from '../../assets/Perlaza.png';
 import An from '../../assets/An.png';

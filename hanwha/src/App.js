@@ -30,8 +30,8 @@ const App = () => {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/findpw" element={<FindPwPage />} />
         <Route path="/players" element={<PlayerList />} />
-        <Route path="/player/pitcher" element={<PositionList />} />
-        <Route path="/player/detail" element={<PlayerDetail />} />
+        <Route path="/players/pitcher" element={<PositionList />} />
+        <Route path="/players/detail" element={<PlayerDetail />} />
         <Route path="/vote" element={<VotePage />} />
         <Route path="/vote/list" element={<VoteList />} />
         <Route path="/vote/end" element={<VoteEnd />} />

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const useIntersectionObserver = (targetRef) => {
   const [isInViewport, setIsInViewport] = useState(false);
