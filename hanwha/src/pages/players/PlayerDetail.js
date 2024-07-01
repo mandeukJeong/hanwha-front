@@ -1,11 +1,24 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax, mediaMin } from '../../utils/media';
+import useIntersectionObserver from '../../hooks/useIntersectionObserver';
 import CustomBtn from '../../components/common/CustomBtn';
 import Ryu from '../../assets/players/Ryu.png';
 
+const fadeInUp = `
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+`;
 const MainWrap = styled.main`
   color: ${COLORS.white};
   background-color: ${COLORS.black};
@@ -176,7 +189,16 @@ const SeasonSection = styled.section`
     `};
   }
 `;
-const SeasonWrap = styled.div`
+const AnimatedWrap = styled.div`
+  opacity: 0;
+  transition: opacity 1s ease-out, transform 1s ease-out;
+  ${fadeInUp}
+  &.animation {
+    opacity: 1;
+    animation: fadeInUp 1s ease-out forwards;
+  }
+`;
+const SeasonWrap = styled(AnimatedWrap)`
   display: flex;
   justify-content: center;
   margin-bottom: 60px;
@@ -241,6 +263,9 @@ const ScoreDetail = styled.div`
 `;
 
 const PlayerDetail = () => {
+  const seasonRef = useRef(null);
+  const isSeasonInViewport = useIntersectionObserver(seasonRef);
+
   return (
     <MainWrap>
       <ProfileSection>
@@ -282,7 +307,10 @@ const PlayerDetail = () => {
       </ProfileSection>
       <SeasonSection>
         <h1>2024 SEASON</h1>
-        <SeasonWrap>
+        <SeasonWrap
+          ref={seasonRef}
+          className={isSeasonInViewport ? 'animation' : ''}
+        >
           <ScoreImg></ScoreImg>
           <ScoreWrap>
             <ScoreDetail>
