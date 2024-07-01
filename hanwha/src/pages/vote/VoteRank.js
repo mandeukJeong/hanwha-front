@@ -5,9 +5,9 @@ import { COLORS } from '../../constants/colors';
 import produce_101 from '../../assets/home/produce_101.png';
 import Hwang from '../../assets/Hwang.png';
 import Ju from '../../assets/Ju.png';
-import Moon from '../../assets/Moon.png';
-import Ryu from '../../assets/Ryu.png';
-import Lee from '../../assets/Lee.png';
+import Moon from '../../assets/players/Moon.png';
+import Ryu from '../../assets/players/Ryu.png';
+import Lee from '../../assets/players/Lee.png';
 
 const VoteWrap = styled.div`
   width: 100%;

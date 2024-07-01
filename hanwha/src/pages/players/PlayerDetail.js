@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { COLORS } from '../../constants/colors';
-import Ryu from '../../assets/Ryu.png';
+import Ryu from '../../assets/players/Ryu.png';
 
 const DetailWrap = styled.div`
   width: 100%;
