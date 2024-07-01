@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax, mediaMin } from '../../utils/media';
@@ -11,6 +11,16 @@ import catcher from '../../assets/players/catcher.png';
 import infielder from '../../assets/players/infielder.png';
 import outfielder from '../../assets/players/outfielder.png';
 
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
 const MainWrap = styled.main`
   color: ${COLORS.white};
   background-color: ${COLORS.black};
@@ -74,19 +84,6 @@ const SooriWrap = styled.div`
     display: none;
   `};
 `;
-const MainSection = styled.section`
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 3em;
-  gap: 50px;
-  ${mediaMax.medium`
-    gap: 100px;
-  `};
-  ${mediaMax.small`
-    gap: 30px;
-  `};
-`;
 const PlayerWrap = styled.div`
   display: flex;
   justify-content: center;
@@ -103,6 +100,39 @@ const PlayerWrap = styled.div`
   `};
   ${mediaMax.small`
     height: 250px;
+  `};
+  ${mediaMin.large`
+    transition: all 350ms;
+    &:hover {
+      transform: scale(1.04);
+    }
+  `};
+`;
+const MainSection = styled.section`
+  animation: ${fadeIn} 0.5s ease-in-out forwards;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 3em;
+  gap: 50px;
+  ${mediaMax.medium`
+    gap: 100px;
+  `};
+  ${mediaMax.small`
+    gap: 30px;
+  `};
+  ${mediaMin.large`
+    &:hover ${PlayerWrap}:not(:hover) {
+      transform: scale(0.9);
+    }
+    &:hover ${PlayerWrap}:not(:hover)::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
   `};
 `;
 const TitleWrap = styled.div`
