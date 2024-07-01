@@ -5,7 +5,7 @@ import { SIZES } from '../../constants/size';
 import { mediaMax, mediaMin } from '../../utils/media';
 import useIntersectionObserver from '../../hooks/useIntersectionObserver';
 import CustomBtn from '../common/CustomBtn';
-import produce_101 from '../../assets/home/produce_101.png';
+import produce_101 from '../../assets/common/produce_101.png';
 import vote_player from '../../assets/home/vote_player.png';
 
 const blinking = keyframes`
