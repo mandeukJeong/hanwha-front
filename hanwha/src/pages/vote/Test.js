@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { COLORS } from '../../constants/colors';
 import produce_101 from '../../assets/common/produce_101.png';
 import Hwang from '../../assets/vote/Hwang.png';
 import Ju from '../../assets/Ju.png';
-import soori from '../../assets/players/soori.png';
-import Choi from '../../assets/Choi.png';
-import Perlaza from '../../assets/Perlaza.png';
-import An from '../../assets/An.png';
+import Moon from '../../assets/players/Moon.png';
+import Ryu from '../../assets/players/Ryu.png';
+import Lee from '../../assets/players/Lee.png';
 
 const VoteWrap = styled.div`
   width: 100%;
@@ -23,99 +23,135 @@ const VoteWrap = styled.div`
   }
   h1 {
     text-align: center;
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 25px;
+    font-weight: 700;
     line-height: 1.3;
     margin-bottom: 80px;
-    strong {
-      color: ${COLORS.orange};
-    }
   }
 `;
 const VoteList = styled.div`
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   margin-bottom: -20px;
   width: 100%;
 `;
 const PlayerWrap = styled.div`
   width: 25%;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
   margin-bottom: 100px;
+  &:first-child {
+    width: 100%;
+  }
+  h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  p {
+    font-size: 18px;
+    font-weight: 600;
+    color: ${COLORS.grey};
+  }
 `;
 const PlayerImage = styled.div`
+  position: relative;
   width: 20vw;
   height: 20vw;
   border-radius: 50%;
-  border: 1px solid ${COLORS.grey};
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url(${(props) => props.$bg});
+  border: 2px solid ${COLORS.white};
+  background-image: url(${(props) => props.$bg});
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  cursor: pointer;
+  margin-bottom: 20px;
+`;
+const RankWrap = styled.div`
+  width: 3vw;
+  height: 3vw;
+  background-color: ${(props) => props.$rank};
+  color: ${COLORS.white};
+  font-size: 1.5rem;
+  font-weight: 600;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  h2 {
-    font-size: 25px;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-    text-shadow: 0 0 6px ${COLORS.white};
-  }
+  position: absolute;
+  left: 1.5vw;
+  top: 0.5vw;
+`;
+const CommonLink = styled(Link)`
+  border: 1px solid ${COLORS.orange};
+  border-radius: 5px;
+  padding: 15px 50px;
+  text-decoration: none;
+  color: ${COLORS.orange};
+  font-size: 15px;
+  font-weight: 300;
+  background: linear-gradient(
+    to right,
+    ${COLORS.orange} 50%,
+    rgba(0, 0, 0, 0) 50%
+  );
+  background-size: 200% 100%;
+  background-position: right bottom;
+  transition: all 0.5s ease-out;
 
   &:hover {
-    border: 1px solid ${COLORS.orange};
-    background-image: url(${(props) => props.$bg});
-    h2 {
-      color: ${COLORS.orange};
-      text-shadow: 0 0 6px ${COLORS.orange};
-    }
+    color: ${COLORS.white};
+    background-position: left bottom;
   }
 `;
 
-const VoteResult = () => {
+const VoteRank = () => {
   return (
     <VoteWrap>
       <img src={produce_101} alt="투표 이미지" />
-      <h1>
-        수리들이 뽑은 <strong>최고의 선수</strong>들을 확인해보세요.
-      </h1>
+      <h1>야구는 투수놀이라고 하죠.</h1>
       <VoteList>
         <PlayerWrap>
           <PlayerImage $bg={Hwang}>
-            <h2>PITCHER</h2>
+            <RankWrap $rank={COLORS.orange}>1</RankWrap>
           </PlayerImage>
+          <h2>황준서</h2>
+          <p>349239</p>
+        </PlayerWrap>
+        <PlayerWrap>
+          <PlayerImage $bg={Ryu}>
+            <RankWrap $rank={COLORS.grey}>2</RankWrap>
+          </PlayerImage>
+          <h2>류현진</h2>
+          <p>258903</p>
+        </PlayerWrap>
+        <PlayerWrap>
+          <PlayerImage $bg={Moon}>
+            <RankWrap $rank={COLORS.grey}>3</RankWrap>
+          </PlayerImage>
+          <h2>문동주</h2>
+          <p>232398</p>
         </PlayerWrap>
         <PlayerWrap>
           <PlayerImage $bg={Ju}>
-            <h2>BULLPEN</h2>
+            <RankWrap $rank={COLORS.grey}>4</RankWrap>
           </PlayerImage>
+          <h2>주현상</h2>
+          <p>232343</p>
         </PlayerWrap>
         <PlayerWrap>
-          <PlayerImage $bg={soori}>
-            <h2>THE CUTEST</h2>
+          <PlayerImage $bg={Lee}>
+            <RankWrap $rank={COLORS.grey}>5</RankWrap>
           </PlayerImage>
-        </PlayerWrap>
-        <PlayerWrap>
-          <PlayerImage $bg={Choi}>
-            <h2>CATCHER</h2>
-          </PlayerImage>
-        </PlayerWrap>
-        <PlayerWrap>
-          <PlayerImage $bg={Perlaza}>
-            <h2>OUTFIELDER</h2>
-          </PlayerImage>
-        </PlayerWrap>
-        <PlayerWrap>
-          <PlayerImage $bg={An}>
-            <h2>INFIELDER</h2>
-          </PlayerImage>
+          <h2>이승관</h2>
+          <p>194839</p>
         </PlayerWrap>
       </VoteList>
+      <CommonLink to="/vote/result">GO TO BACK</CommonLink>
     </VoteWrap>
   );
 };
 
-export default VoteResult;
+export default VoteRank;

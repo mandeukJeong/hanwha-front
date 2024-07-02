@@ -1,156 +1,204 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import { COLORS } from '../../constants/colors';
+import { SIZES } from '../../constants/size';
+import { mediaMax } from '../../utils/media';
 import produce_101 from '../../assets/common/produce_101.png';
 import Hwang from '../../assets/vote/Hwang.png';
-import Ju from '../../assets/Ju.png';
-import Moon from '../../assets/players/Moon.png';
-import Ryu from '../../assets/players/Ryu.png';
-import Lee from '../../assets/players/Lee.png';
+import CustomBtn from '../../components/common/CustomBtn';
 
-const VoteWrap = styled.div`
-  width: 100%;
-  padding: 125.05px 50px 100px 50px;
-  display: flex;
-  flex-direction: column;
-  background-color: ${COLORS.black};
+const MainWrap = styled.main`
   color: ${COLORS.white};
-  align-items: center;
-  img {
-    width: 8vw;
+  background-color: ${COLORS.black};
+  padding: 50px 0 100px 0;
+  text-align: center;
+  ${mediaMax.small`
+    padding: 30px 0 50px 0;
+  `};
+`;
+const TitleSection = styled.section`
+  text-align: center;
+  margin-bottom: 50px;
+  ${mediaMax.small`
     margin-bottom: 30px;
-  }
+  `};
   h1 {
-    text-align: center;
-    font-size: 25px;
-    font-weight: 700;
-    line-height: 1.3;
-    margin-bottom: 80px;
+    font-weight: 600;
+    font-size: ${SIZES.ltlarge};
+    ${mediaMax.small`
+      font-size: ${SIZES.mblarge};
+    `};
   }
 `;
-const VoteList = styled.div`
+const MainSection = styled.section`
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin-bottom: -20px;
-  width: 100%;
+  gap: 5em;
+  ${mediaMax.small`
+    gap: 2.5em;
+  `};
 `;
-const PlayerWrap = styled.div`
-  width: 25%;
+const TitleImg = styled.img`
+  filter: drop-shadow(0 0 5px ${COLORS.orange});
+  width: 10%;
+  margin-bottom: 20px;
+  ${mediaMax.medium`
+    width: 15%;
+  `};
+  ${mediaMax.small`
+    width: 20%;
+    margin-bottom: 15px;
+  `};
+`;
+const VoteWrap = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  margin-bottom: 100px;
+  width: 20%;
+  margin-bottom: 50px;
+  ${mediaMax.medium`
+    width: 40%;
+  `};
+  ${mediaMax.small`
+    margin-bottom: 30px;
+  `};
   &:first-child {
     width: 100%;
-  }
-  h2 {
-    font-size: 20px;
-    font-weight: 600;
-    margin-bottom: 10px;
-  }
-  p {
-    font-size: 18px;
-    font-weight: 600;
-    color: ${COLORS.grey};
+    span {
+      background-color: ${COLORS.orange};
+    }
   }
 `;
-const PlayerImage = styled.div`
+const PlayerImg = styled.div`
   position: relative;
-  width: 20vw;
-  height: 20vw;
-  border-radius: 50%;
-  border: 2px solid ${COLORS.white};
   background-image: url(${(props) => props.$bg});
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+  border-radius: 50%;
+  border: 2px solid ${COLORS.white};
+  width: 20vw;
+  height: 20vw;
   margin-bottom: 20px;
+  ${mediaMax.medium`
+    width: 40vw;
+    height: 40vw;
+  `};
+  ${mediaMax.small`
+    margin-bottom: 15px;
+  `};
 `;
-const RankWrap = styled.div`
-  width: 3vw;
-  height: 3vw;
-  background-color: ${(props) => props.$rank};
-  color: ${COLORS.white};
-  font-size: 1.5rem;
-  font-weight: 600;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+const RankText = styled.span`
   position: absolute;
-  left: 1.5vw;
+  background-color: ${COLORS.grey};
+  border-radius: 10px;
+  font-weight: 700;
+  text-align: center;
   top: 0.5vw;
+  left: 2vw;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  font-size: ${SIZES.ltlarge};
+  ${mediaMax.small`
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    font-size: ${SIZES.tblarge};
+  `};
 `;
-const CommonLink = styled(Link)`
-  border: 1px solid ${COLORS.orange};
-  border-radius: 5px;
-  padding: 15px 50px;
-  text-decoration: none;
-  color: ${COLORS.orange};
-  font-size: 15px;
-  font-weight: 300;
-  background: linear-gradient(
-    to right,
-    ${COLORS.orange} 50%,
-    rgba(0, 0, 0, 0) 50%
-  );
-  background-size: 200% 100%;
-  background-position: right bottom;
-  transition: all 0.5s ease-out;
-
-  &:hover {
-    color: ${COLORS.white};
-    background-position: left bottom;
+const VoteText = styled.div`
+  h2 {
+    font-weight: 600;
+    margin-bottom: 5px;
+    font-size: ${SIZES.ltmedium};
+    ${mediaMax.small`
+      font-size: ${SIZES.tbmedium};
+    `};
+  }
+  p {
+    color: ${COLORS.grey};
+    font-weight: 600;
+    font-size: ${SIZES.ltsmall};
+    ${mediaMax.small`
+      font-size: ${SIZES.tbsmall};
+    `};
   }
 `;
 
 const VoteRank = () => {
   return (
-    <VoteWrap>
-      <img src={produce_101} alt="투표 이미지" />
-      <h1>야구는 투수놀이라고 하죠.</h1>
-      <VoteList>
-        <PlayerWrap>
-          <PlayerImage $bg={Hwang}>
-            <RankWrap $rank={COLORS.orange}>1</RankWrap>
-          </PlayerImage>
-          <h2>황준서</h2>
-          <p>349239</p>
-        </PlayerWrap>
-        <PlayerWrap>
-          <PlayerImage $bg={Ryu}>
-            <RankWrap $rank={COLORS.grey}>2</RankWrap>
-          </PlayerImage>
-          <h2>류현진</h2>
-          <p>258903</p>
-        </PlayerWrap>
-        <PlayerWrap>
-          <PlayerImage $bg={Moon}>
-            <RankWrap $rank={COLORS.grey}>3</RankWrap>
-          </PlayerImage>
-          <h2>문동주</h2>
-          <p>232398</p>
-        </PlayerWrap>
-        <PlayerWrap>
-          <PlayerImage $bg={Ju}>
-            <RankWrap $rank={COLORS.grey}>4</RankWrap>
-          </PlayerImage>
-          <h2>주현상</h2>
-          <p>232343</p>
-        </PlayerWrap>
-        <PlayerWrap>
-          <PlayerImage $bg={Lee}>
-            <RankWrap $rank={COLORS.grey}>5</RankWrap>
-          </PlayerImage>
-          <h2>이승관</h2>
-          <p>194839</p>
-        </PlayerWrap>
-      </VoteList>
-      <CommonLink to="/vote/result">GO TO BACK</CommonLink>
-    </VoteWrap>
+    <MainWrap>
+      <TitleSection>
+        <TitleImg src={produce_101} alt="produce 101" />
+        <h1>야구는 투수놀이라고 하죠.</h1>
+      </TitleSection>
+      <MainSection>
+        <VoteWrap>
+          <PlayerImg $bg={Hwang}>
+            <RankText>1</RankText>
+          </PlayerImg>
+          <VoteText>
+            <h2>황준서</h2>
+            <p>349239</p>
+          </VoteText>
+        </VoteWrap>
+        <VoteWrap>
+          <PlayerImg $bg={Hwang}>
+            <RankText>1</RankText>
+          </PlayerImg>
+          <VoteText>
+            <h2>황준서</h2>
+            <p>349239</p>
+          </VoteText>
+        </VoteWrap>
+        <VoteWrap>
+          <PlayerImg $bg={Hwang}>
+            <RankText>1</RankText>
+          </PlayerImg>
+          <VoteText>
+            <h2>황준서</h2>
+            <p>349239</p>
+          </VoteText>
+        </VoteWrap>
+        <VoteWrap>
+          <PlayerImg $bg={Hwang}>
+            <RankText>1</RankText>
+          </PlayerImg>
+          <VoteText>
+            <h2>황준서</h2>
+            <p>349239</p>
+          </VoteText>
+        </VoteWrap>
+        <VoteWrap>
+          <PlayerImg $bg={Hwang}>
+            <RankText>1</RankText>
+          </PlayerImg>
+          <VoteText>
+            <h2>황준서</h2>
+            <p>349239</p>
+          </VoteText>
+        </VoteWrap>
+        <VoteWrap>
+          <PlayerImg $bg={Hwang}>
+            <RankText>1</RankText>
+          </PlayerImg>
+          <VoteText>
+            <h2>황준서</h2>
+            <p>349239</p>
+          </VoteText>
+        </VoteWrap>
+      </MainSection>
+      <CustomBtn
+        to="/vote/result"
+        $border={COLORS.orange}
+        $fontColor={COLORS.orange}
+        $bgColor={COLORS.orange}
+        text="GO TO BACK"
+      />
+    </MainWrap>
   );
 };
 
