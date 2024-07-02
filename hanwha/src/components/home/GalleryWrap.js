@@ -5,9 +5,9 @@ import { SIZES } from '../../constants/size';
 import { mediaMax, mediaMin } from '../../utils/media';
 import useIntersectionObserver from '../../hooks/useIntersectionObserver';
 import CustomBtn from '../common/CustomBtn';
-import gallery_1 from '../../assets/home/gallery_1.JPG';
-import gallery_2 from '../../assets/home/gallery_2.JPG';
-import gallery_3 from '../../assets/home/gallery_3.JPG';
+import gallery_1 from '../../assets/common/gallery_1.JPG';
+import gallery_2 from '../../assets/common/gallery_2.JPG';
+import gallery_3 from '../../assets/common/gallery_3.JPG';
 
 const fadeInUp = `
   @keyframes fadeInUp {

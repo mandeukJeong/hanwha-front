@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
-import gallery_image1 from '../../assets/gallery_image1.jpg';
+import gallery_image1 from '../../assets/common/gallery_4.jpg';
 import gallery_image2 from '../../assets/gallery_image2.jpg';
 import gallery_image3 from '../../assets/gallery_image3.jpg';
 import gallery_image4 from '../../assets/gallery_image4.jpg';
