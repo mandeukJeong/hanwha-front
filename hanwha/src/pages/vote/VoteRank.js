@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { COLORS } from '../../constants/colors';
 import produce_101 from '../../assets/common/produce_101.png';
-import Hwang from '../../assets/Hwang.png';
+import Hwang from '../../assets/vote/Hwang.png';
 import Ju from '../../assets/Ju.png';
 import Moon from '../../assets/players/Moon.png';
 import Ryu from '../../assets/players/Ryu.png';

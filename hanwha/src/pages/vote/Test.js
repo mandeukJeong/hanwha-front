@@ -1,75 +1,156 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
-import produce_101 from '../../assets/common/produce_101.png';
+import Hwang from '../../assets/Hwang.png';
+import Ryu from '../../assets/players/Ryu.png';
+import Moon from '../../assets/players/Moon.png';
+import Lee from '../../assets/players/Lee.png';
 
-const fadeIn = keyframes`
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-`;
 const VoteWrap = styled.div`
   width: 100%;
-  height: 100vh;
-  padding: 175.05px 0 100px 0;
+  padding: 125.05px 50px 100px 50px;
+  display: flex;
+  flex-direction: column;
   background-color: ${COLORS.black};
   color: ${COLORS.white};
+  align-items: center;
+  h1 {
+    text-align: center;
+    font-size: 25px;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 80px;
+  }
+`;
+const PlayerList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: -20px;
+  width: 100%;
+`;
+const PlayerDetail = styled.div`
+  width: 25%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 20px;
+  margin-bottom: 100px;
+  p {
+    font-size: 18px;
+    font-weight: 500;
+  }
 `;
-const TitleText = styled.h1`
-  font-size: 30px;
-  font-weight: 700;
-  margin-bottom: 30px;
+const PlayerImage = styled.div`
+  width: 20vw;
+  height: 20vw;
+  border-radius: 50%;
+  border: 1px solid ${COLORS.grey};
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url(${(props) => props.$bg});
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+
+  &:hover {
+    border: 1px solid ${COLORS.orange};
+    background-image: url(${(props) => props.$bg});
+  }
 `;
-const VoteImage = styled.img`
-  width: 30%;
-  margin-bottom: 40px;
-  animation: ${fadeIn} 1s ease-in-out forwards;
-  filter: drop-shadow(4px 4px 4px ${COLORS.orange});
+const ProgressText = styled.p`
+  font-size: 20px;
+  font-weight: 800;
+  color: ${COLORS.grey};
+  margin-bottom: 50px;
 `;
-const SubText = styled.p`
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 40px;
+const LinkWrap = styled.div`
+  display: flex;
+  gap: 50px;
 `;
 const CommonLink = styled(Link)`
-  border: 1px solid ${COLORS.orange};
+  border: 1px solid ${(props) => props.$border};
   border-radius: 5px;
-  padding: 15px 50px;
+  padding: 15px 0;
+  width: 160px;
+  text-align: center;
   text-decoration: none;
-  color: ${COLORS.orange};
+  color: ${(props) => props.$fontColor};
   font-size: 15px;
   font-weight: 300;
   background: linear-gradient(
     to right,
     ${COLORS.orange} 50%,
-    rgba(0, 0, 0, 0) 50%
+    ${COLORS.black} 50%
   );
   background-size: 200% 100%;
   background-position: right bottom;
   transition: all 0.5s ease-out;
 
   &:hover {
+    border: 1px solid ${COLORS.orange};
     color: ${COLORS.white};
     background-position: left bottom;
   }
 `;
 
-const VotePage = () => {
+const VoteList = () => {
   return (
     <VoteWrap>
-      <TitleText>당신의 선수에게 투표하세요.</TitleText>
-      <VoteImage src={produce_101} alt="투표 이미지" />
-      <SubText>지금같이 투표하러 갈까요?</SubText>
-      <CommonLink to="/vote/list">START</CommonLink>
+      <h1>
+        내가 바로 탱크!
+        <br />
+        당신의 투수를 투표해주세요.
+      </h1>
+      <PlayerList>
+        <PlayerDetail>
+          <PlayerImage $bg={Hwang} />
+          <p>황준서</p>
+        </PlayerDetail>
+        <PlayerDetail>
+          <PlayerImage $bg={Ryu} />
+          <p>류현진</p>
+        </PlayerDetail>
+        <PlayerDetail>
+          <PlayerImage $bg={Moon} />
+          <p>문동주</p>
+        </PlayerDetail>
+        <PlayerDetail>
+          <PlayerImage $bg={Lee} />
+          <p>이승관</p>
+        </PlayerDetail>
+        <PlayerDetail>
+          <PlayerImage $bg={Hwang} />
+          <p>황준서</p>
+        </PlayerDetail>
+        <PlayerDetail>
+          <PlayerImage $bg={Ryu} />
+          <p>류현진</p>
+        </PlayerDetail>
+        <PlayerDetail>
+          <PlayerImage $bg={Moon} />
+          <p>문동주</p>
+        </PlayerDetail>
+        <PlayerDetail>
+          <PlayerImage $bg={Lee} />
+          <p>이승관</p>
+        </PlayerDetail>
+      </PlayerList>
+      <ProgressText>1/10</ProgressText>
+      <LinkWrap>
+        <CommonLink $border={COLORS.grey} $fontColor={COLORS.white}>
+          BEFORE
+        </CommonLink>
+        <CommonLink
+          to="/vote/end"
+          $border={COLORS.orange}
+          $fontColor={COLORS.orange}
+        >
+          NEXT
+        </CommonLink>
+      </LinkWrap>
     </VoteWrap>
   );
 };
 
-export default VotePage;
+export default VoteList;

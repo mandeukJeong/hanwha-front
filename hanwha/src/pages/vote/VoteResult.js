@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import produce_101 from '../../assets/common/produce_101.png';
-import Hwang from '../../assets/Hwang.png';
+import Hwang from '../../assets/vote/Hwang.png';
 import Ju from '../../assets/Ju.png';
 import soori from '../../assets/players/soori.png';
 import Choi from '../../assets/Choi.png';
