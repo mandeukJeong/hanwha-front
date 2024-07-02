@@ -1,11 +1,19 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax } from '../../utils/media';
 import produce_101 from '../../assets/common/produce_101.png';
 import Hwang from '../../assets/vote/Hwang.png';
 
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
 const MainWrap = styled.main`
   color: ${COLORS.white};
   background-color: ${COLORS.black};
@@ -15,6 +23,7 @@ const MainWrap = styled.main`
   `};
 `;
 const TitleSection = styled.section`
+  animation: ${fadeIn} 1s ease-in-out forwards;
   text-align: center;
   margin-bottom: 50px;
   ${mediaMax.small`
@@ -32,6 +41,7 @@ const TitleSection = styled.section`
   }
 `;
 const MainSection = styled.section`
+  animation: ${fadeIn} 1s ease-in-out forwards;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -42,7 +52,6 @@ const MainSection = styled.section`
   `};
 `;
 const TitleImg = styled.img`
-  filter: drop-shadow(0 0 5px ${COLORS.orange});
   width: 10%;
   margin-bottom: 20px;
   ${mediaMax.medium`
