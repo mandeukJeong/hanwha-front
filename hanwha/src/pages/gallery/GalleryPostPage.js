@@ -1,116 +1,114 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
-import gallery_image1 from '../../assets/common/gallery_4.jpg';
-import gallery_image2 from '../../assets/gallery_image2.jpg';
-import gallery_image3 from '../../assets/gallery_image3.jpg';
-import gallery_image4 from '../../assets/gallery_image4.jpg';
+import { SIZES } from '../../constants/size';
+import { mediaMax } from '../../utils/media';
+import CustomBtn from '../../components/common/CustomBtn';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import gallery_1 from '../../assets/common/gallery_1.JPG';
+import gallery_2 from '../../assets/common/gallery_2.JPG';
+import gallery_3 from '../../assets/common/gallery_3.JPG';
 
-const PostWrap = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 125.05px 50px 100px 50px;
-  background-color: ${COLORS.black};
+const MainWrap = styled.main`
   color: ${COLORS.white};
+  background-color: ${COLORS.black};
+  text-align: center;
+  padding: 50px;
+  ${mediaMax.small`
+    padding: 30px;
+  `};
   h1 {
-    margin: 20px 0;
-    font-size: 30px;
     font-weight: 700;
+    font-size: ${SIZES.ltlarge};
+    ${mediaMax.small`
+      font-size: ${SIZES.tblarge};
+    `};
   }
+`;
+const MainSection = styled.section`
+  margin-top: 50px;
+  ${mediaMax.small`
+    margin-top: 30px;
+  `};
 `;
 const ImageWrap = styled.div`
-  width: 90%;
-  margin: 50px 0 30px 0;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 200px;
+  justify-content: center;
+  gap: 10em;
+  ${mediaMax.small`
+    gap: 3em;
+  `};
+  img {
+    width: 100%;
+  }
 `;
-const PostImage = styled.img`
-  width: 100%;
-  height: 80vh;
-  object-fit: cover;
-`;
-const InfoWrap = styled.div`
-  width: 90%;
+const WriterWrap = styled.div`
   display: flex;
   justify-content: space-between;
-  font-size: 16px;
-  h4 {
+  font-weight: 500;
+  font-size: ${SIZES.ltsmall};
+  margin: 30px 0 50px 0;
+  ${mediaMax.small`
+    font-size: ${SIZES.tbsmall};
+    margin: 30px 0;
+  `};
+  p {
     color: ${COLORS.grey};
   }
-  p {
+  span {
     color: ${COLORS.orange};
-    font-weight: 600;
-  }
-`;
-const CommonLink = styled(Link)`
-  border: 1px solid ${(props) => props.$border};
-  border-radius: 5px;
-  padding: 15px 0;
-  width: 160px;
-  text-align: center;
-  text-decoration: none;
-  color: ${(props) => props.$fontColor};
-  font-size: 15px;
-  font-weight: 300;
-  background: linear-gradient(
-    to right,
-    ${(props) => props.$gageColor} 50%,
-    ${COLORS.black} 50%
-  );
-  background-size: 200% 100%;
-  background-position: right bottom;
-  transition: all 0.5s ease-out;
-  svg {
-    margin-right: 10px;
-  }
-
-  &:hover {
-    border: 1px solid ${(props) => props.$gageColor};
-    color: ${COLORS.white};
-    background-position: left bottom;
   }
 `;
 const LinkWrap = styled.div`
   display: flex;
-  gap: 100px;
-  margin-top: 50px;
+  justify-content: center;
+  gap: 3em;
+  ${mediaMax.small`
+    gap: 2em;
+  `};
 `;
 
 const GalleryPostPage = () => {
   return (
-    <PostWrap>
+    <MainWrap>
       <h1>2024 스트링 캠프</h1>
-      <ImageWrap>
-        <PostImage src={gallery_image1} alt="갤러리 이미지1" />
-        <PostImage src={gallery_image2} alt="갤러리 이미지2" />
-        <PostImage src={gallery_image3} alt="갤러리 이미지3" />
-        <PostImage src={gallery_image4} alt="갤러리 이미지4" />
-      </ImageWrap>
-      <InfoWrap>
-        <h4>2024.03.24 16:03:24</h4>
-        <p>만득이</p>
-      </InfoWrap>
-      <LinkWrap>
-        <CommonLink $border="#F32121" $fontColor="#F32121" $gageColor="#F32121">
-          <FontAwesomeIcon icon={faHeart} />
-          120
-        </CommonLink>
-        <CommonLink
-          $border={COLORS.grey}
-          $fontColor={COLORS.white}
-          $gageColor={COLORS.orange}
-        >
-          GO TO LIST
-        </CommonLink>
-      </LinkWrap>
-    </PostWrap>
+      <MainSection>
+        <ImageWrap>
+          <img src={gallery_1} alt="갤러리 이미지" />
+          <img src={gallery_2} alt="갤러리 이미지" />
+          <img src={gallery_3} alt="갤러리 이미지" />
+        </ImageWrap>
+        <WriterWrap>
+          <p>2024.03.24 16:03:24</p>
+          <span>만득이</span>
+        </WriterWrap>
+        <LinkWrap>
+          <CustomBtn
+            to="/"
+            $border="#F32121"
+            $fontColor="#F32121"
+            $bgColor="#F32121"
+            text={
+              <>
+                <FontAwesomeIcon icon={faHeart} />
+                &nbsp;&nbsp;
+                {' 120'}
+              </>
+            }
+          />
+          <CustomBtn
+            to="/gallery/list"
+            $border={COLORS.grey}
+            $fontColor={COLORS.white}
+            $bgColor={COLORS.orange}
+            text="GO TO LIST"
+          />
+        </LinkWrap>
+      </MainSection>
+    </MainWrap>
   );
 };
 
