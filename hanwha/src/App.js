@@ -19,11 +19,13 @@ import GalleryListPage from './pages/gallery/GalleryListPage';
 import GalleryPostPage from './pages/gallery/GalleryPostPage';
 import GalleryWritePage from './pages/gallery/GalleryWritePage';
 import NotFound from './pages/NotFound';
+import ScrollToTop from './hooks/ScrollToTop';
 
 const App = () => {
   return (
     <>
       <Header />
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
