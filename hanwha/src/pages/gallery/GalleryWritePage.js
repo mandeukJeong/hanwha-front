@@ -1,107 +1,126 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
+import { SIZES } from '../../constants/size';
+import { mediaMax } from '../../utils/media';
+import CustomBtn from '../../components/common/CustomBtn';
 
-const WriteWrap = styled.div`
-  width: 100%;
-  height: calc(100vh - 75.05px);
+const MainWrap = styled.main`
+  color: ${COLORS.white};
+  background-color: ${COLORS.black};
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 125.05px 50px 100px 50px;
-  background-color: ${COLORS.black};
-  color: ${COLORS.white};
+  padding: 50px;
+  height: calc(100vh - 176px);
+  ${mediaMax.medium`
+    height: calc(100vh - 345px);
+  `};
+  ${mediaMax.small`
+    padding: 30px;
+    height: calc(100vh - 136px);
+  `};
   h1 {
-    margin: 20px 0;
-    font-size: 30px;
     font-weight: 700;
+    font-size: 30px;
+    ${mediaMax.small`
+      font-size: ${SIZES.tblarge};
+    `};
   }
 `;
 const FormWrap = styled.form`
-  width: 45%;
-  max-width: 600px;
-  margin-top: 50px;
-  div {
-    margin: 50px 0;
-    display: flex;
-    justify-content: center;
-  }
+  text-align: center;
+  padding: 50px 0;
+  width: 40%;
+  ${mediaMax.medium`
+    width: 70%;
+  `};
+  ${mediaMax.small`
+    padding: 30px 0;
+    width: 90%;
+  `};
 `;
-const WriteInput = styled.input`
+const FormInput = styled.input`
   width: 100%;
-  font-size: 16px;
+  border: none;
   background-color: ${COLORS.dark};
   color: ${COLORS.white};
-  border: none;
   border-radius: 10px;
+  font-size: ${SIZES.ltsmall};
   padding: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+  ${mediaMax.small`
+    font-size: ${SIZES.mbmedium};
+    padding: 18px;
+    margin-bottom: 20px;
+  `};
   &::placeholder,
   &[type='file'] {
     color: ${COLORS.grey};
     font-weight: 700;
-    margin-bottom: 30px;
   }
   &::file-selector-button {
     display: none;
   }
 `;
-const AlertText = styled.p`
+const AlertWrap = styled.div`
+  text-align: start;
   color: ${COLORS.grey};
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 1.3;
-  margin-bottom: 20px;
-`;
-const CommonLink = styled(Link)`
-  border: 1px solid ${COLORS.grey};
-  border-radius: 5px;
-  padding: ${(props) => props.$pd};
-  text-decoration: none;
-  color: ${COLORS.white};
-  font-size: 13px;
-  font-weight: ${(props) => props.$fontWeight};
-  background: linear-gradient(
-    to right,
-    ${COLORS.orange} 50%,
-    rgba(0, 0, 0, 0) 50%
-  );
-  background-size: 200% 100%;
-  background-position: right bottom;
-  transition: all 0.5s ease-out;
-
-  &:hover {
-    border: 1px solid ${COLORS.orange};
-    color: ${COLORS.white};
-    background-position: left bottom;
+  font-weight: 600;
+  font-size: ${SIZES.ltsmall};
+  margin-bottom: 50px;
+  ${mediaMax.small`
+    font-size: ${SIZES.mbmedium};
+    margin-bottom: 30px;
+  `};
+  p {
+    &:first-child {
+      margin-bottom: 20px;
+      ${mediaMax.small`
+        margin-bottom: 15px;
+      `};
+    }
   }
+`;
+const SubmitBtn = styled.button`
+  border: none;
+  background-color: inherit;
+  padding: 0;
 `;
 
 const GalleryWritePage = () => {
   return (
-    <WriteWrap>
+    <MainWrap>
       <h1>수리가 만든 추억을 공유해주세요!</h1>
       <FormWrap>
-        <WriteInput type="text" placeholder="제목" />
-        <WriteInput type="file" placeholder="첨부파일" />
-        <AlertText>
-          * 음란, 폭력, 정치적인 내용의 이미지가 포함되었을 경우,
-          <br />
-          관리자에 의해 해당 게시글이 비공개 처리될 수 있습니다.
-        </AlertText>
-        <AlertText>* JPG, PNG만 등록 가능합니다.</AlertText>
-        <div>
-          <CommonLink type="submit" $pd="15px 60px" $fontWeight="500">
-            파일등록
-          </CommonLink>
-        </div>
+        <FormInput type="text" placeholder="제목" />
+        <FormInput type="file" placeholder="첨부파일" />
+        <AlertWrap>
+          <p>
+            * 음란, 폭력, 정치적인 내용의 이미지가 포함되었을 경우,
+            <br />
+            관리자에 의해 해당 게시글이 비공개 처리될 수 있습니다.
+          </p>
+          <p>* JPG, PNG만 등록 가능합니다.</p>
+        </AlertWrap>
+        <SubmitBtn type="submit">
+          <CustomBtn
+            $border={COLORS.grey}
+            $fontColor={COLORS.white}
+            $bgColor={COLORS.orange}
+            text="파일 등록"
+          />
+        </SubmitBtn>
       </FormWrap>
-      <CommonLink $pd="15px 30px" $fontWeight="400">
-        GO TO LIST
-      </CommonLink>
-    </WriteWrap>
+      <CustomBtn
+        to="/gallery"
+        $border={COLORS.grey}
+        $fontColor={COLORS.white}
+        $bgColor={COLORS.orange}
+        text="GO TO LIST"
+      />
+    </MainWrap>
   );
 };
 
