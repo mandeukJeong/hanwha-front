@@ -37,6 +37,12 @@ a {
 	color: inherit;
 }
 
+select {
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,

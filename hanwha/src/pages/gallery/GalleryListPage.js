@@ -1,161 +1,257 @@
 import React from 'react';
 import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
-import gallery_image1 from '../../assets/common/gallery_4.jpg';
-import gallery_image2 from '../../assets/gallery_image2.jpg';
-import gallery_image3 from '../../assets/gallery_image3.jpg';
-import chevron from '../../assets/chevron.png';
+import { SIZES } from '../../constants/size';
+import { mediaMax } from '../../utils/media';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faChevronLeft,
   faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
+import chevron from '../../assets/gallery/chevron.png';
+import gallery_1 from '../../assets/common/gallery_1.JPG';
+import gallery_2 from '../../assets/common/gallery_2.JPG';
+import gallery_3 from '../../assets/common/gallery_3.JPG';
 
-const GalleryWrap = styled.div`
-  background-color: ${COLORS.black};
+const MainWrap = styled.main`
   color: ${COLORS.white};
-  padding: 125.05px 50px 100px 50px;
-  width: 100%;
+  background-color: ${COLORS.black};
+  padding: 50px;
+  ${mediaMax.small`
+    padding: 30px;
+  `};
 `;
-const TitleWrap = styled.div`
+const TitleSection = styled.section`
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 50px;
+  ${mediaMax.small`
+    margin-bottom: 30px;
+  `};
   h1 {
-    font-size: 30px;
     font-weight: 600;
-    line-height: 1.3;
+    font-size: 30px;
+    ${mediaMax.small`
+      font-size: 22px;
+    `};
   }
 `;
-const ImageWrap = styled.div`
+const SortSelect = styled.select`
+  border: none;
+  color: ${COLORS.grey};
+  border-radius: 10px;
+  background: url(${chevron}) calc(100% - 10px) center no-repeat;
+  background-color: ${COLORS.dark};
+  background-size: ${SIZES.ltmedium};
+  padding: 12px 24px;
+  font-size: ${SIZES.ltxsmall};
+  width: 115px;
+  ${mediaMax.small`
+    background-size: ${SIZES.tblarge};
+    padding: 10px 20px;
+    font-size: ${SIZES.tbsmall};
+    width: 100px;
+  `};
+`;
+const GalleryWrap = styled.div`
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
-  gap: 50px;
-  justify-content: center;
+  gap: 5em;
+  margin-bottom: 50px;
+  ${mediaMax.medium`
+    gap: 1em;
+    justify-content: space-between;
+  `};
+  ${mediaMax.small`
+    margin-bottom: 30px;
+  `};
 `;
-const ImageFrame = styled.div`
-  width: 30%;
-  border-radius: 15px 15px 0px 0px;
+const ImageCard = styled.div`
   background-color: ${COLORS.dark};
-  margin-bottom: 100px;
-  font-size: 14px;
-  font-weight: 400;
-  h3 {
-    font-size: 18px;
+  border-radius: 12px;
+  width: calc(100% / 3 - 10em / 3);
+  margin-bottom: 30px;
+  ${mediaMax.medium`
+    width: 45%;
+  `};
+`;
+const GalleryImage = styled.img`
+  width: 100%;
+  display: block;
+  border-radius: 12px 12px 0 0;
+`;
+const GalleryText = styled.div`
+  padding: 20px;
+  ${mediaMax.medium`
+    padding: 15px;
+  `};
+  h2 {
     font-weight: 600;
-    margin-bottom: 10px;
-    padding: 0 20px;
-  }
-  h4 {
-    padding: 0 20px;
+    font-size: ${SIZES.ltsmall};
+    margin-bottom: 5px;
+    ${mediaMax.medium`
+      font-size: ${SIZES.tbmedium};
+      margin-bottom: 10px;
+    `};
+    ${mediaMax.small`
+      font-size: ${SIZES.mbmedium};
+    `};
   }
   p {
-    margin: 10px 0 20px 0;
-    color: ${COLORS.orange};
-    padding: 0 20px;
+    font-size: ${SIZES.ltxsmall};
+    margin-bottom: 5px;
+    ${mediaMax.medium`
+      font-size: ${SIZES.tbmedium};
+      margin-bottom: 10px;
+    `};
+    ${mediaMax.small`
+      font-size: ${SIZES.mbmedium};
+    `};
+    &:last-child {
+      color: ${COLORS.orange};
+      font-weight: 600;
+      margin-bottom: 0;
+    }
   }
 `;
-const GalleryImage = styled.div`
-  border-radius: 15px 15px 0px 0px;
-  width: 100%;
-  height: 350px;
-  margin-bottom: 20px;
-  background-image: url(${(props) => props.$bg});
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-`;
-const PaginationWrap = styled.div`
+const PageWrap = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
-  color: ${COLORS.grey};
-  font-size: 20px;
-
-  button {
-    background-color: inherit;
-    border: none;
+  gap: 1.5em;
+  margin-bottom: 50px;
+  ${mediaMax.small`
+    margin-bottom: 30px;
+  `};
+  svg {
     color: ${COLORS.grey};
-    font-weight: 700;
-    font-size: 16px;
+    vertical-align: center;
+    height: 20px;
+    line-height: 20px;
+    ${mediaMax.small`
+      height: 15px;
+      line-height: 15px;
+    `};
   }
 `;
-const SelectBox = styled.select`
-  width: 115px;
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background: url(${chevron}) calc(100% - 10px) center no-repeat;
-  background-color: ${COLORS.dark};
-  background-size: 20px;
+const PageBtn = styled.button`
+  padding: 0;
   border: none;
+  background-color: inherit;
   color: ${COLORS.grey};
-  padding: 10px 20px;
-  font-size: 15px;
-  border-radius: 10px;
+  vertical-align: center;
+  font-weight: 700;
+  height: 20px;
+  line-height: 20px;
+  margin-top: 1.5px;
+  font-size: 18px;
+  ${mediaMax.small`
+    height: 15px;
+    line-height: 15px;
+    margin-top: 1.5px;
+    font-size: 15px;
+  `};
 `;
 
 const GalleryListPage = () => {
   return (
-    <GalleryWrap>
-      <TitleWrap>
+    <MainWrap>
+      <TitleSection>
         <h1>GALLERY</h1>
-        <SelectBox>
+        <SortSelect>
           <option>HOT</option>
           <option>LATEST</option>
           <option>OLDEST</option>
-        </SelectBox>
-      </TitleWrap>
-      <ImageWrap>
-        <ImageFrame>
-          <GalleryImage $bg={gallery_image1} />
-          <h3>2024 스프링 캠프</h3>
-          <h4>2024.03.24 16:03:24</h4>
-          <p>만득이</p>
-        </ImageFrame>
-        <ImageFrame>
-          <GalleryImage $bg={gallery_image2} />
-          <h3>2024 스프링 캠프</h3>
-          <h4>2024.03.24 16:03:24</h4>
-          <p>만득이</p>
-        </ImageFrame>
-        <ImageFrame>
-          <GalleryImage $bg={gallery_image3} />
-          <h3>2024 스프링 캠프</h3>
-          <h4>2024.03.24 16:03:24</h4>
-          <p>만득이</p>
-        </ImageFrame>
-        <ImageFrame>
-          <GalleryImage $bg={gallery_image1} />
-          <h3>2024 스프링 캠프</h3>
-          <h4>2024.03.24 16:03:24</h4>
-          <p>만득이</p>
-        </ImageFrame>
-        <ImageFrame>
-          <GalleryImage $bg={gallery_image2} />
-          <h3>2024 스프링 캠프</h3>
-          <h4>2024.03.24 16:03:24</h4>
-          <p>만득이</p>
-        </ImageFrame>
-        <ImageFrame>
-          <GalleryImage $bg={gallery_image3} />
-          <h3>2024 스프링 캠프</h3>
-          <h4>2024.03.24 16:03:24</h4>
-          <p>만득이</p>
-        </ImageFrame>
-      </ImageWrap>
-      <PaginationWrap>
-        <FontAwesomeIcon icon={faChevronLeft} />
-        <button>1</button>
-        <button>2</button>
-        <button>3</button>
-        <button>4</button>
-        <button>5</button>
-        <FontAwesomeIcon icon={faChevronRight} />
-      </PaginationWrap>
-    </GalleryWrap>
+        </SortSelect>
+      </TitleSection>
+      <section>
+        <GalleryWrap>
+          <ImageCard>
+            <GalleryImage src={gallery_1} alt="갤러리 이미지" />
+            <GalleryText>
+              <h2>한화 vs KIA</h2>
+              <p>2024.06.23 18:00:49</p>
+              <p>만득이</p>
+            </GalleryText>
+          </ImageCard>
+          <ImageCard>
+            <GalleryImage src={gallery_2} alt="갤러리 이미지" />
+            <GalleryText>
+              <h2>한화 vs 두산</h2>
+              <p>2024.06.26 16:12:34</p>
+              <p>만득이</p>
+            </GalleryText>
+          </ImageCard>
+          <ImageCard>
+            <GalleryImage src={gallery_3} alt="갤러리 이미지" />
+            <GalleryText>
+              <h2>한화 vs 두산</h2>
+              <p>2024.06.28 14:03:24</p>
+              <p>만득이</p>
+            </GalleryText>
+          </ImageCard>
+          <ImageCard>
+            <GalleryImage src={gallery_1} alt="갤러리 이미지" />
+            <GalleryText>
+              <h2>한화 vs KIA</h2>
+              <p>2024.06.23 18:00:49</p>
+              <p>만득이</p>
+            </GalleryText>
+          </ImageCard>
+          <ImageCard>
+            <GalleryImage src={gallery_2} alt="갤러리 이미지" />
+            <GalleryText>
+              <h2>한화 vs 두산</h2>
+              <p>2024.06.26 16:12:34</p>
+              <p>만득이</p>
+            </GalleryText>
+          </ImageCard>
+          <ImageCard>
+            <GalleryImage src={gallery_3} alt="갤러리 이미지" />
+            <GalleryText>
+              <h2>한화 vs 두산</h2>
+              <p>2024.06.28 14:03:24</p>
+              <p>만득이</p>
+            </GalleryText>
+          </ImageCard>
+          <ImageCard>
+            <GalleryImage src={gallery_1} alt="갤러리 이미지" />
+            <GalleryText>
+              <h2>한화 vs KIA</h2>
+              <p>2024.06.23 18:00:49</p>
+              <p>만득이</p>
+            </GalleryText>
+          </ImageCard>
+          <ImageCard>
+            <GalleryImage src={gallery_2} alt="갤러리 이미지" />
+            <GalleryText>
+              <h2>한화 vs 두산</h2>
+              <p>2024.06.26 16:12:34</p>
+              <p>만득이</p>
+            </GalleryText>
+          </ImageCard>
+          <ImageCard>
+            <GalleryImage src={gallery_3} alt="갤러리 이미지" />
+            <GalleryText>
+              <h2>한화 vs 두산</h2>
+              <p>2024.06.28 14:03:24</p>
+              <p>만득이</p>
+            </GalleryText>
+          </ImageCard>
+        </GalleryWrap>
+        <PageWrap>
+          <FontAwesomeIcon icon={faChevronLeft} />
+          <PageBtn>1</PageBtn>
+          <PageBtn>2</PageBtn>
+          <PageBtn>3</PageBtn>
+          <PageBtn>4</PageBtn>
+          <PageBtn>5</PageBtn>
+          <FontAwesomeIcon icon={faChevronRight} />
+        </PageWrap>
+      </section>
+    </MainWrap>
   );
 };
 
