@@ -221,6 +221,9 @@ const Header = () => {
             <NavItem>
               <Link to="/gallery">GALLERY</Link>
             </NavItem>
+            <NavItem>
+              <Link to="/chat">CHAT</Link>
+            </NavItem>
           </ul>
         </NavWrap>
         <AuthWrap>
