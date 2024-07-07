@@ -32,7 +32,6 @@ const Button = styled(Link)`
   font-size: ${SIZES.ltsmall};
   ${mediaMax.medium`
     padding: 10px 30px;
-    width: 95px;
     height: 25px;
     line-height: 25px;
     font-size: ${SIZES.tbmedium};
