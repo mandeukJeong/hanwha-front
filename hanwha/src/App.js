@@ -20,6 +20,7 @@ import GalleryPostPage from './pages/gallery/GalleryPostPage';
 import GalleryWritePage from './pages/gallery/GalleryWritePage';
 import ChatPage from './pages/chat/ChatPage';
 import NewChat from './pages/chat/NewChat';
+import ChatLive from './pages/chat/ChatLive';
 import NotFound from './pages/NotFound';
 import ScrollToTop from './hooks/ScrollToTop';
 
@@ -47,6 +48,7 @@ const App = () => {
         <Route path="/gallery/write" element={<GalleryWritePage />} />
         <Route path="/chat" element={<ChatPage />} />
         <Route path="/chat/new" element={<NewChat />} />
+        <Route path="/chat/live" element={<ChatLive />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

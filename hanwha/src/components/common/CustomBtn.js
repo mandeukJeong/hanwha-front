@@ -6,6 +6,7 @@ import { SIZES } from '../../constants/size';
 import { mediaMax } from '../../utils/media';
 
 const Button = styled(Link)`
+  cursor: pointer;
   color: ${(props) => props.$fontColor};
   border: 1px solid ${(props) => props.$border};
   border-radius: 5px;
