@@ -21,6 +21,7 @@ const HeaderWrap = styled.header`
   border-bottom: 1px solid ${COLORS.grey};
   ${mediaMax.medium`
     justify-content: space-between;
+    z-index: 2000;
   `};
 `;
 const LogoLink = styled(Link)`
@@ -219,10 +220,10 @@ const Header = () => {
               <Link to="/vote">VOTE</Link>
             </NavItem>
             <NavItem>
-              <Link to="/gallery">GALLERY</Link>
+              <Link to="/chat">CHAT</Link>
             </NavItem>
             <NavItem>
-              <Link to="/chat">CHAT</Link>
+              <Link to="/gallery">GALLERY</Link>
             </NavItem>
           </ul>
         </NavWrap>
