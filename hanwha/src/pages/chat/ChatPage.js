@@ -5,11 +5,13 @@ import { SIZES } from '../../constants/size';
 import { mediaMax } from '../../utils/media';
 import CustomBtn from '../../components/common/CustomBtn';
 import lg_logo from '../../assets/chat/lg_logo.png';
+import alert from '../../assets/common/alert.png';
 
 const MainWrap = styled.main`
   color: ${COLORS.white};
   background-color: ${COLORS.black};
   padding: 50px;
+  min-height: calc(100vh - 384px);
   ${mediaMax.medium`
     min-height: calc(100vh - 345px);
   `};
@@ -105,6 +107,36 @@ const ScheduleWrap = styled.div`
     `};
   }
 `;
+const NoRoomWrap = styled.div`
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: ${COLORS.dark};
+  border-radius: 10px;
+  box-shadow: 20px 20px 50px rgba(38, 38, 38, 0.75);
+  width: 40%;
+  padding: 50px;
+  ${mediaMax.medium`
+    width: 100%;
+  `};
+  ${mediaMax.small`
+    padding: 20px;
+  `};
+  p {
+    font-weight: 600;
+    font-size: ${SIZES.ltsmall};
+    ${mediaMax.small`
+      font-size: ${SIZES.tbsmall};
+    `};
+  }
+  img {
+    width: 100%;
+    ${mediaMax.small`
+      width: 50%;
+    `};
+  }
+`;
 
 const ChatPage = () => {
   return (
@@ -120,6 +152,21 @@ const ChatPage = () => {
         />
       </TitleSection>
       <MainSection>
+        {/* <NoRoomWrap>
+          <p>
+            현재 채팅방이 존재하지 않습니다.
+            <br />
+            새로운 채팅방이 생성될 때까지 기다려주세요!
+          </p>
+          <img src={alert} alt="채팅방 없음" />
+          <CustomBtn
+            to="/"
+            $border={COLORS.grey}
+            $fontColor={COLORS.white}
+            $bgColor={COLORS.orange}
+            text="GO TO HOME"
+          />
+        </NoRoomWrap> */}
         <RoomWrap>
           <h2>LIVE</h2>
           <InfoWrap>
