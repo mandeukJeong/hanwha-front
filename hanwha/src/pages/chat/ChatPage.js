@@ -5,7 +5,7 @@ import { SIZES } from '../../constants/size';
 import { mediaMax } from '../../utils/media';
 import CustomBtn from '../../components/common/CustomBtn';
 import lg_logo from '../../assets/chat/lg_logo.png';
-import alert from '../../assets/common/alert.png';
+// import alert from '../../assets/common/alert.png';
 
 const MainWrap = styled.main`
   color: ${COLORS.white};
@@ -107,36 +107,36 @@ const ScheduleWrap = styled.div`
     `};
   }
 `;
-const NoRoomWrap = styled.div`
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: ${COLORS.dark};
-  border-radius: 10px;
-  box-shadow: 20px 20px 50px rgba(38, 38, 38, 0.75);
-  width: 40%;
-  padding: 50px;
-  ${mediaMax.medium`
-    width: 100%;
-  `};
-  ${mediaMax.small`
-    padding: 20px;
-  `};
-  p {
-    font-weight: 600;
-    font-size: ${SIZES.ltsmall};
-    ${mediaMax.small`
-      font-size: ${SIZES.tbsmall};
-    `};
-  }
-  img {
-    width: 100%;
-    ${mediaMax.small`
-      width: 50%;
-    `};
-  }
-`;
+// const NoRoomWrap = styled.div`
+//   text-align: center;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   background-color: ${COLORS.dark};
+//   border-radius: 10px;
+//   box-shadow: 20px 20px 50px rgba(38, 38, 38, 0.75);
+//   width: 40%;
+//   padding: 50px;
+//   ${mediaMax.medium`
+//     width: 100%;
+//   `};
+//   ${mediaMax.small`
+//     padding: 20px;
+//   `};
+//   p {
+//     font-weight: 600;
+//     font-size: ${SIZES.ltsmall};
+//     ${mediaMax.small`
+//       font-size: ${SIZES.tbsmall};
+//     `};
+//   }
+//   img {
+//     width: 100%;
+//     ${mediaMax.small`
+//       width: 50%;
+//     `};
+//   }
+// `;
 
 const ChatPage = () => {
   return (
