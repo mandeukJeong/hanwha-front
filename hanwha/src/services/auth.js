@@ -21,3 +21,8 @@ export const getUser = async () => {
   const response = await privateApi.get('/user');
   return response;
 };
+
+export const logout = async () => {
+  const response = await privateApi.post('/user/logout');
+  return response;
+};

@@ -8,6 +8,9 @@ import hanwha_logo from '../../assets/logo/hanwha_logo.png';
 import hanwha_wordmark from '../../assets/logo/hanwha_wordmark.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faHouse, faX } from '@fortawesome/free-solid-svg-icons';
+import { useSelector, useDispatch } from 'react-redux';
+import { changeUserInfo } from '../../store/user';
+import { logout } from '../../services/auth';
 
 const HeaderWrap = styled.header`
   display: flex;
@@ -126,7 +129,6 @@ const AuthWrap = styled.ul`
   ${mediaMin.large`
     font-size: ${SIZES.ltsmall};
     font-weight: 700;
-    color: ${COLORS.grey};
   `};
   ${mediaMax.medium`
     background-color: ${COLORS.grey};
@@ -148,6 +150,7 @@ const AuthItem = styled.li`
   a {
     ${mediaMin.large`
       padding: 0 0.8em;
+      color: ${(props) => props.$fontcolor};
     `};
   }
   ${mediaMin.large`
@@ -187,8 +190,32 @@ const HanwhaImg = styled.img`
 `;
 
 const Header = () => {
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
+
+  const onLogout = (e) => {
+    logout()
+      .then((response) => {
+        if (response.status === 200) {
+          localStorage.removeItem('token');
+          dispatch(
+            changeUserInfo({
+              isLogin: false,
+              email: '',
+              nickname: '',
+              authId: null,
+            })
+          );
+          navigate('/');
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   return (
     <HeaderWrap>
       <h1>
@@ -230,11 +257,19 @@ const Header = () => {
         <AuthWrap>
           <HanwhaImg src={hanwha_wordmark} alt="한화 로고 이미지" />
           <div>
-            <AuthItem>
-              <Link to="/login">LOGIN</Link>
+            <AuthItem $fontcolor={user.isLogin ? COLORS.orange : COLORS.grey}>
+              {user.isLogin ? (
+                <Link>{user.userInfo.nickname}</Link>
+              ) : (
+                <Link to="/login">LOGIN</Link>
+              )}
             </AuthItem>
-            <AuthItem>
-              <Link to="/register">JOIN US</Link>
+            <AuthItem $fontcolor={COLORS.grey}>
+              {user.isLogin ? (
+                <Link onClick={onLogout}>LOGOUT</Link>
+              ) : (
+                <Link to="/register">JOIN US</Link>
+              )}
             </AuthItem>
           </div>
         </AuthWrap>
