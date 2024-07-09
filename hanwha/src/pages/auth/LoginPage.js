@@ -1,11 +1,12 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useReducer } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax } from '../../utils/media';
 import CustomBtn from '../../components/common/CustomBtn';
 import hanwha_wordmark from '../../assets/logo/hanwha_wordmark.png';
+import { login } from '../../services/auth';
 
 const MainWrap = styled.main`
   color: ${COLORS.white};
@@ -133,7 +134,65 @@ const JoinText = styled.p`
   `};
 `;
 
+const loginReducer = (state, action) => {
+  return {
+    ...state,
+    [action.name]: action.value,
+  };
+};
+
 const LoginPage = () => {
+  const navigate = useNavigate();
+  // const emailRegEx =
+  //   /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/i;
+  const [errorMessage, setErrorMessage] = useState('');
+  const [state, dispatch] = useReducer(loginReducer, {
+    email: '',
+    password: '',
+  });
+
+  const { email, password } = state;
+
+  const onChange = (e) => {
+    dispatch(e.target);
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    // input 빈 칸 존재 시
+    if (Object.values({ email, password }).some((value) => value === '')) {
+      setErrorMessage('빈칸을 모두 입력해주세요.');
+      return;
+    }
+
+    // 이메일 형식 맞지 않을 시
+    // if (!emailRegEx.test(email)) {
+    //   setErrorMessage('이메일 형식이 올바르지 않습니다.');
+    //   return;
+    // }
+
+    login(email, password)
+      .then((response) => {
+        if (response.status === 200) {
+          setErrorMessage('');
+          navigate('/');
+        }
+        // if (response.status === 201) {
+        //   setErrorMessage('');
+        //   navigate('/login');
+        // }
+      })
+      .catch((e) => {
+        // 존재하지 않는 계정 || 비밀번호 일치하지 않을 경우
+        if (e.response.status === 401) {
+          setErrorMessage(e.response.data);
+        } else {
+          setErrorMessage('로그인 실패');
+        }
+      });
+  };
+
   return (
     <MainWrap>
       <LoginWrap>
@@ -143,17 +202,29 @@ const LoginPage = () => {
           </LogoLink>
         </h1>
         <FormWrap>
-          <AuthInput type="text" placeholder="이메일" autoComplete="off" />
           <AuthInput
+            name="email"
+            value={email}
+            type="text"
+            placeholder="이메일"
+            autoComplete="off"
+            onChange={onChange}
+          />
+          <AuthInput
+            name="password"
+            value={password}
             type="password"
             placeholder="비밀번호"
             autoComplete="off"
+            onChange={onChange}
           />
           <FindPwWrap>
-            <p>존재하지 않는 계정입니다.</p>
+            <p>{errorMessage}</p>
             <Link to="/findpw">비밀번호 찾기</Link>
           </FindPwWrap>
-          <SubmitBtn type="submit">LOGIN</SubmitBtn>
+          <SubmitBtn type="submit" onClick={onSubmit}>
+            LOGIN
+          </SubmitBtn>
         </FormWrap>
         <JoinText>
           아직 수리가 아니신가요?

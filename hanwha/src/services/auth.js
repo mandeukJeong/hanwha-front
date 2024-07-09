@@ -8,3 +8,11 @@ export const register = async (email, nickname, password) => {
   });
   return response;
 };
+
+export const login = async (email, password) => {
+  const response = await axios.post('/user/login', {
+    email,
+    password,
+  });
+  return response;
+};
