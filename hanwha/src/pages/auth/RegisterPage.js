@@ -1,11 +1,12 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useReducer } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax } from '../../utils/media';
 import CustomBtn from '../../components/common/CustomBtn';
 import hanwha_wordmark from '../../assets/logo/hanwha_wordmark.png';
+import { register } from '../../services/auth';
 
 const MainWrap = styled.main`
   color: ${COLORS.white};
@@ -122,7 +123,73 @@ const LoginText = styled.p`
   `};
 `;
 
+const registerReducer = (state, action) => {
+  return {
+    ...state,
+    [action.name]: action.value,
+  };
+};
+
 const RegisterPage = () => {
+  const emailRegEx =
+    /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/i;
+  const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState('');
+  const [state, dispatch] = useReducer(registerReducer, {
+    email: '',
+    nickname: '',
+    password: '',
+    passwordConfirm: '',
+  });
+
+  const { email, nickname, password, passwordConfirm } = state;
+
+  const onChange = (e) => {
+    dispatch(e.target);
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    // input 빈 칸 존재 시
+    if (
+      Object.values({ email, nickname, password, passwordConfirm }).some(
+        (value) => value === ''
+      )
+    ) {
+      setErrorMessage('빈칸을 모두 입력해주세요.');
+      return;
+    }
+
+    // 비밀번호, 비밀번호 확인 불일치 시
+    if (password !== passwordConfirm) {
+      setErrorMessage('비밀번호가 일치하지 않습니다.');
+      return;
+    }
+
+    // 이메일 형식 맞지 않을 시
+    if (!emailRegEx.test(email)) {
+      setErrorMessage('이메일 형식이 올바르지 않습니다.');
+      return;
+    }
+
+    register(email, nickname, password)
+      .then((response) => {
+        if (response.status === 201) {
+          setErrorMessage('');
+          navigate('/login');
+        }
+      })
+      .catch((e) => {
+        // 중복 계정 존재
+        if (e.response.status === 400) {
+          setErrorMessage(e.response.data.error);
+        } else {
+          setErrorMessage('회원가입 실패');
+        }
+      });
+  };
+
   return (
     <MainWrap>
       <RegisterWrap>
@@ -132,22 +199,44 @@ const RegisterPage = () => {
           </LogoLink>
         </h1>
         <FormWrap>
-          <AuthInput type="text" placeholder="이메일" autoComplete="off" />
-          <AuthInput type="text" placeholder="닉네임" autoComplete="off" />
           <AuthInput
+            name="email"
+            value={email}
+            type="text"
+            placeholder="이메일"
+            autoComplete="off"
+            onChange={onChange}
+          />
+          <AuthInput
+            name="nickname"
+            value={nickname}
+            type="text"
+            placeholder="닉네임"
+            autoComplete="off"
+            onChange={onChange}
+          />
+          <AuthInput
+            name="password"
+            value={password}
             type="password"
             placeholder="비밀번호"
             autoComplete="off"
+            onChange={onChange}
           />
           <AuthInput
+            name="passwordConfirm"
+            value={passwordConfirm}
             type="password"
             placeholder="비밀번호 확인"
             autoComplete="off"
+            onChange={onChange}
           />
           <ErrorWrap>
-            <p>비밀번호가 일치하지 않습니다.</p>
+            <p>{errorMessage}</p>
           </ErrorWrap>
-          <SubmitBtn type="submit">JOIN</SubmitBtn>
+          <SubmitBtn type="submit" onClick={onSubmit}>
+            JOIN
+          </SubmitBtn>
         </FormWrap>
         <LoginText>이미 회원이신가요?</LoginText>
         <CustomBtn
