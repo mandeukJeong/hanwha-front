@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
@@ -23,32 +23,62 @@ import NewChat from './pages/chat/NewChat';
 import ChatLive from './pages/chat/ChatLive';
 import NotFound from './pages/NotFound';
 import ScrollToTop from './hooks/ScrollToTop';
+import PublicRoute from './pages/routes/PublicRoute';
+import PrivateRoute from './pages/routes/PrivateRoute';
+import { useDispatch } from 'react-redux';
+import { changeUserInfo } from './store/user';
+import { getUser } from './services/auth';
 
 const App = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      getUser()
+        .then((response) => {
+          dispatch(
+            changeUserInfo({
+              isLogin: true,
+              email: response.data.email,
+              nickname: response.data.nickname,
+              authId: response.data.authId,
+            })
+          );
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+  }, [dispatch]);
+
   return (
     <>
       <Header />
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/findpw" element={<FindPwPage />} />
-        <Route path="/players" element={<PlayerList />} />
-        <Route path="/players/pitcher" element={<PositionList />} />
-        <Route path="/players/detail" element={<PlayerDetail />} />
-        <Route path="/vote" element={<VotePage />} />
-        <Route path="/vote/list" element={<VoteList />} />
-        <Route path="/vote/end" element={<VoteEnd />} />
-        <Route path="/vote/result" element={<VoteResult />} />
-        <Route path="/vote/rank" element={<VoteRank />} />
-        <Route path="/gallery" element={<GalleryPage />} />
-        <Route path="/gallery/list" element={<GalleryListPage />} />
-        <Route path="/gallery/post" element={<GalleryPostPage />} />
-        <Route path="/gallery/write" element={<GalleryWritePage />} />
-        <Route path="/chat" element={<ChatPage />} />
-        <Route path="/chat/new" element={<NewChat />} />
-        <Route path="/chat/live" element={<ChatLive />} />
+        <Route element={<PublicRoute />}>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/findpw" element={<FindPwPage />} />
+        </Route>
+        <Route element={<PrivateRoute />}>
+          <Route path="/players" element={<PlayerList />} />
+          <Route path="/players/pitcher" element={<PositionList />} />
+          <Route path="/players/detail" element={<PlayerDetail />} />
+          <Route path="/vote" element={<VotePage />} />
+          <Route path="/vote/list" element={<VoteList />} />
+          <Route path="/vote/end" element={<VoteEnd />} />
+          <Route path="/vote/result" element={<VoteResult />} />
+          <Route path="/vote/rank" element={<VoteRank />} />
+          <Route path="/gallery" element={<GalleryPage />} />
+          <Route path="/gallery/list" element={<GalleryListPage />} />
+          <Route path="/gallery/post" element={<GalleryPostPage />} />
+          <Route path="/gallery/write" element={<GalleryWritePage />} />
+          <Route path="/chat" element={<ChatPage />} />
+          <Route path="/chat/new" element={<NewChat />} />
+          <Route path="/chat/live" element={<ChatLive />} />
+        </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

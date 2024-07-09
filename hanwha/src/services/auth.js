@@ -1,7 +1,7 @@
-import axios from 'axios';
+import { privateApi, publicApi } from './index';
 
 export const register = async (email, nickname, password) => {
-  const response = await axios.post('/user/register', {
+  const response = await publicApi.post('/user/register', {
     email,
     nickname,
     password,
@@ -10,9 +10,14 @@ export const register = async (email, nickname, password) => {
 };
 
 export const login = async (email, password) => {
-  const response = await axios.post('/user/login', {
+  const response = await publicApi.post('/user/login', {
     email,
     password,
   });
+  return response;
+};
+
+export const getUser = async () => {
+  const response = await privateApi.get('/user');
   return response;
 };

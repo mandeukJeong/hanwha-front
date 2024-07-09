@@ -7,6 +7,9 @@ import { mediaMax } from '../../utils/media';
 import CustomBtn from '../../components/common/CustomBtn';
 import hanwha_wordmark from '../../assets/logo/hanwha_wordmark.png';
 import { login } from '../../services/auth';
+import { changeUserInfo } from '../../store/user';
+import { useDispatch } from 'react-redux';
+import { privateApi } from '../../services';
 
 const MainWrap = styled.main`
   color: ${COLORS.white};
@@ -142,6 +145,7 @@ const loginReducer = (state, action) => {
 };
 
 const LoginPage = () => {
+  const userDispatch = useDispatch();
   const navigate = useNavigate();
   // const emailRegEx =
   //   /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/i;
@@ -176,12 +180,20 @@ const LoginPage = () => {
       .then((response) => {
         if (response.status === 200) {
           setErrorMessage('');
+          localStorage.setItem('token', response.data.accessToken);
+          privateApi.defaults.headers.common[
+            'Authorization'
+          ] = `Bearer ${response.data.accessToken}`;
+          userDispatch(
+            changeUserInfo({
+              isLogin: true,
+              email: response.data.email,
+              nickname: response.data.nickname,
+              authId: response.data.authId,
+            })
+          );
           navigate('/');
         }
-        // if (response.status === 201) {
-        //   setErrorMessage('');
-        //   navigate('/login');
-        // }
       })
       .catch((e) => {
         // 존재하지 않는 계정 || 비밀번호 일치하지 않을 경우
