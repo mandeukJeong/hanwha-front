@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState, useReducer } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax } from '../../utils/media';
 import hanwha_wordmark from '../../assets/logo/hanwha_wordmark.png';
+import { sendEmail } from '../../services/auth';
 
 const MainWrap = styled.main`
   color: ${COLORS.white};
@@ -50,6 +51,17 @@ const FormWrap = styled.form`
     margin-bottom: 30px;
   `};
 `;
+const AuthInputWrap = styled.div`
+  display: flex;
+  gap: 0.5em;
+  margin-bottom: 20px;
+  ${mediaMax.medium`
+    margin-bottom: 18px;
+  `};
+  ${mediaMax.small`
+    margin-bottom: 15px;
+  `};
+`;
 const AuthInput = styled.input`
   color: ${COLORS.white};
   width: 100%;
@@ -72,6 +84,24 @@ const AuthInput = styled.input`
   &:last-of-type {
     margin-bottom: 0;
   }
+`;
+const AuthBtn = styled.button`
+  cursor: pointer;
+  background-color: ${COLORS.dark};
+  color: ${COLORS.white};
+  border: none;
+  font-weight: 600;
+  border-radius: 10px;
+  font-size: ${SIZES.ltxsmall};
+  width: 25%;
+  ${mediaMax.medium`
+    font-size: ${SIZES.tbmedium};
+    width: 30%;
+  `};
+  ${mediaMax.small`
+    font-size: ${SIZES.mbmedium};
+    width: 40%;
+  `};
 `;
 const ErrorWrap = styled.div`
   text-align: center;
@@ -121,7 +151,52 @@ const SubmitBtn = styled.button`
   `};
 `;
 
+const passwordReducer = (state, action) => {
+  return {
+    ...state,
+    [action.name]: action.value,
+  };
+};
+
 const FindPwPage = () => {
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isSend, setIsSend] = useState(false);
+  const [isVerify, setIsVerify] = useState(false);
+  const [state, dispatch] = useReducer(passwordReducer, {
+    email: '',
+    verifyNumber: '',
+    password: '',
+    passwordConfirm: '',
+  });
+
+  const { email, verifyNumber, password, passwordConfirm } = state;
+
+  const onChange = (e) => {
+    dispatch(e.target);
+  };
+
+  const onSendSubmit = (e) => {
+    e.preventDefault();
+
+    if (email === '') {
+      setErrorMessage('이메일을 입력해주세요.');
+      return;
+    }
+
+    sendEmail(email)
+      .then((response) => {
+        if (response.status === 200) {
+          setErrorMessage('');
+          setIsSend(true);
+        }
+      })
+      .catch((e) => {
+        if (e.response.status === 404) {
+          setErrorMessage(e.response.data.error);
+        }
+      });
+  };
+
   return (
     <MainWrap>
       <FindPwWrap>
@@ -131,26 +206,51 @@ const FindPwPage = () => {
           </LogoLink>
         </h1>
         <FormWrap>
-          <AuthInput type="text" placeholder="이메일" autoComplete="off" />
+          <AuthInputWrap>
+            <AuthInput
+              name="email"
+              value={email}
+              type="text"
+              placeholder="이메일"
+              autoComplete="off"
+              onChange={onChange}
+            />
+            <AuthBtn onClick={onSendSubmit}>인증번호 발급</AuthBtn>
+          </AuthInputWrap>
+          <AlertWrap>{isSend && <p>인증번호가 전송되었습니다.</p>}</AlertWrap>
+          <AuthInputWrap>
+            <AuthInput
+              name="verifyNumber"
+              value={verifyNumber}
+              type="text"
+              placeholder="인증번호"
+              autoComplete="off"
+              onChange={onChange}
+            />
+            {isSend && <AuthBtn>인증번호 확인</AuthBtn>}
+          </AuthInputWrap>
           <AlertWrap>
-            <p>인증번호가 전송되었습니다.</p>
-          </AlertWrap>
-          <AuthInput type="text" placeholder="인증번호" autoComplete="off" />
-          <AlertWrap>
-            <p>인증번호가 일치합니다.</p>
+            {isSend && isVerify && <p>인증번호가 일치합니다.</p>}
           </AlertWrap>
           <AuthInput
+            name="password"
+            value={password}
             type="password"
             placeholder="비밀번호"
             autoComplete="off"
+            onChange={onChange}
           />
           <AuthInput
+            name="passwordConfirm"
+            value={passwordConfirm}
             type="password"
             placeholder="비밀번호 확인"
             autoComplete="off"
+            onChange={onChange}
           />
           <ErrorWrap>
-            <p>비밀번호가 일치하지 않습니다.</p>
+            {/* 비밀번호가 일치하지 않습니다. */}
+            <p>{errorMessage}</p>
           </ErrorWrap>
           <SubmitBtn type="submit">SUBMIT</SubmitBtn>
         </FormWrap>

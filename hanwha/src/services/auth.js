@@ -26,3 +26,8 @@ export const logout = async () => {
   const response = await privateApi.post('/user/logout');
   return response;
 };
+
+export const sendEmail = async (email) => {
+  const response = await publicApi.post('/user/email', { email });
+  return response;
+};
