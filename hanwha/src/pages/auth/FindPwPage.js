@@ -1,11 +1,11 @@
 import React, { useState, useReducer } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax } from '../../utils/media';
 import hanwha_wordmark from '../../assets/logo/hanwha_wordmark.png';
-import { sendEmail, checkAuth } from '../../services/auth';
+import { sendEmail, checkAuth, changePassword } from '../../services/auth';
 
 const MainWrap = styled.main`
   color: ${COLORS.white};
@@ -159,6 +159,7 @@ const passwordReducer = (state, action) => {
 };
 
 const FindPwPage = () => {
+  const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('');
   const [isSend, setIsSend] = useState(false);
   const [isVerify, setIsVerify] = useState(false);
@@ -224,6 +225,44 @@ const FindPwPage = () => {
       });
   };
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    // input 빈 칸 존재 시
+    if (
+      Object.values({ email, verifyNumber, password, passwordConfirm }).some(
+        (value) => value === ''
+      )
+    ) {
+      setErrorMessage('빈칸을 모두 입력해주세요.');
+      return;
+    }
+
+    // 비밀번호, 비밀번호 확인 불일치 시
+    if (password !== passwordConfirm) {
+      setErrorMessage('비밀번호가 일치하지 않습니다.');
+      return;
+    }
+
+    changePassword(email, verifyNumber, password)
+      .then((response) => {
+        if (response.status === 200) {
+          setErrorMessage('');
+          alert('비밀번호 변경이 완료되었습니다.');
+          navigate('/login');
+        }
+      })
+      .catch((e) => {
+        if (e.response.status === 400) {
+          setErrorMessage('빈칸을 모두 입력해주세요.');
+        } else if (e.response.status === 404) {
+          setErrorMessage(e.response.data.error);
+        } else {
+          setErrorMessage('비밀번호 변경에 실패하였습니다.');
+        }
+      });
+  };
+
   return (
     <MainWrap>
       <FindPwWrap>
@@ -240,9 +279,12 @@ const FindPwPage = () => {
               type="text"
               placeholder="이메일"
               autoComplete="off"
+              disabled={isSend}
               onChange={onChange}
             />
-            <AuthBtn onClick={onSendSubmit}>인증번호 발급</AuthBtn>
+            <AuthBtn disabled={isSend} onClick={onSendSubmit}>
+              인증번호 발급
+            </AuthBtn>
           </AuthInputWrap>
           <AlertWrap>{isSend && <p>인증번호가 전송되었습니다.</p>}</AlertWrap>
           <AuthInputWrap>
@@ -252,9 +294,14 @@ const FindPwPage = () => {
               type="text"
               placeholder="인증번호"
               autoComplete="off"
+              disabled={isVerify}
               onChange={onChange}
             />
-            {isSend && <AuthBtn onClick={onCheckSubmit}>인증번호 확인</AuthBtn>}
+            {isSend && (
+              <AuthBtn disabled={isVerify} onClick={onCheckSubmit}>
+                인증번호 확인
+              </AuthBtn>
+            )}
           </AuthInputWrap>
           <AlertWrap>
             {isSend && isVerify && <p>인증번호가 일치합니다.</p>}
@@ -276,10 +323,11 @@ const FindPwPage = () => {
             onChange={onChange}
           />
           <ErrorWrap>
-            {/* 비밀번호가 일치하지 않습니다. */}
             <p>{errorMessage}</p>
           </ErrorWrap>
-          <SubmitBtn type="submit">SUBMIT</SubmitBtn>
+          <SubmitBtn type="submit" onClick={onSubmit}>
+            SUBMIT
+          </SubmitBtn>
         </FormWrap>
       </FindPwWrap>
     </MainWrap>

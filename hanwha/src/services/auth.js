@@ -36,3 +36,12 @@ export const checkAuth = async (email, verifyNumber) => {
   const response = await publicApi.post('/user/check', { email, verifyNumber });
   return response;
 };
+
+export const changePassword = async (email, verifyNumber, password) => {
+  const response = await publicApi.post('/user/password', {
+    email,
+    verifyNumber,
+    password,
+  });
+  return response;
+};
