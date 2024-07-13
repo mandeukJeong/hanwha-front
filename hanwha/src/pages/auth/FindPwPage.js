@@ -5,7 +5,7 @@ import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax } from '../../utils/media';
 import hanwha_wordmark from '../../assets/logo/hanwha_wordmark.png';
-import { sendEmail } from '../../services/auth';
+import { sendEmail, checkAuth } from '../../services/auth';
 
 const MainWrap = styled.main`
   color: ${COLORS.white};
@@ -197,6 +197,33 @@ const FindPwPage = () => {
       });
   };
 
+  const onCheckSubmit = (e) => {
+    e.preventDefault();
+
+    if (email === '') {
+      setErrorMessage('이메일을 입력해주세요.');
+      return;
+    }
+
+    if (verifyNumber === '') {
+      setErrorMessage('인증번호를 입력해주세요.');
+      return;
+    }
+
+    checkAuth(email, verifyNumber)
+      .then((response) => {
+        if (response.status === 200) {
+          setErrorMessage('');
+          setIsVerify(true);
+        }
+      })
+      .catch((e) => {
+        if (e.response.status === 404) {
+          setErrorMessage('인증번호가 일치하지 않습니다.');
+        }
+      });
+  };
+
   return (
     <MainWrap>
       <FindPwWrap>
@@ -227,7 +254,7 @@ const FindPwPage = () => {
               autoComplete="off"
               onChange={onChange}
             />
-            {isSend && <AuthBtn>인증번호 확인</AuthBtn>}
+            {isSend && <AuthBtn onClick={onCheckSubmit}>인증번호 확인</AuthBtn>}
           </AuthInputWrap>
           <AlertWrap>
             {isSend && isVerify && <p>인증번호가 일치합니다.</p>}

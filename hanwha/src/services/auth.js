@@ -31,3 +31,8 @@ export const sendEmail = async (email) => {
   const response = await publicApi.post('/user/email', { email });
   return response;
 };
+
+export const checkAuth = async (email, verifyNumber) => {
+  const response = await publicApi.post('/user/check', { email, verifyNumber });
+  return response;
+};
