@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax } from '../../utils/media';
 import CustomBtn from '../../components/common/CustomBtn';
-import Ryu from '../../assets/players/Ryu.png';
-import Moon from '../../assets/players/Moon.png';
-import Lee from '../../assets/players/Lee.png';
+import { getPlayerList } from '../../services/players';
 
 const MainWrap = styled.main`
   color: ${COLORS.white};
@@ -127,174 +126,45 @@ const NameWrap = styled.div`
 `;
 
 const PositionList = () => {
+  const [playerList, setPlayerList] = useState([]);
+  const location = useLocation();
+  const path = location.pathname.slice(location.pathname.lastIndexOf('/') + 1);
+  const posCd = path === 'pitcher' ? 1 : null;
+
+  useEffect(() => {
+    getPlayerList(posCd)
+      .then((response) => {
+        setPlayerList(response.data);
+      })
+      .catch((e) => console.log(e));
+  }, [posCd]);
+
   return (
     <MainWrap>
       <HeaderSection>
         <h1>PITCHER</h1>
       </HeaderSection>
       <MainSection>
-        <PlayerWrap>
-          <PlayerImg $bg={Ryu}>
-            <CustomBtn
-              to="/players/detail"
-              $border={COLORS.grey}
-              $fontColor={COLORS.white}
-              $bgColor={COLORS.orange}
-              text="PROFILE"
-            />
-          </PlayerImg>
-          <InfoWrap>
-            <h2>99</h2>
-            <NameWrap>
-              <h3>류현진</h3>
-              <p>RYU HYUN JIN</p>
-            </NameWrap>
-          </InfoWrap>
-        </PlayerWrap>
-        <PlayerWrap>
-          <PlayerImg $bg={Moon}>
-            <CustomBtn
-              to="/players/detail"
-              $border={COLORS.grey}
-              $fontColor={COLORS.white}
-              $bgColor={COLORS.orange}
-              text="PROFILE"
-            />
-          </PlayerImg>
-          <InfoWrap>
-            <h2>1</h2>
-            <NameWrap>
-              <h3>문동주</h3>
-              <p>MOON DONG JU</p>
-            </NameWrap>
-          </InfoWrap>
-        </PlayerWrap>
-        <PlayerWrap>
-          <PlayerImg $bg={Lee}>
-            <CustomBtn
-              to="/players/detail"
-              $border={COLORS.grey}
-              $fontColor={COLORS.white}
-              $bgColor={COLORS.orange}
-              text="PROFILE"
-            />
-          </PlayerImg>
-          <InfoWrap>
-            <h2>4</h2>
-            <NameWrap>
-              <h3>이승관</h3>
-              <p>LEE SEONG GWAN</p>
-            </NameWrap>
-          </InfoWrap>
-        </PlayerWrap>
-        <PlayerWrap>
-          <PlayerImg $bg={Ryu}>
-            <CustomBtn
-              to="/players/detail"
-              $border={COLORS.grey}
-              $fontColor={COLORS.white}
-              $bgColor={COLORS.orange}
-              text="PROFILE"
-            />
-          </PlayerImg>
-          <InfoWrap>
-            <h2>99</h2>
-            <NameWrap>
-              <h3>류현진</h3>
-              <p>RYU HYUN JIN</p>
-            </NameWrap>
-          </InfoWrap>
-        </PlayerWrap>
-        <PlayerWrap>
-          <PlayerImg $bg={Moon}>
-            <CustomBtn
-              to="/players/detail"
-              $border={COLORS.grey}
-              $fontColor={COLORS.white}
-              $bgColor={COLORS.orange}
-              text="PROFILE"
-            />
-          </PlayerImg>
-          <InfoWrap>
-            <h2>1</h2>
-            <NameWrap>
-              <h3>문동주</h3>
-              <p>MOON DONG JU</p>
-            </NameWrap>
-          </InfoWrap>
-        </PlayerWrap>
-        <PlayerWrap>
-          <PlayerImg $bg={Lee}>
-            <CustomBtn
-              to="/players/detail"
-              $border={COLORS.grey}
-              $fontColor={COLORS.white}
-              $bgColor={COLORS.orange}
-              text="PROFILE"
-            />
-          </PlayerImg>
-          <InfoWrap>
-            <h2>4</h2>
-            <NameWrap>
-              <h3>이승관</h3>
-              <p>LEE SEONG GWAN</p>
-            </NameWrap>
-          </InfoWrap>
-        </PlayerWrap>
-        <PlayerWrap>
-          <PlayerImg $bg={Ryu}>
-            <CustomBtn
-              to="/players/detail"
-              $border={COLORS.grey}
-              $fontColor={COLORS.white}
-              $bgColor={COLORS.orange}
-              text="PROFILE"
-            />
-          </PlayerImg>
-          <InfoWrap>
-            <h2>99</h2>
-            <NameWrap>
-              <h3>류현진</h3>
-              <p>RYU HYUN JIN</p>
-            </NameWrap>
-          </InfoWrap>
-        </PlayerWrap>
-        <PlayerWrap>
-          <PlayerImg $bg={Moon}>
-            <CustomBtn
-              to="/players/detail"
-              $border={COLORS.grey}
-              $fontColor={COLORS.white}
-              $bgColor={COLORS.orange}
-              text="PROFILE"
-            />
-          </PlayerImg>
-          <InfoWrap>
-            <h2>1</h2>
-            <NameWrap>
-              <h3>문동주</h3>
-              <p>MOON DONG JU</p>
-            </NameWrap>
-          </InfoWrap>
-        </PlayerWrap>
-        <PlayerWrap>
-          <PlayerImg $bg={Lee}>
-            <CustomBtn
-              to="/players/detail"
-              $border={COLORS.grey}
-              $fontColor={COLORS.white}
-              $bgColor={COLORS.orange}
-              text="PROFILE"
-            />
-          </PlayerImg>
-          <InfoWrap>
-            <h2>4</h2>
-            <NameWrap>
-              <h3>이승관</h3>
-              <p>LEE SEONG GWAN</p>
-            </NameWrap>
-          </InfoWrap>
-        </PlayerWrap>
+        {playerList.map((item) => (
+          <PlayerWrap key={item.pCd}>
+            <PlayerImg $bg={item.img}>
+              <CustomBtn
+                to={`/players/${item.pCd}`}
+                $border={COLORS.grey}
+                $fontColor={COLORS.white}
+                $bgColor={COLORS.orange}
+                text="PROFILE"
+              />
+            </PlayerImg>
+            <InfoWrap>
+              <h2>{item.backNo}</h2>
+              <NameWrap>
+                <h3>{item.pNm}</h3>
+                <p>{item.pEn}</p>
+              </NameWrap>
+            </InfoWrap>
+          </PlayerWrap>
+        ))}
       </MainSection>
     </MainWrap>
   );
