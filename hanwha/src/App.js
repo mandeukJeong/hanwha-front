@@ -65,7 +65,7 @@ const App = () => {
         <Route element={<PrivateRoute />}>
           <Route path="/players" element={<PlayerList />} />
           <Route path="/players/:position" element={<PositionList />} />
-          <Route path="/players/detail" element={<PlayerDetail />} />
+          <Route path="/players/detail/:pCd" element={<PlayerDetail />} />
           <Route path="/vote" element={<VotePage />} />
           <Route path="/vote/list" element={<VoteList />} />
           <Route path="/vote/end" element={<VoteEnd />} />

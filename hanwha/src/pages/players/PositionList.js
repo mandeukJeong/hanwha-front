@@ -159,7 +159,7 @@ const PositionList = () => {
           <PlayerWrap key={item.pCd}>
             <PlayerImg $bg={item.img}>
               <CustomBtn
-                to={`/players/${item.pCd}`}
+                to={`/players/detail/${item.pCd}`}
                 $border={COLORS.grey}
                 $fontColor={COLORS.white}
                 $bgColor={COLORS.orange}

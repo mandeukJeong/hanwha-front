@@ -8,3 +8,8 @@ export const getPlayerList = async (posCd) => {
   });
   return response;
 };
+
+export const getPlayerProfile = async (pCd) => {
+  const response = await privateApi.get(`/players/${pCd}`);
+  return response;
+};

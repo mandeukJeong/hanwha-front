@@ -1,11 +1,12 @@
-import React, { useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax, mediaMin } from '../../utils/media';
 import useIntersectionObserver from '../../hooks/useIntersectionObserver';
 import CustomBtn from '../../components/common/CustomBtn';
-import Ryu from '../../assets/players/Ryu.png';
+import { getPlayerProfile } from '../../services/players';
 
 const fadeInUp = `
   @keyframes fadeInUp {
@@ -40,7 +41,10 @@ const ProfileSection = styled.section`
   `};
 `;
 const ProfileImg = styled.img`
-  width: 30%;
+  ${mediaMin.large`
+    align-self: flex-start;
+    width: 30%;
+  `};
   ${mediaMax.medium`
     width: 50%;
   `};
@@ -161,8 +165,10 @@ const PersonalDetail = styled.div`
     `};
   }
   p {
+    width: 300px;
     font-size: ${SIZES.ltsmall};
     ${mediaMax.small`
+      width: 250px;
       font-size: ${SIZES.tbsmall};
     `};
   }
@@ -263,48 +269,69 @@ const ScoreDetail = styled.div`
 `;
 
 const PlayerDetail = () => {
+  const params = useParams();
+  const [playerProfile, setPlayerProfile] = useState(null);
   const seasonRef = useRef(null);
   const isSeasonInViewport = useIntersectionObserver(seasonRef);
 
+  useEffect(() => {
+    getPlayerProfile(params.pCd)
+      .then((response) => setPlayerProfile(response.data))
+      .catch((e) => console.log(e));
+  }, [params]);
+
   return (
     <MainWrap>
-      <ProfileSection>
-        <ProfileImg src={Ryu} alt="류현진" />
-        <ProfileWrap>
-          <InfoWrap>
-            <h2>99</h2>
-            <NameWrap>
-              <h3>류현진</h3>
-              <p>RYU HYUN JIN</p>
-            </NameWrap>
-          </InfoWrap>
-          <PositionWrap>
-            <PositionImg></PositionImg>
-            <PositionText>
-              <h3>투수</h3>
-              <p>좌/우</p>
-            </PositionText>
-          </PositionWrap>
-          <div>
-            <PersonalDetail>
-              <h3>생년월일</h3>
-              <p>1987.03.25</p>
-            </PersonalDetail>
-            <PersonalDetail>
-              <h3>체격</h3>
-              <p>187cm, 98kg</p>
-            </PersonalDetail>
-            <PersonalDetail>
-              <h3>출신학교</h3>
-              <p>인천 창영초-동산중-동산고-대전대</p>
-            </PersonalDetail>
-            <PersonalDetail>
-              <h3>경력</h3>
-              <p>한화-LA다져스-토론토</p>
-            </PersonalDetail>
-          </div>
-        </ProfileWrap>
-      </ProfileSection>
+      {playerProfile && (
+        <ProfileSection>
+          <ProfileImg src={playerProfile.img} alt={playerProfile.pNm} />
+          <ProfileWrap>
+            <InfoWrap>
+              <h2>{playerProfile.backNo}</h2>
+              <NameWrap>
+                <h3>{playerProfile.pNm}</h3>
+                <p>{playerProfile.pEn}</p>
+              </NameWrap>
+            </InfoWrap>
+            <PositionWrap>
+              <PositionImg></PositionImg>
+              <PositionText>
+                <h3>{playerProfile.posNm}</h3>
+                <p>{playerProfile.posDetail}</p>
+              </PositionText>
+            </PositionWrap>
+            <div>
+              <PersonalDetail>
+                <h3>생년월일</h3>
+                <p>{playerProfile.birth}</p>
+              </PersonalDetail>
+              <PersonalDetail>
+                <h3>체격</h3>
+                <p>
+                  {playerProfile.height}cm, {playerProfile.weight}kg
+                </p>
+              </PersonalDetail>
+              <PersonalDetail>
+                <h3>출신학교</h3>
+                <p>{playerProfile.school}</p>
+              </PersonalDetail>
+              <PersonalDetail>
+                <h3>경력</h3>
+                <p>
+                  {playerProfile.career.split('\n').map((line, index) => (
+                    <React.Fragment key={index}>
+                      {line}
+                      <br />
+                      <br />
+                    </React.Fragment>
+                  ))}
+                </p>
+              </PersonalDetail>
+            </div>
+          </ProfileWrap>
+        </ProfileSection>
+      )}
+
       <SeasonSection>
         <h1>2024 SEASON</h1>
         <SeasonWrap
