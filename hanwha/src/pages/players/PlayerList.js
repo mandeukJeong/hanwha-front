@@ -180,7 +180,7 @@ const PlayerList = () => {
           <TitleWrap>
             <h2>CATCHER</h2>
             <CustomBtn
-              to="/players/pitcher"
+              to="/players/catcher"
               $border={COLORS.grey}
               $fontColor={COLORS.white}
               $bgColor={COLORS.orange}
@@ -192,7 +192,7 @@ const PlayerList = () => {
           <TitleWrap>
             <h2>INFIELDER</h2>
             <CustomBtn
-              to="/players/pitcher"
+              to="/players/infielder"
               $border={COLORS.grey}
               $fontColor={COLORS.white}
               $bgColor={COLORS.orange}
@@ -204,7 +204,7 @@ const PlayerList = () => {
           <TitleWrap>
             <h2>OUTFIELDER</h2>
             <CustomBtn
-              to="/players/pitcher"
+              to="/players/outfielder"
               $border={COLORS.grey}
               $fontColor={COLORS.white}
               $bgColor={COLORS.orange}

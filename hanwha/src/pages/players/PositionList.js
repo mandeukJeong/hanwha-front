@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
@@ -46,6 +46,9 @@ const PlayerWrap = styled.div`
   width: 30%;
   ${mediaMax.medium`
     width: 45%;
+  `};
+  ${mediaMax.small`
+    margin-bottom: 30px;
   `};
 `;
 const PlayerImg = styled.div`
@@ -127,9 +130,16 @@ const NameWrap = styled.div`
 
 const PositionList = () => {
   const [playerList, setPlayerList] = useState([]);
-  const location = useLocation();
-  const path = location.pathname.slice(location.pathname.lastIndexOf('/') + 1);
-  const posCd = path === 'pitcher' ? 1 : null;
+  const params = useParams();
+  const path = params.position.slice(params.position.lastIndexOf('/') + 1);
+  const posCd =
+    path === 'pitcher'
+      ? 1
+      : path === 'catcher'
+      ? 2
+      : path === 'infielder'
+      ? 3
+      : 4;
 
   useEffect(() => {
     getPlayerList(posCd)
@@ -142,7 +152,7 @@ const PositionList = () => {
   return (
     <MainWrap>
       <HeaderSection>
-        <h1>PITCHER</h1>
+        <h1>{path.toUpperCase()}</h1>
       </HeaderSection>
       <MainSection>
         {playerList.map((item) => (
