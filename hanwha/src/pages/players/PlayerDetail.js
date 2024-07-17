@@ -346,28 +346,54 @@ const PlayerDetail = () => {
           {playerScore && (
             <ScoreWrap>
               <ScoreDetail>
-                <h3>{searchParams.get('posCd') === '1' && playerScore.era}</h3>
-                <p>{searchParams.get('posCd') === '1' && '평균자책점'}</p>
+                <h3>
+                  {searchParams.get('posCd') === '1'
+                    ? playerScore.era
+                    : playerScore.avg}
+                </h3>
+                <p>
+                  {searchParams.get('posCd') === '1' ? '평균자책점' : '타율'}
+                </p>
               </ScoreDetail>
               <ScoreDetail>
-                <h3>{searchParams.get('posCd') === '1' && playerScore.win}</h3>
-                <p>{searchParams.get('posCd') === '1' && '승'}</p>
+                <h3>
+                  {searchParams.get('posCd') === '1'
+                    ? playerScore.win
+                    : playerScore.ops}
+                </h3>
+                <p>{searchParams.get('posCd') === '1' ? '승' : 'OPS'}</p>
               </ScoreDetail>
               <ScoreDetail>
-                <h3>{searchParams.get('posCd') === '1' && playerScore.lose}</h3>
-                <p>{searchParams.get('posCd') === '1' && '패'}</p>
+                <h3>
+                  {searchParams.get('posCd') === '1'
+                    ? playerScore.lose
+                    : playerScore.rbi}
+                </h3>
+                <p>{searchParams.get('posCd') === '1' ? '패' : '타점'}</p>
               </ScoreDetail>
               <ScoreDetail>
-                <h3>{searchParams.get('posCd') === '1' && playerScore.so}</h3>
-                <p>{searchParams.get('posCd') === '1' && '탈삼진'}</p>
+                <h3>
+                  {searchParams.get('posCd') === '1'
+                    ? playerScore.so
+                    : playerScore.h}
+                </h3>
+                <p>{searchParams.get('posCd') === '1' ? '탈삼진' : '안타'}</p>
               </ScoreDetail>
               <ScoreDetail>
-                <h3>{searchParams.get('posCd') === '1' && playerScore.ip}</h3>
-                <p>{searchParams.get('posCd') === '1' && '이닝'}</p>
+                <h3>
+                  {searchParams.get('posCd') === '1'
+                    ? playerScore.ip
+                    : playerScore.hr}
+                </h3>
+                <p>{searchParams.get('posCd') === '1' ? '이닝' : '홈런'}</p>
               </ScoreDetail>
               <ScoreDetail>
-                <h3>{searchParams.get('posCd') === '1' && playerScore.sv}</h3>
-                <p>{searchParams.get('posCd') === '1' && '세이브'}</p>
+                <h3>
+                  {searchParams.get('posCd') === '1'
+                    ? playerScore.sv
+                    : playerScore.sb}
+                </h3>
+                <p>{searchParams.get('posCd') === '1' ? '세이브' : '도루'}</p>
               </ScoreDetail>
             </ScoreWrap>
           )}
