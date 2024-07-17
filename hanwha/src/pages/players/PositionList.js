@@ -129,7 +129,7 @@ const NameWrap = styled.div`
 `;
 
 const PositionList = () => {
-  const [playerList, setPlayerList] = useState([]);
+  const [playerList, setPlayerList] = useState(null);
   const params = useParams();
   const path = params.position.slice(params.position.lastIndexOf('/') + 1);
   const posCd =
@@ -155,26 +155,27 @@ const PositionList = () => {
         <h1>{path.toUpperCase()}</h1>
       </HeaderSection>
       <MainSection>
-        {playerList.map((item) => (
-          <PlayerWrap key={item.pCd}>
-            <PlayerImg $bg={item.img}>
-              <CustomBtn
-                to={`/players/detail/${item.pCd}`}
-                $border={COLORS.grey}
-                $fontColor={COLORS.white}
-                $bgColor={COLORS.orange}
-                text="PROFILE"
-              />
-            </PlayerImg>
-            <InfoWrap>
-              <h2>{item.backNo}</h2>
-              <NameWrap>
-                <h3>{item.pNm}</h3>
-                <p>{item.pEn}</p>
-              </NameWrap>
-            </InfoWrap>
-          </PlayerWrap>
-        ))}
+        {playerList &&
+          playerList.map((item) => (
+            <PlayerWrap key={item.pCd}>
+              <PlayerImg $bg={item.img}>
+                <CustomBtn
+                  to={`/players/detail?pCd=${item.pCd}&posCd=${posCd}`}
+                  $border={COLORS.grey}
+                  $fontColor={COLORS.white}
+                  $bgColor={COLORS.orange}
+                  text="PROFILE"
+                />
+              </PlayerImg>
+              <InfoWrap>
+                <h2>{item.backNo}</h2>
+                <NameWrap>
+                  <h3>{item.pNm}</h3>
+                  <p>{item.pEn}</p>
+                </NameWrap>
+              </InfoWrap>
+            </PlayerWrap>
+          ))}
       </MainSection>
     </MainWrap>
   );

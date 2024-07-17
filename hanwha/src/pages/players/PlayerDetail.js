@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax, mediaMin } from '../../utils/media';
 import useIntersectionObserver from '../../hooks/useIntersectionObserver';
 import CustomBtn from '../../components/common/CustomBtn';
-import { getPlayerProfile } from '../../services/players';
+import { getPlayerProfile, getPlayerScore } from '../../services/players';
 
 const fadeInUp = `
   @keyframes fadeInUp {
@@ -269,16 +269,21 @@ const ScoreDetail = styled.div`
 `;
 
 const PlayerDetail = () => {
-  const params = useParams();
+  const [searchParams] = useSearchParams();
   const [playerProfile, setPlayerProfile] = useState(null);
+  const [playerScore, setPlayerScore] = useState(null);
   const seasonRef = useRef(null);
   const isSeasonInViewport = useIntersectionObserver(seasonRef);
 
   useEffect(() => {
-    getPlayerProfile(params.pCd)
+    getPlayerProfile(searchParams.get('pCd'))
       .then((response) => setPlayerProfile(response.data))
       .catch((e) => console.log(e));
-  }, [params]);
+
+    getPlayerScore(searchParams.get('pCd'), searchParams.get('posCd'))
+      .then((response) => setPlayerScore(response.data))
+      .catch((e) => console.log(e));
+  }, [searchParams]);
 
   return (
     <MainWrap>
@@ -331,7 +336,6 @@ const PlayerDetail = () => {
           </ProfileWrap>
         </ProfileSection>
       )}
-
       <SeasonSection>
         <h1>2024 SEASON</h1>
         <SeasonWrap
@@ -339,32 +343,34 @@ const PlayerDetail = () => {
           className={isSeasonInViewport ? 'animation' : ''}
         >
           <ScoreImg></ScoreImg>
-          <ScoreWrap>
-            <ScoreDetail>
-              <h3>5.91</h3>
-              <p>평균자책점</p>
-            </ScoreDetail>
-            <ScoreDetail>
-              <h3>1</h3>
-              <p>승</p>
-            </ScoreDetail>
-            <ScoreDetail>
-              <h3>3</h3>
-              <p>패</p>
-            </ScoreDetail>
-            <ScoreDetail>
-              <h3>31</h3>
-              <p>탈삼진</p>
-            </ScoreDetail>
-            <ScoreDetail>
-              <h3>32</h3>
-              <p>이닝</p>
-            </ScoreDetail>
-            <ScoreDetail>
-              <h3>0</h3>
-              <p>세이브</p>
-            </ScoreDetail>
-          </ScoreWrap>
+          {playerScore && (
+            <ScoreWrap>
+              <ScoreDetail>
+                <h3>{searchParams.get('posCd') === '1' && playerScore.era}</h3>
+                <p>{searchParams.get('posCd') === '1' && '평균자책점'}</p>
+              </ScoreDetail>
+              <ScoreDetail>
+                <h3>{searchParams.get('posCd') === '1' && playerScore.win}</h3>
+                <p>{searchParams.get('posCd') === '1' && '승'}</p>
+              </ScoreDetail>
+              <ScoreDetail>
+                <h3>{searchParams.get('posCd') === '1' && playerScore.lose}</h3>
+                <p>{searchParams.get('posCd') === '1' && '패'}</p>
+              </ScoreDetail>
+              <ScoreDetail>
+                <h3>{searchParams.get('posCd') === '1' && playerScore.so}</h3>
+                <p>{searchParams.get('posCd') === '1' && '탈삼진'}</p>
+              </ScoreDetail>
+              <ScoreDetail>
+                <h3>{searchParams.get('posCd') === '1' && playerScore.ip}</h3>
+                <p>{searchParams.get('posCd') === '1' && '이닝'}</p>
+              </ScoreDetail>
+              <ScoreDetail>
+                <h3>{searchParams.get('posCd') === '1' && playerScore.sv}</h3>
+                <p>{searchParams.get('posCd') === '1' && '세이브'}</p>
+              </ScoreDetail>
+            </ScoreWrap>
+          )}
         </SeasonWrap>
         <CustomBtn
           to="/players/pitcher"
