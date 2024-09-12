@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax } from '../../utils/media';
-import CustomBtn from './CustomBtn';
+import { useSelector, useDispatch } from 'react-redux';
+import { changeModalInfo } from '../../store/modal';
+import CustomLink from './CustomLink';
 
 const ModalWrap = styled.div`
   width: 100%;
@@ -46,16 +48,29 @@ const ModalBtn = styled.button`
 `;
 
 const Alert = () => {
+  const modal = useSelector((state) => state.modal);
+  const dispatch = useDispatch();
+
+  const onClick = () => {
+    dispatch(
+      changeModalInfo({
+        isOpen: false,
+        modalText: '',
+        modalBtnText: '',
+      })
+    );
+  };
+
   return (
     <ModalWrap>
       <ModalContent>
-        <ModalText>제목을 입력해주세요.</ModalText>
-        <ModalBtn>
-          <CustomBtn
+        <ModalText>{modal.modalText}</ModalText>
+        <ModalBtn onClick={onClick}>
+          <CustomLink
             $border={COLORS.grey}
             $fontColor={COLORS.white}
             $bgColor={COLORS.orange}
-            text="확인"
+            text={modal.modalBtnText}
           />
         </ModalBtn>
       </ModalContent>

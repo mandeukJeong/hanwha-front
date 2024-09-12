@@ -5,7 +5,7 @@ import { SIZES } from '../../constants/size';
 import { mediaMax } from '../../utils/media';
 import DatePicker from 'react-datepicker';
 import { ko } from 'date-fns/locale/ko';
-import CustomBtn from '../../components/common/CustomBtn';
+import CustomLink from '../../components/common/CustomLink';
 import chevron from '../../assets/gallery/chevron.png';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -127,7 +127,7 @@ const NewChat = () => {
             dateFormat="yyyy.MM.dd HH:mm"
           />
           <LinkWrap>
-            <CustomBtn
+            <CustomLink
               to="/chat"
               $border={COLORS.grey}
               $fontColor={COLORS.white}
@@ -135,7 +135,7 @@ const NewChat = () => {
               text="GO TO LIST"
             />
             <SubmitBtn type="submit">
-              <CustomBtn
+              <CustomLink
                 $border={COLORS.orange}
                 $fontColor={COLORS.orange}
                 $bgColor={COLORS.orange}

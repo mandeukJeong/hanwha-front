@@ -1,15 +1,16 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax } from '../../utils/media';
 
-const Button = styled.button`
-  all: unset;
+const CusLink = styled(Link)`
   cursor: pointer;
   color: ${(props) => props.$fontColor};
   border: 1px solid ${(props) => props.$border};
   border-radius: 5px;
+  display: inline-block;
   text-align: center;
   font-weight: 400;
   background: linear-gradient(
@@ -45,17 +46,17 @@ const Button = styled.button`
   `};
 `;
 
-const CustomBtn = ({ $border, $fontColor, $bgColor, text, type }) => {
+const CustomLink = ({ $border, $fontColor, $bgColor, text, to }) => {
   return (
-    <Button
-      type={type}
+    <CusLink
+      to={to}
       $border={$border}
       $fontColor={$fontColor}
       $bgColor={$bgColor}
     >
       {text}
-    </Button>
+    </CusLink>
   );
 };
 
-export default CustomBtn;
+export default CustomLink;

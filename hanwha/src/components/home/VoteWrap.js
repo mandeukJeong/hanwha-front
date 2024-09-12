@@ -4,7 +4,7 @@ import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax, mediaMin } from '../../utils/media';
 import useIntersectionObserver from '../../hooks/useIntersectionObserver';
-import CustomBtn from '../common/CustomBtn';
+import CustomLink from '../common/CustomLink';
 import produce_101 from '../../assets/common/produce_101.png';
 import vote_player from '../../assets/home/vote_player.png';
 
@@ -182,14 +182,14 @@ const VoteWrap = () => {
           당신의 선수에게 소중한 한 표를 전달해주세요!
         </p>
         <LinkWrap>
-          <CustomBtn
+          <CustomLink
             to="/vote"
             $border={COLORS.grey}
             $fontColor={COLORS.white}
             $bgColor={COLORS.orange}
             text="GO TO VOTE"
           />
-          <CustomBtn
+          <CustomLink
             to="/vote/result"
             $border={COLORS.orange}
             $fontColor={COLORS.orange}

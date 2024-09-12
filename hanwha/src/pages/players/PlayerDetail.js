@@ -5,7 +5,7 @@ import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax, mediaMin } from '../../utils/media';
 import useIntersectionObserver from '../../hooks/useIntersectionObserver';
-import CustomBtn from '../../components/common/CustomBtn';
+import CustomLink from '../../components/common/CustomLink';
 import { getPlayerProfile, getPlayerScore } from '../../services/players';
 
 const fadeInUp = `
@@ -398,7 +398,7 @@ const PlayerDetail = () => {
             </ScoreWrap>
           )}
         </SeasonWrap>
-        <CustomBtn
+        <CustomLink
           to="/players/pitcher"
           $border={COLORS.grey}
           $fontColor={COLORS.white}

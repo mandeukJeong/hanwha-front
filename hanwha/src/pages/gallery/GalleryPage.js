@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax, mediaMin } from '../../utils/media';
-import CustomBtn from '../../components/common/CustomBtn';
+import CustomLink from '../../components/common/CustomLink';
 import gallery_1 from '../../assets/common/gallery_1.JPG';
 import gallery_2 from '../../assets/common/gallery_2.JPG';
 import gallery_3 from '../../assets/common/gallery_3.JPG';
@@ -115,7 +115,7 @@ const GalleryPage = () => {
           <br />
           추억들을 모아봤어요.
         </h1>
-        <CustomBtn
+        <CustomLink
           to="/gallery/write"
           $border={COLORS.orange}
           $fontColor={COLORS.orange}
@@ -160,7 +160,7 @@ const GalleryPage = () => {
         </ImageWrap>
         <NavigateWrap>
           <p>더 많은 추억을 보러가고 싶으신가요?</p>
-          <CustomBtn
+          <CustomLink
             to="/gallery/list"
             $border={COLORS.grey}
             $fontColor={COLORS.white}

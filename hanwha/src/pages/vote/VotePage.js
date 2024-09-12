@@ -3,7 +3,7 @@ import styled, { keyframes } from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax } from '../../utils/media';
-import CustomBtn from '../../components/common/CustomBtn';
+import CustomLink from '../../components/common/CustomLink';
 import produce_101 from '../../assets/common/produce_101.png';
 
 const fadeIn = keyframes`
@@ -83,7 +83,7 @@ const VotePage = () => {
         <TitleText>당신의 선수에게 투표하세요.</TitleText>
         <ProduceImg src={produce_101} alt="produce 101" />
         <SubText>지금 같이 투표하러 갈까요?</SubText>
-        <CustomBtn
+        <CustomLink
           to="/vote/list"
           $border={COLORS.orange}
           $fontColor={COLORS.orange}

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax } from '../../utils/media';
-import CustomBtn from '../../components/common/CustomBtn';
+import CustomLink from '../../components/common/CustomLink';
 import { getPlayerList } from '../../services/players';
 
 const MainWrap = styled.main`
@@ -159,7 +159,7 @@ const PositionList = () => {
           playerList.map((item) => (
             <PlayerWrap key={item.pCd}>
               <PlayerImg $bg={item.img}>
-                <CustomBtn
+                <CustomLink
                   to={`/players/detail?pCd=${item.pCd}&posCd=${posCd}`}
                   $border={COLORS.grey}
                   $fontColor={COLORS.white}

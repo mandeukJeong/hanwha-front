@@ -3,13 +3,15 @@ import { createSlice } from '@reduxjs/toolkit';
 const modal = createSlice({
   name: 'modal',
   initialState: {
-    isOpen: true,
+    isOpen: false,
     modalText: '',
+    modalBtnText: '',
   },
   reducers: {
-    changeModalInfo(state, { payload: { isOpen, modalText } }) {
+    changeModalInfo(state, { payload: { isOpen, modalText, modalBtnText } }) {
       state.isOpen = isOpen;
       state.modalText = modalText;
+      state.modalBtnText = modalBtnText;
     },
   },
 });

@@ -3,7 +3,7 @@ import styled, { keyframes } from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax, mediaMin } from '../../utils/media';
-import CustomBtn from '../../components/common/CustomBtn';
+import CustomLink from '../../components/common/CustomLink';
 import player_headers from '../../assets/players/players_header.jpg';
 import soori from '../../assets/players/soori.png';
 import pitcher from '../../assets/players/pitcher.png';
@@ -167,7 +167,7 @@ const PlayerList = () => {
         <PlayerWrap $bg={pitcher}>
           <TitleWrap>
             <h2>PITCHER</h2>
-            <CustomBtn
+            <CustomLink
               to="/players/pitcher"
               $border={COLORS.grey}
               $fontColor={COLORS.white}
@@ -179,7 +179,7 @@ const PlayerList = () => {
         <PlayerWrap $bg={catcher}>
           <TitleWrap>
             <h2>CATCHER</h2>
-            <CustomBtn
+            <CustomLink
               to="/players/catcher"
               $border={COLORS.grey}
               $fontColor={COLORS.white}
@@ -191,7 +191,7 @@ const PlayerList = () => {
         <PlayerWrap $bg={infielder}>
           <TitleWrap>
             <h2>INFIELDER</h2>
-            <CustomBtn
+            <CustomLink
               to="/players/infielder"
               $border={COLORS.grey}
               $fontColor={COLORS.white}
@@ -203,7 +203,7 @@ const PlayerList = () => {
         <PlayerWrap $bg={outfielder}>
           <TitleWrap>
             <h2>OUTFIELDER</h2>
-            <CustomBtn
+            <CustomLink
               to="/players/outfielder"
               $border={COLORS.grey}
               $fontColor={COLORS.white}

@@ -4,7 +4,7 @@ import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax, mediaMin } from '../../utils/media';
 import useIntersectionObserver from '../../hooks/useIntersectionObserver';
-import CustomBtn from '../common/CustomBtn';
+import CustomLink from '../common/CustomLink';
 import player_bg from '../../assets/home/player_bg.JPG';
 
 const fadeInUp = `
@@ -135,7 +135,7 @@ const PlayerWrap = () => {
           <br />
           한화 이글스의 투수, 포수, 내야수, 외야수를 만나러 가요.
         </p>
-        <CustomBtn
+        <CustomLink
           to="/players"
           $border={COLORS.grey}
           $fontColor={COLORS.white}

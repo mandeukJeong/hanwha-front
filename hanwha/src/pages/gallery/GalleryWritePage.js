@@ -5,9 +5,11 @@ import { SIZES } from '../../constants/size';
 import { mediaMax } from '../../utils/media';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
-import { useSelector } from 'react-redux';
-import CustomBtn from '../../components/common/CustomBtn';
+import { useSelector, useDispatch } from 'react-redux';
+import { changeModalInfo } from '../../store/modal';
 import Alert from '../../components/common/Alert';
+import CustomBtn from '../../components/common/CustomBtn';
+import CustomLink from '../../components/common/CustomLink';
 
 const MainWrap = styled.main`
   color: ${COLORS.white};
@@ -130,15 +132,12 @@ const AlertWrap = styled.div`
     }
   }
 `;
-const SubmitBtn = styled.button`
-  border: none;
-  background-color: inherit;
-  padding: 0;
-`;
 
 const GalleryWritePage = () => {
   const modal = useSelector((state) => state.modal);
+  const dispatch = useDispatch();
   const [showTitles, setShowTitles] = useState([]);
+  const [title, setTitle] = useState('');
 
   const handleAddImages = (e) => {
     const imageLists = e.target.files;
@@ -155,15 +154,52 @@ const GalleryWritePage = () => {
     setShowTitles(showTitles.filter((_, index) => index !== id));
   };
 
+  const onChange = (e) => {
+    setTitle(e.target.value);
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    if (title === '') {
+      dispatch(
+        changeModalInfo({
+          isOpen: true,
+          modalText: '제목을 입력해주세요.',
+          modalBtnText: '확인',
+        })
+      );
+
+      return;
+    }
+
+    if (showTitles.length === 0) {
+      dispatch(
+        changeModalInfo({
+          isOpen: true,
+          modalText: '파일을 등록해주세요.',
+          modalBtnText: '확인',
+        })
+      );
+
+      return;
+    }
+  };
+
   return (
     <>
       <MainWrap>
         <h1>수리가 만든 추억을 공유해주세요!</h1>
-        <FormWrap>
-          <FormInput type="text" placeholder="제목" />
+        <FormWrap onSubmit={onSubmit}>
+          <FormInput
+            type="text"
+            placeholder="제목"
+            value={title}
+            onChange={onChange}
+          />
           <FormLabel htmlFor="input-file" onChange={handleAddImages}>
-            <span>첨부파일</span>
-            <input id="input-file" type="file" accept="image/*" />
+            <span>첨부파일 등록</span>
+            <input id="input-file" type="file" accept="image/png, image/jpeg" />
           </FormLabel>
           <FileWrap>
             {showTitles.map((item, i) => (
@@ -185,16 +221,15 @@ const GalleryWritePage = () => {
             </p>
             <p>* JPG, PNG만 등록 가능합니다.</p>
           </AlertWrap>
-          <SubmitBtn type="submit">
-            <CustomBtn
-              $border={COLORS.grey}
-              $fontColor={COLORS.white}
-              $bgColor={COLORS.orange}
-              text="파일 등록"
-            />
-          </SubmitBtn>
+          <CustomBtn
+            type="submit"
+            $border={COLORS.grey}
+            $fontColor={COLORS.white}
+            $bgColor={COLORS.orange}
+            text="파일 등록"
+          />
         </FormWrap>
-        <CustomBtn
+        <CustomLink
           to="/gallery"
           $border={COLORS.grey}
           $fontColor={COLORS.white}

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax } from '../../utils/media';
-import CustomBtn from '../../components/common/CustomBtn';
+import CustomLink from '../../components/common/CustomLink';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import gallery_1 from '../../assets/common/gallery_1.JPG';
@@ -86,7 +86,7 @@ const GalleryPostPage = () => {
           <span>만득이</span>
         </WriterWrap>
         <LinkWrap>
-          <CustomBtn
+          <CustomLink
             to="/"
             $border="#F32121"
             $fontColor="#F32121"
@@ -99,7 +99,7 @@ const GalleryPostPage = () => {
               </>
             }
           />
-          <CustomBtn
+          <CustomLink
             to="/gallery/list"
             $border={COLORS.grey}
             $fontColor={COLORS.white}

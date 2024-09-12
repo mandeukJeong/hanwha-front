@@ -5,7 +5,7 @@ import { SIZES } from '../../constants/size';
 import { mediaMax } from '../../utils/media';
 import produce_101 from '../../assets/common/produce_101.png';
 import Hwang from '../../assets/vote/Hwang.png';
-import CustomBtn from '../../components/common/CustomBtn';
+import CustomLink from '../../components/common/CustomLink';
 
 const fadeIn = keyframes`
   from {
@@ -201,7 +201,7 @@ const VoteRank = () => {
           </VoteText>
         </VoteWrap>
       </MainSection>
-      <CustomBtn
+      <CustomLink
         to="/vote/result"
         $border={COLORS.orange}
         $fontColor={COLORS.orange}

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax } from '../../utils/media';
-import CustomBtn from '../../components/common/CustomBtn';
+import CustomLink from '../../components/common/CustomLink';
 import hanwha_wordmark from '../../assets/logo/hanwha_wordmark.png';
 import { login } from '../../services/auth';
 import { changeUserInfo } from '../../store/user';
@@ -243,7 +243,7 @@ const LoginPage = () => {
           <br />
           우리 같이 한화 이글스 응원하러 가요!
         </JoinText>
-        <CustomBtn
+        <CustomLink
           to="/register"
           $border={COLORS.grey}
           $fontColor={COLORS.white}

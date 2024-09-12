@@ -3,7 +3,7 @@ import styled, { keyframes } from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax } from '../../utils/media';
-import CustomBtn from '../../components/common/CustomBtn';
+import CustomLink from '../../components/common/CustomLink';
 import vote_end from '../../assets/vote/vote_end.png';
 
 const fadeIn = keyframes`
@@ -84,7 +84,7 @@ const VoteEnd = () => {
         <TitleText>모든 투표가 끝났어요.</TitleText>
         <VoteImg src={vote_end} alt="투표 종료" />
         <SubText>수리들이 뽑은 선수들의 순위를 확인하러 갈까요?</SubText>
-        <CustomBtn
+        <CustomLink
           to="/vote/result"
           $border={COLORS.orange}
           $fontColor={COLORS.orange}

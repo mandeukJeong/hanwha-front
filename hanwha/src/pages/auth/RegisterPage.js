@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax } from '../../utils/media';
-import CustomBtn from '../../components/common/CustomBtn';
+import CustomLink from '../../components/common/CustomLink';
 import hanwha_wordmark from '../../assets/logo/hanwha_wordmark.png';
 import { register } from '../../services/auth';
 
@@ -239,7 +239,7 @@ const RegisterPage = () => {
           </SubmitBtn>
         </FormWrap>
         <LoginText>이미 회원이신가요?</LoginText>
-        <CustomBtn
+        <CustomLink
           to="/login"
           $border={COLORS.grey}
           $fontColor={COLORS.white}

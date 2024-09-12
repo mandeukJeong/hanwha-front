@@ -4,7 +4,7 @@ import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax, mediaMin } from '../../utils/media';
 import useIntersectionObserver from '../../hooks/useIntersectionObserver';
-import CustomBtn from '../common/CustomBtn';
+import CustomLink from '../common/CustomLink';
 import gallery_1 from '../../assets/common/gallery_1.JPG';
 import gallery_2 from '../../assets/common/gallery_2.JPG';
 import gallery_3 from '../../assets/common/gallery_3.JPG';
@@ -183,7 +183,7 @@ const GalleryWrap = () => {
           <br />
           나중에 소중한 추억 상자가 될 거예요.
         </p>
-        <CustomBtn
+        <CustomLink
           to="/gallery"
           $border={COLORS.orange}
           $fontColor={COLORS.orange}

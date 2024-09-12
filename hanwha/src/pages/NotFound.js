@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { COLORS } from '../constants/colors';
 import { SIZES } from '../constants/size';
 import { mediaMax } from '../utils/media';
-import CustomBtn from '../components/common/CustomBtn';
+import CustomLink from '../components/common/CustomLink';
 import alert from '../assets/common/alert.png';
 
 const MainWrap = styled.main`
@@ -64,7 +64,7 @@ const NotFound = () => {
           <br />
           페이지의 주소가 변경 혹은 서버에서 삭제되었을 수 있습니다.
         </p>
-        <CustomBtn
+        <CustomLink
           to="/"
           $border={COLORS.grey}
           $fontColor={COLORS.white}

@@ -4,7 +4,7 @@ import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax, mediaMin } from '../../utils/media';
 import useIntersectionObserver from '../../hooks/useIntersectionObserver';
-import CustomBtn from '../common/CustomBtn';
+import CustomLink from '../common/CustomLink';
 import chat from '../../assets/home/chat.png';
 
 const fadeInUp = `
@@ -136,7 +136,7 @@ const ChatWrap = () => {
           <br />
           수리들과 함께 경기를 즐기고 누구보다 열심히 응원해요!
         </p>
-        <CustomBtn
+        <CustomLink
           to="/chat"
           $border={COLORS.grey}
           $fontColor={COLORS.white}
