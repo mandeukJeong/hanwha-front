@@ -5,7 +5,9 @@ import { SIZES } from '../../constants/size';
 import { mediaMax } from '../../utils/media';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { useSelector } from 'react-redux';
 import CustomBtn from '../../components/common/CustomBtn';
+import Alert from '../../components/common/Alert';
 
 const MainWrap = styled.main`
   color: ${COLORS.white};
@@ -135,6 +137,7 @@ const SubmitBtn = styled.button`
 `;
 
 const GalleryWritePage = () => {
+  const modal = useSelector((state) => state.modal);
   const [showTitles, setShowTitles] = useState([]);
 
   const handleAddImages = (e) => {
@@ -153,51 +156,54 @@ const GalleryWritePage = () => {
   };
 
   return (
-    <MainWrap>
-      <h1>수리가 만든 추억을 공유해주세요!</h1>
-      <FormWrap>
-        <FormInput type="text" placeholder="제목" />
-        <FormLabel htmlFor="input-file" onChange={handleAddImages}>
-          <span>첨부파일</span>
-          <input id="input-file" type="file" accept="image/*" />
-        </FormLabel>
-        <FileWrap>
-          {showTitles.map((item, i) => (
-            <FileTitle key={i}>
-              <p>{item}</p>
-              <FontAwesomeIcon
-                icon={faXmark}
-                size="lg"
-                onClick={() => handleDeleteImages(i)}
-              />
-            </FileTitle>
-          ))}
-        </FileWrap>
-        <AlertWrap>
-          <p>
-            * 음란, 폭력, 정치적인 내용의 이미지가 포함되었을 경우,
-            <br />
-            관리자에 의해 해당 게시글이 비공개 처리될 수 있습니다.
-          </p>
-          <p>* JPG, PNG만 등록 가능합니다.</p>
-        </AlertWrap>
-        <SubmitBtn type="submit">
-          <CustomBtn
-            $border={COLORS.grey}
-            $fontColor={COLORS.white}
-            $bgColor={COLORS.orange}
-            text="파일 등록"
-          />
-        </SubmitBtn>
-      </FormWrap>
-      <CustomBtn
-        to="/gallery"
-        $border={COLORS.grey}
-        $fontColor={COLORS.white}
-        $bgColor={COLORS.orange}
-        text="GO TO LIST"
-      />
-    </MainWrap>
+    <>
+      <MainWrap>
+        <h1>수리가 만든 추억을 공유해주세요!</h1>
+        <FormWrap>
+          <FormInput type="text" placeholder="제목" />
+          <FormLabel htmlFor="input-file" onChange={handleAddImages}>
+            <span>첨부파일</span>
+            <input id="input-file" type="file" accept="image/*" />
+          </FormLabel>
+          <FileWrap>
+            {showTitles.map((item, i) => (
+              <FileTitle key={i}>
+                <p>{item}</p>
+                <FontAwesomeIcon
+                  icon={faXmark}
+                  size="lg"
+                  onClick={() => handleDeleteImages(i)}
+                />
+              </FileTitle>
+            ))}
+          </FileWrap>
+          <AlertWrap>
+            <p>
+              * 음란, 폭력, 정치적인 내용의 이미지가 포함되었을 경우,
+              <br />
+              관리자에 의해 해당 게시글이 비공개 처리될 수 있습니다.
+            </p>
+            <p>* JPG, PNG만 등록 가능합니다.</p>
+          </AlertWrap>
+          <SubmitBtn type="submit">
+            <CustomBtn
+              $border={COLORS.grey}
+              $fontColor={COLORS.white}
+              $bgColor={COLORS.orange}
+              text="파일 등록"
+            />
+          </SubmitBtn>
+        </FormWrap>
+        <CustomBtn
+          to="/gallery"
+          $border={COLORS.grey}
+          $fontColor={COLORS.white}
+          $bgColor={COLORS.orange}
+          text="GO TO LIST"
+        />
+      </MainWrap>
+      {modal.isOpen && <Alert />}
+    </>
   );
 };
 
