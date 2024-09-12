@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax } from '../../utils/media';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import CustomBtn from '../../components/common/CustomBtn';
 
 const MainWrap = styled.main`
@@ -13,13 +15,13 @@ const MainWrap = styled.main`
   align-items: center;
   justify-content: center;
   padding: 50px;
-  height: calc(100vh - 176px);
+  min-height: calc(100vh - 176px);
   ${mediaMax.medium`
-    height: calc(100vh - 345px);
+    min-height: calc(100vh - 345px);
   `};
   ${mediaMax.small`
     padding: 30px;
-    height: calc(100vh - 136px);
+    min-height: calc(100vh - 136px);
   `};
   h1 {
     font-weight: 700;
@@ -55,13 +57,56 @@ const FormInput = styled.input`
     padding: 18px;
     margin-bottom: 20px;
   `};
-  &::placeholder,
-  &[type='file'] {
+  &::placeholder {
     color: ${COLORS.grey};
     font-weight: 700;
   }
-  &::file-selector-button {
+`;
+const FormLabel = styled.label`
+  display: flex;
+  align-items: center;
+  text-align: start;
+  border: none;
+  background-color: ${COLORS.dark};
+  font-weight: 700;
+  color: ${COLORS.grey};
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 30px;
+  ${mediaMax.small`
+    padding: 18px;
+    margin-bottom: 20px;
+  `};
+  span {
+    font-size: ${SIZES.ltsmall};
+    ${mediaMax.small`
+      font-size: ${SIZES.mbmedium};
+    `};
+  }
+  input {
     display: none;
+  }
+`;
+const FileWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+`;
+const FileTitle = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: ${COLORS.white};
+  font-size: ${SIZES.ltsmall};
+  margin-bottom: 5px;
+  ${mediaMax.small`
+    font-size: ${SIZES.mbmedium};
+  `};
+  &:last-child {
+    margin-bottom: 30px;
+    ${mediaMax.small`
+      margin-bottom: 20px;
+    `};
   }
 `;
 const AlertWrap = styled.div`
@@ -90,12 +135,44 @@ const SubmitBtn = styled.button`
 `;
 
 const GalleryWritePage = () => {
+  const [showTitles, setShowTitles] = useState([]);
+
+  const handleAddImages = (e) => {
+    const imageLists = e.target.files;
+    let imageTitleLists = [...showTitles];
+
+    for (let i = 0; i < imageLists.length; i++) {
+      const currentImageTitle = imageLists[i].name;
+      imageTitleLists.push(currentImageTitle);
+    }
+    setShowTitles(imageTitleLists);
+  };
+
+  const handleDeleteImages = (id) => {
+    setShowTitles(showTitles.filter((_, index) => index !== id));
+  };
+
   return (
     <MainWrap>
       <h1>수리가 만든 추억을 공유해주세요!</h1>
       <FormWrap>
         <FormInput type="text" placeholder="제목" />
-        <FormInput type="file" placeholder="첨부파일" />
+        <FormLabel htmlFor="input-file" onChange={handleAddImages}>
+          <span>첨부파일</span>
+          <input id="input-file" type="file" accept="image/*" />
+        </FormLabel>
+        <FileWrap>
+          {showTitles.map((item, i) => (
+            <FileTitle key={i}>
+              <p>{item}</p>
+              <FontAwesomeIcon
+                icon={faXmark}
+                size="lg"
+                onClick={() => handleDeleteImages(i)}
+              />
+            </FileTitle>
+          ))}
+        </FileWrap>
         <AlertWrap>
           <p>
             * 음란, 폭력, 정치적인 내용의 이미지가 포함되었을 경우,
