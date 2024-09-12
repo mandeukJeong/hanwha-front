@@ -6,12 +6,17 @@ const modal = createSlice({
     isOpen: false,
     modalText: '',
     modalBtnText: '',
+    modalToLink: null,
   },
   reducers: {
-    changeModalInfo(state, { payload: { isOpen, modalText, modalBtnText } }) {
+    changeModalInfo(
+      state,
+      { payload: { isOpen, modalText, modalBtnText, modalToLink } }
+    ) {
       state.isOpen = isOpen;
       state.modalText = modalText;
       state.modalBtnText = modalBtnText;
+      state.modalToLink = modalToLink;
     },
   },
 });

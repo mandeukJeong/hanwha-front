@@ -57,6 +57,7 @@ const Alert = () => {
         isOpen: false,
         modalText: '',
         modalBtnText: '',
+        modalToLink: null,
       })
     );
   };
@@ -71,6 +72,7 @@ const Alert = () => {
             $fontColor={COLORS.white}
             $bgColor={COLORS.orange}
             text={modal.modalBtnText}
+            to={modal.modalToLink}
           />
         </ModalBtn>
       </ModalContent>

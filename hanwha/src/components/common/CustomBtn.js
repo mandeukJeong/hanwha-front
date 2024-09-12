@@ -45,13 +45,16 @@ const Button = styled.button`
   `};
 `;
 
-const CustomBtn = ({ $border, $fontColor, $bgColor, text, type }) => {
+const CustomBtn = ({ $border, $fontColor, $bgColor, text, type, onClick }) => {
   return (
     <Button
       type={type}
       $border={$border}
       $fontColor={$fontColor}
       $bgColor={$bgColor}
+      onClick={(e) => {
+        onClick(e);
+      }}
     >
       {text}
     </Button>

@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeModalInfo } from '../../store/modal';
+import { postGalleryImages } from '../../services/gallery';
 import Alert from '../../components/common/Alert';
 import CustomBtn from '../../components/common/CustomBtn';
 import CustomLink from '../../components/common/CustomLink';
@@ -136,22 +137,22 @@ const AlertWrap = styled.div`
 const GalleryWritePage = () => {
   const modal = useSelector((state) => state.modal);
   const dispatch = useDispatch();
-  const [showTitles, setShowTitles] = useState([]);
+  const [imageFile, setImageFile] = useState([]);
   const [title, setTitle] = useState('');
 
   const handleAddImages = (e) => {
     const imageLists = e.target.files;
-    let imageTitleLists = [...showTitles];
+    let imageFileLists = [...imageFile];
 
     for (let i = 0; i < imageLists.length; i++) {
-      const currentImageTitle = imageLists[i].name;
-      imageTitleLists.push(currentImageTitle);
+      imageFileLists.push(imageLists[i]);
     }
-    setShowTitles(imageTitleLists);
+
+    setImageFile(imageFileLists);
   };
 
   const handleDeleteImages = (id) => {
-    setShowTitles(showTitles.filter((_, index) => index !== id));
+    setImageFile(imageFile.filter((_, index) => index !== id));
   };
 
   const onChange = (e) => {
@@ -173,7 +174,7 @@ const GalleryWritePage = () => {
       return;
     }
 
-    if (showTitles.length === 0) {
+    if (imageFile.length === 0) {
       dispatch(
         changeModalInfo({
           isOpen: true,
@@ -184,6 +185,27 @@ const GalleryWritePage = () => {
 
       return;
     }
+
+    const formData = new FormData();
+
+    for (let i = 0; i < imageFile.length; i++) {
+      formData.append('files', imageFile[i]);
+    }
+
+    postGalleryImages(formData)
+      .then((response) => {
+        if (response.status === 200) {
+          dispatch(
+            changeModalInfo({
+              isOpen: true,
+              modalText: '업로드가 완료되었습니다.',
+              modalBtnText: '확인',
+              modalToLink: '/gallery',
+            })
+          );
+        }
+      })
+      .catch((e) => console.log(e));
   };
 
   return (
@@ -197,14 +219,19 @@ const GalleryWritePage = () => {
             value={title}
             onChange={onChange}
           />
-          <FormLabel htmlFor="input-file" onChange={handleAddImages}>
+          <FormLabel htmlFor="input-file">
             <span>첨부파일 등록</span>
-            <input id="input-file" type="file" accept="image/png, image/jpeg" />
+            <input
+              id="input-file"
+              type="file"
+              accept="image/png, image/jpeg"
+              onChange={handleAddImages}
+            />
           </FormLabel>
           <FileWrap>
-            {showTitles.map((item, i) => (
+            {imageFile.map((item, i) => (
               <FileTitle key={i}>
-                <p>{item}</p>
+                <p>{item.name}</p>
                 <FontAwesomeIcon
                   icon={faXmark}
                   size="lg"
@@ -219,7 +246,7 @@ const GalleryWritePage = () => {
               <br />
               관리자에 의해 해당 게시글이 비공개 처리될 수 있습니다.
             </p>
-            <p>* JPG, PNG만 등록 가능합니다.</p>
+            <p>* JPG, JPEG, PNG만 등록 가능합니다.</p>
           </AlertWrap>
           <CustomBtn
             type="submit"
@@ -227,6 +254,7 @@ const GalleryWritePage = () => {
             $fontColor={COLORS.white}
             $bgColor={COLORS.orange}
             text="파일 등록"
+            onClick={onSubmit}
           />
         </FormWrap>
         <CustomLink
