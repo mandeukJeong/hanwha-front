@@ -192,6 +192,32 @@ const GalleryWritePage = () => {
       formData.append('files', imageFile[i]);
     }
 
+    formData.append('title', title);
+
+    const date = new Date();
+
+    const formattedDate = date
+      .toLocaleDateString('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .replace(/\./g, '.')
+      .trim();
+
+    const formattedTime = date
+      .toLocaleTimeString('ko-KR', {
+        hour12: false,
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+      })
+      .split(':')
+      .map((unit) => unit.padStart(2, '0'))
+      .join(':');
+
+    formData.append('date', `${formattedDate} ${formattedTime}`);
+
     postGalleryImages(formData)
       .then((response) => {
         if (response.status === 200) {
