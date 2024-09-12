@@ -26,11 +26,18 @@ const ModalContent = styled.div`
   width: 500px;
   height: 300px;
   gap: 50px;
+  ${mediaMax.small`
+    width: 300px;
+    height: 250px;
+  `};
 `;
 const ModalText = styled.p`
   color: ${COLORS.white};
-  font-size: ${SIZES.ltsmall};
   font-weight: 500;
+  font-size: ${SIZES.ltsmall};
+  ${mediaMax.small`
+    font-size: ${SIZES.tbmedium};
+  `};
 `;
 const ModalBtn = styled.button`
   border: none;
