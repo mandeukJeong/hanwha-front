@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
@@ -160,6 +160,7 @@ const PageBtn = styled.button`
 `;
 
 const GalleryListPage = () => {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [imageLists, setImageLists] = useState(null);
   const [totalPages, setTotalpages] = useState(0);
@@ -169,7 +170,7 @@ const GalleryListPage = () => {
   const endPage = Math.min(startPage + 4, totalPages);
 
   useEffect(() => {
-    getGalleryImages(searchParams.get('pages'), order, 1)
+    getGalleryImages(searchParams.get('pages'), order, 9)
       .then((response) => {
         setImageLists(response.data.imageLists);
         setTotalpages(response.data.totalPages);
@@ -192,6 +193,10 @@ const GalleryListPage = () => {
     });
   };
 
+  const onClickNavigate = (id) => {
+    navigate(`/gallery/post/${id}`);
+  };
+
   return (
     <MainWrap>
       <TitleSection>
@@ -206,7 +211,10 @@ const GalleryListPage = () => {
         <GalleryWrap>
           {imageLists &&
             imageLists.map((item) => (
-              <ImageCard key={item._id}>
+              <ImageCard
+                key={item._id}
+                onClick={() => onClickNavigate(item._id)}
+              >
                 <GalleryImage
                   src={item.imgUrl[0]}
                   alt={`${item.title} 이미지`}

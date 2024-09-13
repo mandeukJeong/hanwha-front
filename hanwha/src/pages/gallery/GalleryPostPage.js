@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax } from '../../utils/media';
+import CustomBtn from '../../components/common/CustomBtn';
 import CustomLink from '../../components/common/CustomLink';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
-import gallery_1 from '../../assets/common/gallery_1.JPG';
-import gallery_2 from '../../assets/common/gallery_2.JPG';
-import gallery_3 from '../../assets/common/gallery_3.JPG';
+import { getPostDetail } from '../../services/gallery';
 
 const MainWrap = styled.main`
   color: ${COLORS.white};
@@ -72,42 +72,59 @@ const LinkWrap = styled.div`
 `;
 
 const GalleryPostPage = () => {
+  const params = useParams();
+  const navigate = useNavigate();
+  const [content, setContent] = useState(null);
+
+  useEffect(() => {
+    getPostDetail(params.id)
+      .then((response) => {
+        setContent(response.data);
+      })
+      .catch((e) => console.log(e));
+  }, [params.id]);
+
   return (
     <MainWrap>
-      <h1>2024 스트링 캠프</h1>
-      <MainSection>
-        <ImageWrap>
-          <img src={gallery_1} alt="갤러리 이미지" />
-          <img src={gallery_2} alt="갤러리 이미지" />
-          <img src={gallery_3} alt="갤러리 이미지" />
-        </ImageWrap>
-        <WriterWrap>
-          <p>2024.03.24 16:03:24</p>
-          <span>만득이</span>
-        </WriterWrap>
-        <LinkWrap>
-          <CustomLink
-            to="/"
-            $border="#F32121"
-            $fontColor="#F32121"
-            $bgColor="#F32121"
-            text={
-              <>
-                <FontAwesomeIcon icon={faHeart} />
-                &nbsp;&nbsp;
-                {' 120'}
-              </>
-            }
-          />
-          <CustomLink
-            to="/gallery/list"
-            $border={COLORS.grey}
-            $fontColor={COLORS.white}
-            $bgColor={COLORS.orange}
-            text="GO TO LIST"
-          />
-        </LinkWrap>
-      </MainSection>
+      {content && (
+        <>
+          <h1>{content.title}</h1>
+          <MainSection>
+            <ImageWrap>
+              {content.imgUrl &&
+                content.imgUrl.map((item, i) => (
+                  <img key={i} src={item} alt={`갤러리 이미지 ${i}`} />
+                ))}
+            </ImageWrap>
+            <WriterWrap>
+              <p>{content.date}</p>
+              <span>{content.nickname}</span>
+            </WriterWrap>
+            <LinkWrap>
+              <CustomLink
+                to="/"
+                $border="#F32121"
+                $fontColor="#F32121"
+                $bgColor="#F32121"
+                text={
+                  <>
+                    <FontAwesomeIcon icon={faHeart} />
+                    &nbsp;&nbsp;
+                    {` ${content.heart}`}
+                  </>
+                }
+              />
+              <CustomBtn
+                onClick={() => navigate(-1)}
+                $border={COLORS.grey}
+                $fontColor={COLORS.white}
+                $bgColor={COLORS.orange}
+                text="GO TO LIST"
+              />
+            </LinkWrap>
+          </MainSection>
+        </>
+      )}
     </MainWrap>
   );
 };

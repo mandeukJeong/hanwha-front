@@ -19,3 +19,12 @@ export const getGalleryImages = async (pageNum, order, renderNum) => {
   });
   return response;
 };
+
+export const getPostDetail = async (id) => {
+  const response = await privateApi.get('/gallery/detail', {
+    params: {
+      id,
+    },
+  });
+  return response;
+};

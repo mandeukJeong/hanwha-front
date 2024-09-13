@@ -73,7 +73,7 @@ const App = () => {
           <Route path="/vote/rank" element={<VoteRank />} />
           <Route path="/gallery" element={<GalleryPage />} />
           <Route path="/gallery/list" element={<GalleryListPage />} />
-          <Route path="/gallery/post" element={<GalleryPostPage />} />
+          <Route path="/gallery/post/:id" element={<GalleryPostPage />} />
           <Route path="/gallery/write" element={<GalleryWritePage />} />
           <Route path="/chat" element={<ChatPage />} />
           <Route path="/chat/new" element={<NewChat />} />
