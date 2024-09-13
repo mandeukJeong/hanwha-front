@@ -28,3 +28,8 @@ export const getPostDetail = async (id) => {
   });
   return response;
 };
+
+export const increaseHeart = async (id) => {
+  const response = await privateApi.put(`/gallery/heart?id=${id}`);
+  return response;
+};

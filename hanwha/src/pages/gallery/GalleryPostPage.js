@@ -5,10 +5,9 @@ import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax } from '../../utils/media';
 import CustomBtn from '../../components/common/CustomBtn';
-import CustomLink from '../../components/common/CustomLink';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
-import { getPostDetail } from '../../services/gallery';
+import { getPostDetail, increaseHeart } from '../../services/gallery';
 
 const MainWrap = styled.main`
   color: ${COLORS.white};
@@ -84,6 +83,19 @@ const GalleryPostPage = () => {
       .catch((e) => console.log(e));
   }, [params.id]);
 
+  const updateHeart = () => {
+    increaseHeart(params.id)
+      .then(
+        setContent((prevState) => {
+          return {
+            ...prevState,
+            heart: content.heart + 1,
+          };
+        })
+      )
+      .catch((e) => console.log(e));
+  };
+
   return (
     <MainWrap>
       {content && (
@@ -101,8 +113,8 @@ const GalleryPostPage = () => {
               <span>{content.nickname}</span>
             </WriterWrap>
             <LinkWrap>
-              <CustomLink
-                to="/"
+              <CustomBtn
+                onClick={updateHeart}
                 $border="#F32121"
                 $fontColor="#F32121"
                 $bgColor="#F32121"
