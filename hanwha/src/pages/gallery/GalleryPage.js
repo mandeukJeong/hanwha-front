@@ -146,7 +146,7 @@ const GalleryPage = () => {
         <NavigateWrap>
           <p>더 많은 추억을 보러가고 싶으신가요?</p>
           <CustomLink
-            to="/gallery/list"
+            to="/gallery/list?pages=1"
             $border={COLORS.grey}
             $fontColor={COLORS.white}
             $bgColor={COLORS.orange}

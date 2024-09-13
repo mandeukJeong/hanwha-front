@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
@@ -159,42 +160,35 @@ const PageBtn = styled.button`
 `;
 
 const GalleryListPage = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [imageLists, setImageLists] = useState(null);
-  const [pagination, setPagination] = useState({
-    totalPages: 0,
-    currentPage: 1,
-  });
+  const [totalPages, setTotalpages] = useState(0);
   const [order, setOrder] = useState('heart');
 
-  const startPage = Math.floor((pagination.currentPage - 1) / 5) * 5 + 1;
-  const endPage = Math.min(startPage + 4, pagination.totalPages);
+  const startPage = Math.floor((searchParams.get('pages') - 1) / 5) * 5 + 1;
+  const endPage = Math.min(startPage + 4, totalPages);
 
   useEffect(() => {
-    getGalleryImages(pagination.currentPage, order, 9)
+    getGalleryImages(searchParams.get('pages'), order, 1)
       .then((response) => {
         setImageLists(response.data.imageLists);
-        setPagination((prevState) => {
-          return { ...prevState, totalPages: response.data.totalPages };
-        });
+        setTotalpages(response.data.totalPages);
       })
       .catch((e) => console.log(e));
-  }, [order, pagination.currentPage]);
+  }, [order, searchParams]);
 
   const onChange = (e) => {
     setOrder(e.target.value);
   };
 
   const onChangeCurrentPage = (currentPage) => {
-    setPagination((prevState) => {
-      return {
-        ...prevState,
-        currentPage:
-          currentPage < 1
-            ? 1
-            : currentPage > pagination.totalPages
-            ? pagination.totalPages
-            : currentPage,
-      };
+    setSearchParams({
+      pages:
+        currentPage < 1
+          ? 1
+          : currentPage > totalPages
+          ? totalPages
+          : currentPage,
     });
   };
 
@@ -228,19 +222,20 @@ const GalleryListPage = () => {
         <PageWrap>
           <FontAwesomeIcon
             icon={faChevronLeft}
-            onClick={() => onChangeCurrentPage(pagination.currentPage - 1)}
+            onClick={() => onChangeCurrentPage(searchParams.get('pages') - 1)}
           />
-          {[...Array(endPage - startPage + 1)].map((_, index) => (
-            <PageBtn
-              key={startPage + index}
-              onClick={() => onChangeCurrentPage(startPage + index)}
-            >
-              {startPage + index}
-            </PageBtn>
-          ))}
+          {endPage - startPage + 1 > 0 &&
+            [...Array(endPage - startPage + 1)].map((_, index) => (
+              <PageBtn
+                key={startPage + index}
+                onClick={() => onChangeCurrentPage(startPage + index)}
+              >
+                {startPage + index}
+              </PageBtn>
+            ))}
           <FontAwesomeIcon
             icon={faChevronRight}
-            onClick={() => onChangeCurrentPage(pagination.currentPage + 1)}
+            onClick={() => onChangeCurrentPage(searchParams.get('pages') + 1)}
           />
         </PageWrap>
       </section>
