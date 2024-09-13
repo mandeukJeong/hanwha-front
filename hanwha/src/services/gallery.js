@@ -8,3 +8,14 @@ export const postGalleryImages = async (formData) => {
   });
   return response;
 };
+
+export const getGalleryImages = async (pageNum, order, renderNum) => {
+  const response = await privateApi.get('/gallery/lists', {
+    params: {
+      pageNum,
+      order,
+      renderNum,
+    },
+  });
+  return response;
+};

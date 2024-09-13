@@ -1,13 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax, mediaMin } from '../../utils/media';
 import CustomLink from '../../components/common/CustomLink';
-import gallery_1 from '../../assets/common/gallery_1.JPG';
-import gallery_2 from '../../assets/common/gallery_2.JPG';
-import gallery_3 from '../../assets/common/gallery_3.JPG';
-import gallery_4 from '../../assets/common/gallery_4.jpg';
+import { getGalleryImages } from '../../services/gallery';
 
 const MainWrap = styled.main`
   color: ${COLORS.white};
@@ -107,6 +104,14 @@ const NavigateWrap = styled.div`
 `;
 
 const GalleryPage = () => {
+  const [imageLists, setImageLists] = useState(null);
+
+  useEffect(() => {
+    getGalleryImages(1, 'heart', 4)
+      .then((response) => setImageLists(response.data.imageLists))
+      .catch((e) => console.log(e));
+  }, []);
+
   return (
     <MainWrap>
       <TitleSection>
@@ -125,38 +130,17 @@ const GalleryPage = () => {
       </TitleSection>
       <section>
         <ImageWrap>
-          <ImageCard>
-            <GalleryImg src={gallery_1} alt="대표 이미지1" />
-            <GalleryText>
-              <h2>한화 vs KIA</h2>
-              <p>2024.06.23 18:00:49</p>
-              <p>만득이</p>
-            </GalleryText>
-          </ImageCard>
-          <ImageCard>
-            <GalleryImg src={gallery_2} alt="대표 이미지2" />
-            <GalleryText>
-              <h2>한화 vs 두산</h2>
-              <p>2024.06.26 16:12:34</p>
-              <p>만득이</p>
-            </GalleryText>
-          </ImageCard>
-          <ImageCard>
-            <GalleryImg src={gallery_3} alt="대표 이미지3" />
-            <GalleryText>
-              <h2>한화 vs 두산</h2>
-              <p>2024.06.28 14:03:24</p>
-              <p>만득이</p>
-            </GalleryText>
-          </ImageCard>
-          <ImageCard>
-            <GalleryImg src={gallery_4} alt="대표 이미지3" />
-            <GalleryText>
-              <h2>2024 스프링 캠프</h2>
-              <p>2024.03.24 16:03:24</p>
-              <p>만득이</p>
-            </GalleryText>
-          </ImageCard>
+          {imageLists &&
+            imageLists.map((item, i) => (
+              <ImageCard key={item._id}>
+                <GalleryImg src={item.imgUrl[0]} alt={`대표 이미지 ${i + 1}`} />
+                <GalleryText>
+                  <h2>{item.title}</h2>
+                  <p>{item.date}</p>
+                  <p>{item.nickname}</p>
+                </GalleryText>
+              </ImageCard>
+            ))}
         </ImageWrap>
         <NavigateWrap>
           <p>더 많은 추억을 보러가고 싶으신가요?</p>
