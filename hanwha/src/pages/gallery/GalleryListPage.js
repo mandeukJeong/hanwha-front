@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
@@ -8,10 +8,8 @@ import {
   faChevronLeft,
   faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
+import { getGalleryImages } from '../../services/gallery';
 import chevron from '../../assets/gallery/chevron.png';
-import gallery_1 from '../../assets/common/gallery_1.JPG';
-import gallery_2 from '../../assets/common/gallery_2.JPG';
-import gallery_3 from '../../assets/common/gallery_3.JPG';
 
 const MainWrap = styled.main`
   color: ${COLORS.white};
@@ -81,6 +79,11 @@ const GalleryImage = styled.img`
   width: 100%;
   display: block;
   border-radius: 12px 12px 0 0;
+  object-fit: cover;
+  height: 35vh;
+  ${mediaMax.medium`
+    height: 15vh;
+  `};
 `;
 const GalleryText = styled.div`
   padding: 20px;
@@ -156,6 +159,18 @@ const PageBtn = styled.button`
 `;
 
 const GalleryListPage = () => {
+  const [imageLists, setImageLists] = useState(null);
+  const [totalNum, setTotalNum] = useState(0);
+
+  useEffect(() => {
+    getGalleryImages(1, 'heart', 9)
+      .then((response) => {
+        setImageLists(response.data.imageLists);
+        setTotalNum(response.totalPages);
+      })
+      .catch((e) => console.log(e));
+  }, []);
+
   return (
     <MainWrap>
       <TitleSection>
@@ -168,86 +183,26 @@ const GalleryListPage = () => {
       </TitleSection>
       <section>
         <GalleryWrap>
-          <ImageCard>
-            <GalleryImage src={gallery_1} alt="갤러리 이미지" />
-            <GalleryText>
-              <h2>한화 vs KIA</h2>
-              <p>2024.06.23 18:00:49</p>
-              <p>만득이</p>
-            </GalleryText>
-          </ImageCard>
-          <ImageCard>
-            <GalleryImage src={gallery_2} alt="갤러리 이미지" />
-            <GalleryText>
-              <h2>한화 vs 두산</h2>
-              <p>2024.06.26 16:12:34</p>
-              <p>만득이</p>
-            </GalleryText>
-          </ImageCard>
-          <ImageCard>
-            <GalleryImage src={gallery_3} alt="갤러리 이미지" />
-            <GalleryText>
-              <h2>한화 vs 두산</h2>
-              <p>2024.06.28 14:03:24</p>
-              <p>만득이</p>
-            </GalleryText>
-          </ImageCard>
-          <ImageCard>
-            <GalleryImage src={gallery_1} alt="갤러리 이미지" />
-            <GalleryText>
-              <h2>한화 vs KIA</h2>
-              <p>2024.06.23 18:00:49</p>
-              <p>만득이</p>
-            </GalleryText>
-          </ImageCard>
-          <ImageCard>
-            <GalleryImage src={gallery_2} alt="갤러리 이미지" />
-            <GalleryText>
-              <h2>한화 vs 두산</h2>
-              <p>2024.06.26 16:12:34</p>
-              <p>만득이</p>
-            </GalleryText>
-          </ImageCard>
-          <ImageCard>
-            <GalleryImage src={gallery_3} alt="갤러리 이미지" />
-            <GalleryText>
-              <h2>한화 vs 두산</h2>
-              <p>2024.06.28 14:03:24</p>
-              <p>만득이</p>
-            </GalleryText>
-          </ImageCard>
-          <ImageCard>
-            <GalleryImage src={gallery_1} alt="갤러리 이미지" />
-            <GalleryText>
-              <h2>한화 vs KIA</h2>
-              <p>2024.06.23 18:00:49</p>
-              <p>만득이</p>
-            </GalleryText>
-          </ImageCard>
-          <ImageCard>
-            <GalleryImage src={gallery_2} alt="갤러리 이미지" />
-            <GalleryText>
-              <h2>한화 vs 두산</h2>
-              <p>2024.06.26 16:12:34</p>
-              <p>만득이</p>
-            </GalleryText>
-          </ImageCard>
-          <ImageCard>
-            <GalleryImage src={gallery_3} alt="갤러리 이미지" />
-            <GalleryText>
-              <h2>한화 vs 두산</h2>
-              <p>2024.06.28 14:03:24</p>
-              <p>만득이</p>
-            </GalleryText>
-          </ImageCard>
+          {imageLists &&
+            imageLists.map((item) => (
+              <ImageCard key={item._id}>
+                <GalleryImage
+                  src={item.imgUrl[0]}
+                  alt={`${item.title} 이미지`}
+                />
+                <GalleryText>
+                  <h2>{item.title}</h2>
+                  <p>{item.date}</p>
+                  <p>{item.nickname}</p>
+                </GalleryText>
+              </ImageCard>
+            ))}
         </GalleryWrap>
         <PageWrap>
           <FontAwesomeIcon icon={faChevronLeft} />
-          <PageBtn>1</PageBtn>
-          <PageBtn>2</PageBtn>
-          <PageBtn>3</PageBtn>
-          <PageBtn>4</PageBtn>
-          <PageBtn>5</PageBtn>
+          {[...Array(totalNum)].map((_, index) => (
+            <PageBtn key={index + 1}>{index + 1}</PageBtn>
+          ))}
           <FontAwesomeIcon icon={faChevronRight} />
         </PageWrap>
       </section>

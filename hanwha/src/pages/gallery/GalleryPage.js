@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
-import { mediaMax, mediaMin } from '../../utils/media';
+import { mediaMax } from '../../utils/media';
 import CustomLink from '../../components/common/CustomLink';
 import { getGalleryImages } from '../../services/gallery';
 
@@ -45,9 +45,10 @@ const ImageCard = styled.div`
 const GalleryImg = styled.img`
   width: 100%;
   display: block;
-  ${mediaMin.large`
-    height: 45vh;
-    object-fit: cover;
+  height: 45vh;
+  object-fit: cover;
+  ${mediaMax.medium`
+    height: 30vh;
   `};
 `;
 const GalleryText = styled.div`
