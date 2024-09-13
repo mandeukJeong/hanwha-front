@@ -160,25 +160,52 @@ const PageBtn = styled.button`
 
 const GalleryListPage = () => {
   const [imageLists, setImageLists] = useState(null);
-  const [totalNum, setTotalNum] = useState(0);
+  const [pagination, setPagination] = useState({
+    totalPages: 0,
+    currentPage: 1,
+  });
+  const [order, setOrder] = useState('heart');
+
+  const startPage = Math.floor((pagination.currentPage - 1) / 5) * 5 + 1;
+  const endPage = Math.min(startPage + 4, pagination.totalPages);
 
   useEffect(() => {
-    getGalleryImages(1, 'heart', 9)
+    getGalleryImages(pagination.currentPage, order, 9)
       .then((response) => {
         setImageLists(response.data.imageLists);
-        setTotalNum(response.totalPages);
+        setPagination((prevState) => {
+          return { ...prevState, totalPages: response.data.totalPages };
+        });
       })
       .catch((e) => console.log(e));
-  }, []);
+  }, [order, pagination.currentPage]);
+
+  const onChange = (e) => {
+    setOrder(e.target.value);
+  };
+
+  const onChangeCurrentPage = (currentPage) => {
+    setPagination((prevState) => {
+      return {
+        ...prevState,
+        currentPage:
+          currentPage < 1
+            ? 1
+            : currentPage > pagination.totalPages
+            ? pagination.totalPages
+            : currentPage,
+      };
+    });
+  };
 
   return (
     <MainWrap>
       <TitleSection>
         <h1>GALLERY</h1>
-        <SortSelect>
-          <option>HOT</option>
-          <option>LATEST</option>
-          <option>OLDEST</option>
+        <SortSelect onChange={onChange}>
+          <option value="heart">HOT</option>
+          <option value="latest">LATEST</option>
+          <option value="oldest">OLDEST</option>
         </SortSelect>
       </TitleSection>
       <section>
@@ -199,11 +226,22 @@ const GalleryListPage = () => {
             ))}
         </GalleryWrap>
         <PageWrap>
-          <FontAwesomeIcon icon={faChevronLeft} />
-          {[...Array(totalNum)].map((_, index) => (
-            <PageBtn key={index + 1}>{index + 1}</PageBtn>
+          <FontAwesomeIcon
+            icon={faChevronLeft}
+            onClick={() => onChangeCurrentPage(pagination.currentPage - 1)}
+          />
+          {[...Array(endPage - startPage + 1)].map((_, index) => (
+            <PageBtn
+              key={startPage + index}
+              onClick={() => onChangeCurrentPage(startPage + index)}
+            >
+              {startPage + index}
+            </PageBtn>
           ))}
-          <FontAwesomeIcon icon={faChevronRight} />
+          <FontAwesomeIcon
+            icon={faChevronRight}
+            onClick={() => onChangeCurrentPage(pagination.currentPage + 1)}
+          />
         </PageWrap>
       </section>
     </MainWrap>
