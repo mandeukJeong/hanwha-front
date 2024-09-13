@@ -144,7 +144,7 @@ const PageBtn = styled.button`
   padding: 0;
   border: none;
   background-color: inherit;
-  color: ${COLORS.grey};
+  color: ${(props) => (props.$current ? COLORS.white : COLORS.grey)};
   vertical-align: center;
   font-weight: 700;
   height: 20px;
@@ -237,6 +237,12 @@ const GalleryListPage = () => {
               <PageBtn
                 key={startPage + index}
                 onClick={() => onChangeCurrentPage(startPage + index)}
+                $current={
+                  Number(startPage + index) ===
+                  Number(searchParams.get('pages'))
+                    ? true
+                    : false
+                }
               >
                 {startPage + index}
               </PageBtn>
