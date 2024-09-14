@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
@@ -8,6 +8,7 @@ import { ko } from 'date-fns/locale/ko';
 import CustomLink from '../../components/common/CustomLink';
 import chevron from '../../assets/gallery/chevron.png';
 import 'react-datepicker/dist/react-datepicker.css';
+import { getTeamInfo } from '../../services/chat';
 
 const MainWrap = styled.main`
   display: flex;
@@ -46,7 +47,10 @@ const RoomForm = styled.form`
   align-items: center;
 `;
 const TeamImg = styled.div`
-  background-color: ${COLORS.grey};
+  background: ${COLORS.grey};
+  background-image: ${(props) => props.$src && `url(${props.$src})`};
+  background-size: contain;
+  background-repeat: no-repeat;
   border-radius: 50%;
   width: 250px;
   height: 250px;
@@ -110,14 +114,38 @@ const CustomDatePicker = styled(DatePicker)`
 `;
 const NewChat = () => {
   const [startDate, setStartDate] = useState(new Date());
+  const [teamList, setTeamList] = useState(null);
+  const [selectedTeam, setSelectedTeam] = useState('');
+
+  useEffect(() => {
+    getTeamInfo()
+      .then((response) => setTeamList(response.data))
+      .catch((e) => console.log(e));
+  }, []);
+
+  const onChange = (e) => {
+    const anotherTeam = teamList.filter(
+      (item) => item.teamCd === e.target.value
+    );
+    setSelectedTeam(anotherTeam[0].emblem);
+  };
+
   return (
     <MainWrap>
       <MainSection>
         <h1>안녕하세요, 관리자님!</h1>
         <RoomForm>
-          <TeamImg></TeamImg>
-          <TeamSelect>
+          <TeamImg $src={selectedTeam} />
+          <TeamSelect onChange={onChange}>
             <option>TEAM</option>
+            {teamList &&
+              teamList
+                .filter((item) => item.teamCd !== 'HH')
+                .map((item) => (
+                  <option key={item.teamCd} value={item.teamCd}>
+                    {item.teamNm}
+                  </option>
+                ))}
           </TeamSelect>
           <CustomDatePicker
             locale={ko}
