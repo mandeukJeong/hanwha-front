@@ -13,3 +13,8 @@ export const makeChatRoom = async (ourTeam, vsTeam, startDate) => {
   });
   return response;
 };
+
+export const getChatRoomList = async () => {
+  const response = await privateApi.get('/chat/list');
+  return response;
+};

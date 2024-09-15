@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax } from '../../utils/media';
 import CustomLink from '../../components/common/CustomLink';
-import lg_logo from '../../assets/chat/lg_logo.png';
-// import alert from '../../assets/common/alert.png';
+import { getChatRoomList } from '../../services/chat';
+import alert from '../../assets/common/alert.png';
 
 const MainWrap = styled.main`
   color: ${COLORS.white};
@@ -107,38 +107,46 @@ const ScheduleWrap = styled.div`
     `};
   }
 `;
-// const NoRoomWrap = styled.div`
-//   text-align: center;
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   background-color: ${COLORS.dark};
-//   border-radius: 10px;
-//   box-shadow: 20px 20px 50px rgba(38, 38, 38, 0.75);
-//   width: 40%;
-//   padding: 50px;
-//   ${mediaMax.medium`
-//     width: 100%;
-//   `};
-//   ${mediaMax.small`
-//     padding: 20px;
-//   `};
-//   p {
-//     font-weight: 600;
-//     font-size: ${SIZES.ltsmall};
-//     ${mediaMax.small`
-//       font-size: ${SIZES.tbsmall};
-//     `};
-//   }
-//   img {
-//     width: 100%;
-//     ${mediaMax.small`
-//       width: 50%;
-//     `};
-//   }
-// `;
+const NoRoomWrap = styled.div`
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: ${COLORS.dark};
+  border-radius: 10px;
+  box-shadow: 20px 20px 50px rgba(38, 38, 38, 0.75);
+  width: 40%;
+  padding: 50px;
+  ${mediaMax.medium`
+    width: 100%;
+  `};
+  ${mediaMax.small`
+    padding: 20px;
+  `};
+  p {
+    font-weight: 600;
+    font-size: ${SIZES.ltsmall};
+    ${mediaMax.small`
+      font-size: ${SIZES.tbsmall};
+    `};
+  }
+  img {
+    width: 100%;
+    ${mediaMax.small`
+      width: 50%;
+    `};
+  }
+`;
 
 const ChatPage = () => {
+  const [chatList, setChatList] = useState(null);
+
+  useEffect(() => {
+    getChatRoomList()
+      .then((response) => setChatList(response.data))
+      .catch((e) => console.log(e));
+  }, []);
+
   return (
     <MainWrap>
       <TitleSection>
@@ -152,61 +160,51 @@ const ChatPage = () => {
         />
       </TitleSection>
       <MainSection>
-        {/* <NoRoomWrap>
-          <p>
-            현재 채팅방이 존재하지 않습니다.
-            <br />
-            새로운 채팅방이 생성될 때까지 기다려주세요!
-          </p>
-          <img src={alert} alt="채팅방 없음" />
-          <CustomLink
-            to="/"
-            $border={COLORS.grey}
-            $fontColor={COLORS.white}
-            $bgColor={COLORS.orange}
-            text="GO TO HOME"
-          />
-        </NoRoomWrap> */}
-        <RoomWrap>
-          <h2>LIVE</h2>
-          <InfoWrap>
-            <ScheduleWrap>
-              <img src={lg_logo} alt="구단 엠블럼" />
-              <div>
-                <p>2024.07.05 18:00</p>
-                <h3>한화 VS LG</h3>
-              </div>
-            </ScheduleWrap>
-            <p>256명</p>
-          </InfoWrap>
-          <CustomLink
-            to="/chat/live"
-            $border={COLORS.grey}
-            $fontColor={COLORS.white}
-            $bgColor={COLORS.orange}
-            text="GO TO ROOM"
-          />
-        </RoomWrap>
-        <RoomWrap>
-          <h2>LIVE</h2>
-          <InfoWrap>
-            <ScheduleWrap>
-              <img src={lg_logo} alt="구단 엠블럼" />
-              <div>
-                <p>2024.07.05 18:00</p>
-                <h3>한화 VS LG</h3>
-              </div>
-            </ScheduleWrap>
-            <p>256명</p>
-          </InfoWrap>
-          <CustomLink
-            to="/chat/live"
-            $border={COLORS.grey}
-            $fontColor={COLORS.white}
-            $bgColor={COLORS.orange}
-            text="GO TO ROOM"
-          />
-        </RoomWrap>
+        {chatList ? (
+          chatList.map((item) => (
+            <RoomWrap>
+              <h2>LIVE</h2>
+              <InfoWrap>
+                <ScheduleWrap>
+                  <img
+                    src={item.vsTeam.emblem}
+                    alt={`${item.vsTeam.teamNm} 엠블럼`}
+                  />
+                  <div>
+                    <p>{item.startDate}</p>
+                    <h3>
+                      {item.ourTeam.teamNm} VS {item.vsTeam.teamNm}
+                    </h3>
+                  </div>
+                </ScheduleWrap>
+                <p>{item.connected}명</p>
+              </InfoWrap>
+              <CustomLink
+                to="/chat/live"
+                $border={COLORS.grey}
+                $fontColor={COLORS.white}
+                $bgColor={COLORS.orange}
+                text="GO TO ROOM"
+              />
+            </RoomWrap>
+          ))
+        ) : (
+          <NoRoomWrap>
+            <p>
+              현재 채팅방이 존재하지 않습니다.
+              <br />
+              새로운 채팅방이 생성될 때까지 기다려주세요!
+            </p>
+            <img src={alert} alt="채팅방 없음" />
+            <CustomLink
+              to="/"
+              $border={COLORS.grey}
+              $fontColor={COLORS.white}
+              $bgColor={COLORS.orange}
+              text="GO TO HOME"
+            />
+          </NoRoomWrap>
+        )}
       </MainSection>
     </MainWrap>
   );
