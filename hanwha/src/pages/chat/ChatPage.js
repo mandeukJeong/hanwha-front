@@ -138,6 +138,25 @@ const NoRoomWrap = styled.div`
   }
 `;
 
+const isSameDate = (date) => {
+  const today = new Date();
+  const inputDate = new Date(date);
+
+  const todayYear = today.getFullYear();
+  const todayMonth = today.getMonth() + 1;
+  const todayDay = today.getDate();
+
+  const inputYear = inputDate.getFullYear();
+  const inputMonth = inputDate.getMonth() + 1;
+  const inputDay = inputDate.getDate();
+
+  return (
+    todayYear === inputYear &&
+    todayMonth === inputMonth &&
+    todayDay === inputDay
+  );
+};
+
 const ChatPage = () => {
   const [chatList, setChatList] = useState(null);
 
@@ -163,7 +182,7 @@ const ChatPage = () => {
         {chatList ? (
           chatList.map((item) => (
             <RoomWrap>
-              <h2>LIVE</h2>
+              {isSameDate(item.startDate) && <h2>LIVE</h2>}
               <InfoWrap>
                 <ScheduleWrap>
                   <img
@@ -180,7 +199,7 @@ const ChatPage = () => {
                 <p>{item.connected}명</p>
               </InfoWrap>
               <CustomLink
-                to="/chat/live"
+                to={`/chat/live/${item._id}`}
                 $border={COLORS.grey}
                 $fontColor={COLORS.white}
                 $bgColor={COLORS.orange}

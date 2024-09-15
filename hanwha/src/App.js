@@ -77,7 +77,7 @@ const App = () => {
           <Route path="/gallery/write" element={<GalleryWritePage />} />
           <Route path="/chat" element={<ChatPage />} />
           <Route path="/chat/new" element={<NewChat />} />
-          <Route path="/chat/live" element={<ChatLive />} />
+          <Route path="/chat/live/:id" element={<ChatLive />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
