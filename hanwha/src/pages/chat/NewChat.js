@@ -161,7 +161,18 @@ const NewChat = () => {
     const date = formatDate(startDate);
 
     makeChatRoom(ourTeam, selectedTeam, date)
-      .then((response) => console.log(response))
+      .then((response) => {
+        if (response.status === 200) {
+          dispatch(
+            changeModalInfo({
+              isOpen: true,
+              modalText: '방이 생성되었습니다.',
+              modalBtnText: '확인',
+              modalToLink: '/chat',
+            })
+          );
+        }
+      })
       .catch((e) => console.log(e));
   };
 
