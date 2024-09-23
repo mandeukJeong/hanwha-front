@@ -170,6 +170,8 @@ const ChatLive = () => {
       removeMember(params.id)
         .then()
         .catch((e) => console.log(e));
+
+      socket.emit('leave-room', params.id);
     };
   }, [params.id]);
 
