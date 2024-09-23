@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import io from 'socket.io-client';
 import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
@@ -11,6 +12,7 @@ import {
   removeMember,
   getOneChatRoom,
 } from '../../services/chat';
+import { getCookie } from '../../hooks/cookie';
 
 const MainWrap = styled.main`
   color: ${COLORS.white};
@@ -140,12 +142,17 @@ const isSameDate = (date) => {
   );
 };
 
+const socket = io.connect('http://localhost:3000');
+
 const ChatLive = () => {
   const [chatInfo, setChatInfo] = useState(null);
+  const [chatInput, setChatInput] = useState('');
+  const [messages, setMessages] = useState([]);
   const params = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
+    socket.emit('ask-join', params.id);
     increaseMember(params.id)
       .then()
       .catch((e) => console.log(e));
@@ -160,6 +167,21 @@ const ChatLive = () => {
         .catch((e) => console.log(e));
     };
   }, [params.id]);
+
+  const onChange = (e) => {
+    setChatInput(e.target.value);
+  };
+
+  useEffect(() => {
+    socket.on('message-broadcast', (data) => {
+      setMessages([...messages, data]);
+    });
+  }, [messages]);
+
+  const onSend = () => {
+    socket.emit('message-send', { room: params.id, message: chatInput });
+    setChatInput('');
+  };
 
   return (
     <MainWrap>
@@ -199,11 +221,25 @@ const ChatLive = () => {
           <TextWrap $isUser={true}>
             <ChatMsg $isUser={true}>오늘 경기 어떠셨나요?</ChatMsg>
           </TextWrap>
+          {messages &&
+            messages.map((item, i) => (
+              <TextWrap
+                $isUser={getCookie('user') === item.userId ? true : false}
+                key={i}
+              >
+                {getCookie('user') !== item.userId && <p>{item.nickname}</p>}
+                <ChatMsg
+                  $isUser={getCookie('user') === item.userId ? true : false}
+                >
+                  {item.message}
+                </ChatMsg>
+              </TextWrap>
+            ))}
         </ChatWrap>
       </MainSection>
       <SendWrap>
-        <SendInput />
-        <FontAwesomeIcon icon={faPaperPlane} size="lg" />
+        <SendInput onChange={onChange} value={chatInput} />
+        <FontAwesomeIcon icon={faPaperPlane} size="lg" onClick={onSend} />
       </SendWrap>
     </MainWrap>
   );
