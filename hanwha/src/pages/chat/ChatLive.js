@@ -6,7 +6,7 @@ import { SIZES } from '../../constants/size';
 import { mediaMax } from '../../utils/media';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
-import { getOneChatRoom } from '../../services/chat';
+import { increaseMember, getOneChatRoom } from '../../services/chat';
 
 const MainWrap = styled.main`
   color: ${COLORS.white};
@@ -142,6 +142,10 @@ const ChatLive = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    increaseMember(params.id)
+      .then((response) => console.log(response))
+      .catch((e) => console.log(e));
+
     getOneChatRoom(params.id)
       .then((response) => setChatInfo(response.data))
       .catch((e) => console.log(e));

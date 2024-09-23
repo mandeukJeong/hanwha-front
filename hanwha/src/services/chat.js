@@ -23,3 +23,8 @@ export const getOneChatRoom = async (id) => {
   const response = await privateApi.get(`/chat/room?id=${id}`);
   return response;
 };
+
+export const increaseMember = async (id) => {
+  const response = await privateApi.put(`/chat/member?id=${id}`);
+  return response;
+};

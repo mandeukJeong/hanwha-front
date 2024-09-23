@@ -180,8 +180,8 @@ const ChatPage = () => {
       </TitleSection>
       <MainSection>
         {chatList ? (
-          chatList.map((item) => (
-            <RoomWrap>
+          chatList.map((item, i) => (
+            <RoomWrap key={i}>
               {isSameDate(item.startDate) && <h2>LIVE</h2>}
               <InfoWrap>
                 <ScheduleWrap>
