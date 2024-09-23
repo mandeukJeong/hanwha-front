@@ -11,6 +11,7 @@ import {
   increaseMember,
   removeMember,
   getOneChatRoom,
+  getChatMessage,
 } from '../../services/chat';
 import { getCookie } from '../../hooks/cookie';
 
@@ -161,6 +162,10 @@ const ChatLive = () => {
       .then((response) => setChatInfo(response.data))
       .catch((e) => console.log(e));
 
+    getChatMessage(params.id)
+      .then((response) => setMessages(response.data))
+      .catch((e) => console.log(e));
+
     return () => {
       removeMember(params.id)
         .then()
@@ -208,30 +213,17 @@ const ChatLive = () => {
       </TitleSection>
       <MainSection>
         <ChatWrap>
-          <TextWrap $isUser={false}>
-            <p>만득이</p>
-            <ChatMsg $isUser={false}>안녕하세요! 만득이입니다.</ChatMsg>
-          </TextWrap>
-          <TextWrap $isUser={false}>
-            <ChatMsg $isUser={false}>오늘 경기 어떠셨나요?</ChatMsg>
-          </TextWrap>
-          <TextWrap $isUser={true}>
-            <ChatMsg $isUser={true}>오늘 경기 많이 힘들었습니다..</ChatMsg>
-          </TextWrap>
-          <TextWrap $isUser={true}>
-            <ChatMsg $isUser={true}>오늘 경기 어떠셨나요?</ChatMsg>
-          </TextWrap>
           {messages &&
             messages.map((item, i) => (
               <TextWrap
-                $isUser={getCookie('user') === item.userId ? true : false}
+                $isUser={getCookie('user') === item.who ? true : false}
                 key={i}
               >
-                {getCookie('user') !== item.userId && <p>{item.nickname}</p>}
+                {getCookie('user') !== item.who && <p>{item.nickname}</p>}
                 <ChatMsg
-                  $isUser={getCookie('user') === item.userId ? true : false}
+                  $isUser={getCookie('user') === item.who ? true : false}
                 >
-                  {item.message}
+                  {item.content}
                 </ChatMsg>
               </TextWrap>
             ))}

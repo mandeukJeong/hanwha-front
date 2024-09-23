@@ -33,3 +33,8 @@ export const removeMember = async (id) => {
   const response = await privateApi.put(`/chat/remove?id=${id}`);
   return response;
 };
+
+export const getChatMessage = async (id) => {
+  const response = await privateApi.get(`/chat/message?id=${id}`);
+  return response;
+};
