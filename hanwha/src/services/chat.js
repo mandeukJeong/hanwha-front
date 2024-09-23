@@ -28,3 +28,8 @@ export const increaseMember = async (id) => {
   const response = await privateApi.put(`/chat/member?id=${id}`);
   return response;
 };
+
+export const removeMember = async (id) => {
+  const response = await privateApi.put(`/chat/remove?id=${id}`);
+  return response;
+};
