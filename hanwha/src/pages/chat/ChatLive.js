@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax } from '../../utils/media';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { getOneChatRoom } from '../../services/chat';
 
 const MainWrap = styled.main`
   color: ${COLORS.white};
@@ -40,7 +42,7 @@ const InfoWrap = styled.div`
     font-size: ${SIZES.tbsmall};
   `};
   h3 {
-    color: ${COLORS.orange};
+    color: ${(props) => (props.$isLive ? COLORS.orange : COLORS.grey)};
     font-weight: 600;
   }
   p {
@@ -115,19 +117,53 @@ const SendInput = styled.input`
   `};
 `;
 
+const isSameDate = (date) => {
+  const today = new Date();
+  const inputDate = new Date(date);
+
+  const todayYear = today.getFullYear();
+  const todayMonth = today.getMonth() + 1;
+  const todayDay = today.getDate();
+
+  const inputYear = inputDate.getFullYear();
+  const inputMonth = inputDate.getMonth() + 1;
+  const inputDay = inputDate.getDate();
+
+  return (
+    todayYear === inputYear &&
+    todayMonth === inputMonth &&
+    todayDay === inputDay
+  );
+};
+
 const ChatLive = () => {
+  const [chatInfo, setChatInfo] = useState(null);
+  const params = useParams();
+
+  useEffect(() => {
+    getOneChatRoom(params.id)
+      .then((response) => setChatInfo(response.data))
+      .catch((e) => console.log(e));
+  }, [params.id]);
+
   return (
     <MainWrap>
       <TitleSection>
-        <InfoWrap>
-          <h3>LIVE</h3>
-          <FontAwesomeIcon icon={faX} size="lg" />
-        </InfoWrap>
-        <h2>한화 vs LG</h2>
-        <InfoWrap>
-          <p>2024.07.05 18:00</p>
-          <p>256명</p>
-        </InfoWrap>
+        {chatInfo && (
+          <>
+            <InfoWrap $isLive={isSameDate(chatInfo.startDate)}>
+              {isSameDate(chatInfo.startDate) ? <h3>LIVE</h3> : <h3>END</h3>}
+              <FontAwesomeIcon icon={faX} size="lg" />
+            </InfoWrap>
+            <h2>
+              {chatInfo.ourTeam.teamNm} vs {chatInfo.vsTeam.teamNm}
+            </h2>
+            <InfoWrap>
+              <p>{chatInfo.startDate}</p>
+              <p>{chatInfo.connected}명</p>
+            </InfoWrap>
+          </>
+        )}
       </TitleSection>
       <MainSection>
         <ChatWrap>

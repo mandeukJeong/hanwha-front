@@ -18,3 +18,8 @@ export const getChatRoomList = async () => {
   const response = await privateApi.get('/chat/list');
   return response;
 };
+
+export const getOneChatRoom = async (id) => {
+  const response = await privateApi.get(`/chat/room?id=${id}`);
+  return response;
+};
