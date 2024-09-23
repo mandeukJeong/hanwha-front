@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
@@ -139,6 +139,7 @@ const isSameDate = (date) => {
 const ChatLive = () => {
   const [chatInfo, setChatInfo] = useState(null);
   const params = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getOneChatRoom(params.id)
@@ -153,7 +154,11 @@ const ChatLive = () => {
           <>
             <InfoWrap $isLive={isSameDate(chatInfo.startDate)}>
               {isSameDate(chatInfo.startDate) ? <h3>LIVE</h3> : <h3>END</h3>}
-              <FontAwesomeIcon icon={faX} size="lg" />
+              <FontAwesomeIcon
+                icon={faX}
+                size="lg"
+                onClick={() => navigate('/chat')}
+              />
             </InfoWrap>
             <h2>
               {chatInfo.ourTeam.teamNm} vs {chatInfo.vsTeam.teamNm}
