@@ -190,6 +190,12 @@ const ChatLive = () => {
     setChatInput('');
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      onSend();
+    }
+  };
+
   return (
     <MainWrap>
       <TitleSection>
@@ -232,7 +238,11 @@ const ChatLive = () => {
         </ChatWrap>
       </MainSection>
       <SendWrap>
-        <SendInput onChange={onChange} value={chatInput} />
+        <SendInput
+          onChange={onChange}
+          value={chatInput}
+          onKeyPress={handleKeyPress}
+        />
         <FontAwesomeIcon icon={faPaperPlane} size="lg" onClick={onSend} />
       </SendWrap>
     </MainWrap>
