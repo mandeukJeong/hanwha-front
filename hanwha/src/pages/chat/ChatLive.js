@@ -165,7 +165,7 @@ const ChatLive = () => {
             </h2>
             <InfoWrap>
               <p>{chatInfo.startDate}</p>
-              <p>{chatInfo.connected}명</p>
+              <p>{chatInfo.member.length}명</p>
             </InfoWrap>
           </>
         )}

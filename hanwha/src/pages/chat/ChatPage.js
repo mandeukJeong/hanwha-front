@@ -196,7 +196,7 @@ const ChatPage = () => {
                     </h3>
                   </div>
                 </ScheduleWrap>
-                <p>{item.connected}명</p>
+                <p>{item.member.length}명</p>
               </InfoWrap>
               <CustomLink
                 to={`/chat/live/${item._id}`}
