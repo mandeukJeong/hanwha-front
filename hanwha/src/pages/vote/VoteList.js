@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax } from '../../utils/media';
+import CustomBtn from '../../components/common/CustomBtn';
 import CustomLink from '../../components/common/CustomLink';
 import { getVoteList } from './../../services/vote';
+import { changeModalInfo } from '../../store/modal';
+import Alert from '../../components/common/Alert';
 
 const MainWrap = styled.main`
   color: ${COLORS.white};
@@ -61,7 +65,7 @@ const PlayerImg = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   border-radius: 50%;
-  border: 2px solid ${COLORS.grey};
+  border: 2px solid ${(props) => props.$border};
   margin-bottom: 15px;
   &:hover {
     border: 2px solid ${COLORS.orange};
@@ -85,78 +89,147 @@ const LinkWrap = styled.div`
 `;
 
 const VoteList = () => {
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [voteList, setVoteList] = useState(null);
-  useEffect(() => {
-    getVoteList()
-      .then((response) =>
-        sessionStorage.setItem('voteList', JSON.stringify(response.data))
-      )
-      .catch((e) => console.log(e));
+  const [voteDone, setVoteDone] = useState(null);
+  const modal = useSelector((state) => state.modal);
+  const dispatch = useDispatch();
 
-    setVoteList(
-      JSON.parse(sessionStorage.getItem('voteList'))[
-        searchParams.get('page') - 1
-      ]
-    );
+  useEffect(() => {
+    if (!sessionStorage.getItem('voteList')) {
+      getVoteList()
+        .then((response) => {
+          sessionStorage.setItem('voteList', JSON.stringify(response.data));
+          sessionStorage.setItem('voteDone', JSON.stringify([]));
+          setVoteList(
+            JSON.parse(sessionStorage.getItem('voteList'))[
+              searchParams.get('page') - 1
+            ]
+          );
+        })
+        .catch((e) => console.log(e));
+    } else {
+      setVoteList(
+        JSON.parse(sessionStorage.getItem('voteList'))[
+          searchParams.get('page') - 1
+        ]
+      );
+
+      if (
+        JSON.parse(sessionStorage.getItem('voteDone')).length >=
+        searchParams.get('page')
+      ) {
+        setVoteDone(
+          JSON.parse(sessionStorage.getItem('voteDone'))[
+            searchParams.get('page') - 1
+          ]
+        );
+      }
+    }
   }, [searchParams]);
 
   const handleNextPage = () => {
     window.scrollTo(0, 0);
   };
 
+  const onSelectPlayer = ({ pCd, pNm, img }) => {
+    setVoteDone({ _id: voteList._id, pCd, pNm, img });
+  };
+
+  const changeNextVote = () => {
+    if (!voteDone) {
+      dispatch(
+        changeModalInfo({
+          isOpen: true,
+          modalText: '선수를 투표해주세요',
+          modalBtnText: '확인',
+          modalToLink: `/vote/list?page=${searchParams.get('page')}`,
+        })
+      );
+
+      return;
+    } else {
+      if (
+        JSON.parse(sessionStorage.getItem('voteDone')).length !==
+        Number(searchParams.get('page'))
+      ) {
+        sessionStorage.setItem(
+          'voteDone',
+          JSON.stringify([
+            ...JSON.parse(sessionStorage.getItem('voteDone')),
+            voteDone,
+          ])
+        );
+      }
+      setVoteDone(null);
+      handleNextPage();
+      navigate(
+        Number(searchParams.get('page')) === 10
+          ? '/vote/end'
+          : `/vote/list?page=${Number(searchParams.get('page')) + 1}`
+      );
+    }
+  };
+
   return (
-    <MainWrap>
-      {voteList && (
-        <MainSection>
-          <TitleText>
-            {voteList.question.split('\n').map((line, index) => (
-              <React.Fragment key={index}>
-                {line}
-                <br />
-              </React.Fragment>
-            ))}
-          </TitleText>
-          <VoteWrap>
-            {voteList.players &&
-              voteList.players.map((item) => (
-                <VoteItem key={item.pCd}>
-                  <PlayerImg $bg={item.img} />
-                  <span>{item.pNm}</span>
-                </VoteItem>
+    <>
+      <MainWrap>
+        {voteList && (
+          <MainSection>
+            <TitleText>
+              {voteList.question.split('\n').map((line, index) => (
+                <React.Fragment key={index}>
+                  {line}
+                  <br />
+                </React.Fragment>
               ))}
-          </VoteWrap>
-          <ProgressText>{`${searchParams.get('page')}/${
-            JSON.parse(sessionStorage.getItem('voteList')).length
-          }`}</ProgressText>
-          <LinkWrap>
-            <CustomLink
-              to={
-                Number(searchParams.get('page')) === 1
-                  ? '/vote'
-                  : `/vote/list?page=${Number(searchParams.get('page')) - 1}`
-              }
-              $fontColor={COLORS.white}
-              $bgColor={COLORS.orange}
-              text="BEFORE"
-              onClick={handleNextPage}
-            />
-            <CustomLink
-              to={
-                Number(searchParams.get('page')) === 10
-                  ? '/vote/end'
-                  : `/vote/list?page=${Number(searchParams.get('page')) + 1}`
-              }
-              $border={COLORS.orange}
-              $fontColor={COLORS.orange}
-              $bgColor={COLORS.orange}
-              text="NEXT"
-              onClick={handleNextPage}
-            />
-          </LinkWrap>
-        </MainSection>
-      )}
-    </MainWrap>
+            </TitleText>
+            <VoteWrap>
+              {voteList.players &&
+                voteList.players.map((item) => (
+                  <VoteItem key={item.pCd}>
+                    <PlayerImg
+                      onClick={() => onSelectPlayer(item)}
+                      $bg={item.img}
+                      $border={
+                        voteDone && voteDone.pCd === item.pCd
+                          ? COLORS.orange
+                          : COLORS.grey
+                      }
+                    />
+                    <span>{item.pNm}</span>
+                  </VoteItem>
+                ))}
+            </VoteWrap>
+            <ProgressText>{`${searchParams.get('page')}/${
+              JSON.parse(sessionStorage.getItem('voteList')).length
+            }`}</ProgressText>
+            <LinkWrap>
+              <CustomLink
+                to={
+                  Number(searchParams.get('page')) === 1
+                    ? '/vote'
+                    : `/vote/list?page=${Number(searchParams.get('page')) - 1}`
+                }
+                $fontColor={COLORS.white}
+                $bgColor={COLORS.orange}
+                text="BEFORE"
+                onClick={handleNextPage}
+              />
+              <CustomBtn
+                onClick={changeNextVote}
+                $border={COLORS.orange}
+                $fontColor={COLORS.orange}
+                $bgColor={COLORS.orange}
+                text="NEXT"
+              />
+            </LinkWrap>
+          </MainSection>
+        )}
+      </MainWrap>
+      {modal.isOpen && <Alert />}
+    </>
   );
 };
 

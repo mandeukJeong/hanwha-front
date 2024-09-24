@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
 import Home from './pages/Home';
@@ -31,6 +31,13 @@ import { getUser } from './services/auth';
 
 const App = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (!location.pathname.startsWith('/vote/list')) {
+      sessionStorage.clear();
+    }
+  }, [location]);
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
