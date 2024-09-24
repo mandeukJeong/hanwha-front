@@ -46,13 +46,14 @@ const CusLink = styled(Link)`
   `};
 `;
 
-const CustomLink = ({ $border, $fontColor, $bgColor, text, to }) => {
+const CustomLink = ({ $border, $fontColor, $bgColor, text, to, onClick }) => {
   return (
     <CusLink
       to={to}
       $border={$border}
       $fontColor={$fontColor}
       $bgColor={$bgColor}
+      onClick={onClick}
     >
       {text}
     </CusLink>

@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax } from '../../utils/media';
 import CustomLink from '../../components/common/CustomLink';
-import Hwang from '../../assets/vote/Hwang.png';
+import { getVoteList } from './../../services/vote';
 
 const MainWrap = styled.main`
   color: ${COLORS.white};
@@ -84,66 +85,77 @@ const LinkWrap = styled.div`
 `;
 
 const VoteList = () => {
+  const [searchParams] = useSearchParams();
+  const [voteList, setVoteList] = useState(null);
+  useEffect(() => {
+    getVoteList()
+      .then((response) =>
+        sessionStorage.setItem('voteList', JSON.stringify(response.data))
+      )
+      .catch((e) => console.log(e));
+
+    setVoteList(
+      JSON.parse(sessionStorage.getItem('voteList'))[
+        searchParams.get('page') - 1
+      ]
+    );
+  }, [searchParams]);
+
+  const handleNextPage = () => {
+    window.scrollTo(0, 0);
+  };
+
   return (
     <MainWrap>
-      <MainSection>
-        <TitleText>
-          내가 바로 탱크!
-          <br />
-          당신의 투수를 투표해주세요.
-        </TitleText>
-        <VoteWrap>
-          <VoteItem>
-            <PlayerImg $bg={Hwang}></PlayerImg>
-            <span>황준서</span>
-          </VoteItem>
-          <VoteItem>
-            <PlayerImg $bg={Hwang}></PlayerImg>
-            <span>황준서</span>
-          </VoteItem>
-          <VoteItem>
-            <PlayerImg $bg={Hwang}></PlayerImg>
-            <span>황준서</span>
-          </VoteItem>
-          <VoteItem>
-            <PlayerImg $bg={Hwang}></PlayerImg>
-            <span>황준서</span>
-          </VoteItem>
-          <VoteItem>
-            <PlayerImg $bg={Hwang}></PlayerImg>
-            <span>황준서</span>
-          </VoteItem>
-          <VoteItem>
-            <PlayerImg $bg={Hwang}></PlayerImg>
-            <span>황준서</span>
-          </VoteItem>
-          <VoteItem>
-            <PlayerImg $bg={Hwang}></PlayerImg>
-            <span>황준서</span>
-          </VoteItem>
-          <VoteItem>
-            <PlayerImg $bg={Hwang}></PlayerImg>
-            <span>황준서</span>
-          </VoteItem>
-        </VoteWrap>
-        <ProgressText>1/10</ProgressText>
-        <LinkWrap>
-          <CustomLink
-            to="/vote"
-            $border={COLORS.grey}
-            $fontColor={COLORS.white}
-            $bgColor={COLORS.orange}
-            text="BEFORE"
-          />
-          <CustomLink
-            to="/vote/end"
-            $border={COLORS.orange}
-            $fontColor={COLORS.orange}
-            $bgColor={COLORS.orange}
-            text="NEXT"
-          />
-        </LinkWrap>
-      </MainSection>
+      {voteList && (
+        <MainSection>
+          <TitleText>
+            {voteList.question.split('\n').map((line, index) => (
+              <React.Fragment key={index}>
+                {line}
+                <br />
+              </React.Fragment>
+            ))}
+          </TitleText>
+          <VoteWrap>
+            {voteList.players &&
+              voteList.players.map((item) => (
+                <VoteItem key={item.pCd}>
+                  <PlayerImg $bg={item.img} />
+                  <span>{item.pNm}</span>
+                </VoteItem>
+              ))}
+          </VoteWrap>
+          <ProgressText>{`${searchParams.get('page')}/${
+            JSON.parse(sessionStorage.getItem('voteList')).length
+          }`}</ProgressText>
+          <LinkWrap>
+            <CustomLink
+              to={
+                Number(searchParams.get('page')) === 1
+                  ? '/vote'
+                  : `/vote/list?page=${Number(searchParams.get('page')) - 1}`
+              }
+              $fontColor={COLORS.white}
+              $bgColor={COLORS.orange}
+              text="BEFORE"
+              onClick={handleNextPage}
+            />
+            <CustomLink
+              to={
+                Number(searchParams.get('page')) === 10
+                  ? '/vote/end'
+                  : `/vote/list?page=${Number(searchParams.get('page')) + 1}`
+              }
+              $border={COLORS.orange}
+              $fontColor={COLORS.orange}
+              $bgColor={COLORS.orange}
+              text="NEXT"
+              onClick={handleNextPage}
+            />
+          </LinkWrap>
+        </MainSection>
+      )}
     </MainWrap>
   );
 };

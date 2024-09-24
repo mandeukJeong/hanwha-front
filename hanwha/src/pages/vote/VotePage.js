@@ -84,7 +84,7 @@ const VotePage = () => {
         <ProduceImg src={produce_101} alt="produce 101" />
         <SubText>지금 같이 투표하러 갈까요?</SubText>
         <CustomLink
-          to="/vote/list"
+          to="/vote/list?page=1"
           $border={COLORS.orange}
           $fontColor={COLORS.orange}
           $bgColor={COLORS.orange}
