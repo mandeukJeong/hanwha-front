@@ -7,7 +7,7 @@ import { SIZES } from '../../constants/size';
 import { mediaMax } from '../../utils/media';
 import CustomBtn from '../../components/common/CustomBtn';
 import CustomLink from '../../components/common/CustomLink';
-import { getVoteList } from './../../services/vote';
+import { getVoteList, updateVoteList } from './../../services/vote';
 import { changeModalInfo } from '../../store/modal';
 import Alert from '../../components/common/Alert';
 
@@ -162,6 +162,13 @@ const VoteList = () => {
           ])
         );
       }
+
+      if (Number(searchParams.get('page')) === 10) {
+        updateVoteList(JSON.parse(sessionStorage.getItem('voteDone')))
+          .then()
+          .catch((e) => console.log(e));
+      }
+
       setVoteDone(null);
       handleNextPage();
       navigate(
