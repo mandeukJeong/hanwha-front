@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax } from '../../utils/media';
 import produce_101 from '../../assets/common/produce_101.png';
-import Hwang from '../../assets/vote/Hwang.png';
 import CustomLink from '../../components/common/CustomLink';
+import { getVoteResult } from '../../services/vote';
 
 const fadeIn = keyframes`
   from {
@@ -139,68 +140,39 @@ const VoteText = styled.div`
 `;
 
 const VoteRank = () => {
+  const params = useParams();
+  const [voteList, setVoteList] = useState(null);
+
+  useEffect(() => {
+    getVoteResult(params.id)
+      .then((response) => setVoteList(response.data))
+      .catch((e) => console.log(e));
+  }, [params]);
+
   return (
     <MainWrap>
-      <TitleSection>
-        <TitleImg src={produce_101} alt="produce 101" />
-        <h1>야구는 투수놀이라고 하죠.</h1>
-      </TitleSection>
-      <MainSection>
-        <VoteWrap>
-          <PlayerImg $bg={Hwang}>
-            <RankText>1</RankText>
-          </PlayerImg>
-          <VoteText>
-            <h2>황준서</h2>
-            <p>349239</p>
-          </VoteText>
-        </VoteWrap>
-        <VoteWrap>
-          <PlayerImg $bg={Hwang}>
-            <RankText>1</RankText>
-          </PlayerImg>
-          <VoteText>
-            <h2>황준서</h2>
-            <p>349239</p>
-          </VoteText>
-        </VoteWrap>
-        <VoteWrap>
-          <PlayerImg $bg={Hwang}>
-            <RankText>1</RankText>
-          </PlayerImg>
-          <VoteText>
-            <h2>황준서</h2>
-            <p>349239</p>
-          </VoteText>
-        </VoteWrap>
-        <VoteWrap>
-          <PlayerImg $bg={Hwang}>
-            <RankText>1</RankText>
-          </PlayerImg>
-          <VoteText>
-            <h2>황준서</h2>
-            <p>349239</p>
-          </VoteText>
-        </VoteWrap>
-        <VoteWrap>
-          <PlayerImg $bg={Hwang}>
-            <RankText>1</RankText>
-          </PlayerImg>
-          <VoteText>
-            <h2>황준서</h2>
-            <p>349239</p>
-          </VoteText>
-        </VoteWrap>
-        <VoteWrap>
-          <PlayerImg $bg={Hwang}>
-            <RankText>1</RankText>
-          </PlayerImg>
-          <VoteText>
-            <h2>황준서</h2>
-            <p>349239</p>
-          </VoteText>
-        </VoteWrap>
-      </MainSection>
+      {voteList && (
+        <>
+          <TitleSection>
+            <TitleImg src={produce_101} alt="produce 101" />
+            <h1>{voteList.description}</h1>
+          </TitleSection>
+          <MainSection>
+            {voteList.voted &&
+              voteList.voted.map((item, i) => (
+                <VoteWrap key={item.pCd}>
+                  <PlayerImg $bg={item.img}>
+                    <RankText>{i + 1}</RankText>
+                  </PlayerImg>
+                  <VoteText>
+                    <h2>{item.pNm}</h2>
+                    <p>{item.count}</p>
+                  </VoteText>
+                </VoteWrap>
+              ))}
+          </MainSection>
+        </>
+      )}
       <CustomLink
         to="/vote/result"
         $border={COLORS.orange}
