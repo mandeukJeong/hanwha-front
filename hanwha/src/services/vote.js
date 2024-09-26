@@ -14,3 +14,8 @@ export const isUserVoted = async () => {
   const response = await privateApi.get('/vote/done');
   return response;
 };
+
+export const getVoteRank = async () => {
+  const response = await privateApi.get('/vote/rank');
+  return response;
+};

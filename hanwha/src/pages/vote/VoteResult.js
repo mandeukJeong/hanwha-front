@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax } from '../../utils/media';
 import produce_101 from '../../assets/common/produce_101.png';
-import Hwang from '../../assets/vote/Hwang.png';
+import { getVoteRank } from '../../services/vote';
 
 const fadeIn = keyframes`
   from {
@@ -97,6 +98,14 @@ const VoteText = styled.span`
 `;
 
 const VoteResult = () => {
+  const navigate = useNavigate();
+  const [rankList, setRankList] = useState(null);
+  useEffect(() => {
+    getVoteRank()
+      .then((response) => setRankList(response.data))
+      .catch((e) => console.log(e));
+  }, []);
+
   return (
     <MainWrap>
       <TitleSection>
@@ -106,24 +115,16 @@ const VoteResult = () => {
         </h1>
       </TitleSection>
       <MainSection>
-        <VoteWrap $bg={Hwang}>
-          <VoteText>PITCHER</VoteText>
-        </VoteWrap>
-        <VoteWrap $bg={Hwang}>
-          <VoteText>PITCHER</VoteText>
-        </VoteWrap>
-        <VoteWrap $bg={Hwang}>
-          <VoteText>PITCHER</VoteText>
-        </VoteWrap>
-        <VoteWrap $bg={Hwang}>
-          <VoteText>PITCHER</VoteText>
-        </VoteWrap>
-        <VoteWrap $bg={Hwang}>
-          <VoteText>PITCHER</VoteText>
-        </VoteWrap>
-        <VoteWrap $bg={Hwang}>
-          <VoteText>PITCHER</VoteText>
-        </VoteWrap>
+        {rankList &&
+          rankList.map((item) => (
+            <VoteWrap
+              key={item._id}
+              $bg={item.img}
+              onClick={() => navigate(`/vote/rank/${item._id}`)}
+            >
+              <VoteText>{item.title}</VoteText>
+            </VoteWrap>
+          ))}
       </MainSection>
     </MainWrap>
   );

@@ -77,7 +77,7 @@ const App = () => {
           <Route path="/vote/list" element={<VoteList />} />
           <Route path="/vote/end" element={<VoteEnd />} />
           <Route path="/vote/result" element={<VoteResult />} />
-          <Route path="/vote/rank" element={<VoteRank />} />
+          <Route path="/vote/rank/:id" element={<VoteRank />} />
           <Route path="/gallery" element={<GalleryPage />} />
           <Route path="/gallery/list" element={<GalleryListPage />} />
           <Route path="/gallery/post/:id" element={<GalleryPostPage />} />
