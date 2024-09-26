@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax } from '../../utils/media';
 import CustomLink from '../../components/common/CustomLink';
 import produce_101 from '../../assets/common/produce_101.png';
+import { isUserVoted } from '../../services/vote';
 
 const fadeIn = keyframes`
   from {
@@ -77,6 +79,17 @@ const SubText = styled.h2`
   `};
 `;
 const VotePage = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    isUserVoted()
+      .then((response) => {
+        if (response.data) {
+          navigate('/vote/end');
+        }
+      })
+      .catch((e) => console.log(e));
+  }, [navigate]);
+
   return (
     <MainWrap>
       <MainSection>

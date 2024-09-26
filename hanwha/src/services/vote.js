@@ -9,3 +9,8 @@ export const updateVoteList = async (voteDone) => {
   const response = await privateApi.post('/vote/complete', { voteDone });
   return response;
 };
+
+export const isUserVoted = async () => {
+  const response = await privateApi.get('/vote/done');
+  return response;
+};
