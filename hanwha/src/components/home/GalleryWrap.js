@@ -1,13 +1,11 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax, mediaMin } from '../../utils/media';
 import useIntersectionObserver from '../../hooks/useIntersectionObserver';
 import CustomLink from '../common/CustomLink';
-import gallery_1 from '../../assets/common/gallery_1.JPG';
-import gallery_2 from '../../assets/common/gallery_2.JPG';
-import gallery_3 from '../../assets/common/gallery_3.JPG';
+import { getGalleryImages } from '../../services/gallery';
 
 const fadeInUp = `
   @keyframes fadeInUp {
@@ -169,10 +167,18 @@ const GalleryText = styled.div`
 `;
 
 const GalleryWrap = () => {
+  const [imageLists, setImageLists] = useState(null);
   const textRef = useRef(null);
   const imageRef = useRef(null);
   const isTextInViewport = useIntersectionObserver(textRef);
   const isImageInViewport = useIntersectionObserver(imageRef);
+
+  useEffect(() => {
+    getGalleryImages(1, 'heart', 3)
+      .then((response) => setImageLists(response.data.imageLists))
+      .catch((e) => console.log(e));
+  }, []);
+
   return (
     <GallerySection>
       <TextWrap ref={textRef} className={isTextInViewport ? 'animation' : ''}>
@@ -195,30 +201,17 @@ const GalleryWrap = () => {
         ref={imageRef}
         className={isImageInViewport ? 'animation' : ''}
       >
-        <ImageCard>
-          <GalleryImg src={gallery_1} alt="대표 이미지1" />
-          <GalleryText>
-            <h2>한화 vs KIA</h2>
-            <p>2024.06.23 18:00:49</p>
-            <p>만득이</p>
-          </GalleryText>
-        </ImageCard>
-        <ImageCard>
-          <GalleryImg src={gallery_2} alt="대표 이미지2" />
-          <GalleryText>
-            <h2>한화 vs 두산</h2>
-            <p>2024.06.26 16:12:34</p>
-            <p>만득이</p>
-          </GalleryText>
-        </ImageCard>
-        <ImageCard>
-          <GalleryImg src={gallery_3} alt="대표 이미지3" />
-          <GalleryText>
-            <h2>한화 vs 두산</h2>
-            <p>2024.06.28 14:03:24</p>
-            <p>만득이</p>
-          </GalleryText>
-        </ImageCard>
+        {imageLists &&
+          imageLists.map((item, i) => (
+            <ImageCard key={item._id}>
+              <GalleryImg src={item.imgUrl[0]} alt={`대표 이미지 ${i + 1}`} />
+              <GalleryText>
+                <h2>{item.title}</h2>
+                <p>{item.date}</p>
+                <p>{item.nickname}</p>
+              </GalleryText>
+            </ImageCard>
+          ))}
       </ImageWrap>
     </GallerySection>
   );
