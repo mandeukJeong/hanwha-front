@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import io from 'socket.io-client';
 import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -22,6 +22,7 @@ const MainWrap = styled.main`
   flex-direction: column;
   min-height: 100vh;
 `;
+
 const TitleSection = styled.section`
   background-color: ${COLORS.dark};
   position: sticky;
@@ -41,6 +42,7 @@ const TitleSection = styled.section`
     `};
   }
 `;
+
 const InfoWrap = styled.div`
   display: flex;
   justify-content: space-between;
@@ -56,11 +58,13 @@ const InfoWrap = styled.div`
     color: ${COLORS.grey};
   }
 `;
+
 const MainSection = styled.section`
   flex-grow: 1;
   display: flex;
   flex-direction: column;
 `;
+
 const ChatWrap = styled.div`
   overflow-y: auto;
   flex-grow: 1;
@@ -69,6 +73,7 @@ const ChatWrap = styled.div`
     padding: 25px;
   `};
 `;
+
 const TextWrap = styled.div`
   display: ${(props) => (props.$isUser ? 'flex' : '')};
   justify-content: ${(props) => (props.$isUser ? 'flex-end' : '')};
@@ -85,6 +90,7 @@ const TextWrap = styled.div`
     `};
   }
 `;
+
 const ChatMsg = styled.div`
   background-color: ${(props) => (props.$isUser ? COLORS.dark : COLORS.grey)};
   align-self: ${(props) => (props.$isUser ? 'flex-end' : 'flex-start')};
@@ -98,6 +104,7 @@ const ChatMsg = styled.div`
     font-size: ${SIZES.tbsmall};
   `};
 `;
+
 const SendWrap = styled.div`
   position: sticky;
   bottom: 0;
@@ -112,6 +119,7 @@ const SendWrap = styled.div`
     gap: 1.5em;
   `};
 `;
+
 const SendInput = styled.input`
   border-radius: 10px;
   background-color: ${COLORS.white};
@@ -127,7 +135,6 @@ const SendInput = styled.input`
 const isSameDate = (date) => {
   const today = new Date();
   const inputDate = new Date(date);
-
   const todayYear = today.getFullYear();
   const todayMonth = today.getMonth() + 1;
   const todayDay = today.getDate();
@@ -143,17 +150,19 @@ const isSameDate = (date) => {
   );
 };
 
-const socket = io.connect('http://localhost:3000');
-
 const ChatLive = () => {
   const [chatInfo, setChatInfo] = useState(null);
   const [chatInput, setChatInput] = useState('');
   const [messages, setMessages] = useState([]);
   const params = useParams();
   const navigate = useNavigate();
+  const socket = useRef(null);
 
   useEffect(() => {
-    socket.emit('ask-join', params.id);
+    socket.current = io.connect('http://localhost:3000');
+
+    socket.current.emit('ask-join', params.id);
+
     increaseMember(params.id)
       .then()
       .catch((e) => console.log(e));
@@ -166,12 +175,18 @@ const ChatLive = () => {
       .then((response) => setMessages(response.data))
       .catch((e) => console.log(e));
 
+    socket.current.on('message-broadcast', (data) => {
+      setMessages((prevMessages) => [...prevMessages, data]);
+    });
+
     return () => {
       removeMember(params.id)
         .then()
         .catch((e) => console.log(e));
-
-      socket.emit('leave-room', params.id);
+      if (socket.current) {
+        socket.current.emit('leave-room', params.id);
+        socket.current.disconnect();
+      }
     };
   }, [params.id]);
 
@@ -179,15 +194,14 @@ const ChatLive = () => {
     setChatInput(e.target.value);
   };
 
-  useEffect(() => {
-    socket.on('message-broadcast', (data) => {
-      setMessages([...messages, data]);
-    });
-  }, [messages]);
-
   const onSend = () => {
-    socket.emit('message-send', { room: params.id, message: chatInput });
-    setChatInput('');
+    if (chatInput.trim()) {
+      socket.current.emit('message-send', {
+        room: params.id,
+        message: chatInput,
+      });
+      setChatInput('');
+    }
   };
 
   const handleKeyPress = (e) => {
@@ -223,14 +237,9 @@ const ChatLive = () => {
         <ChatWrap>
           {messages &&
             messages.map((item, i) => (
-              <TextWrap
-                $isUser={getCookie('user') === item.who ? true : false}
-                key={i}
-              >
+              <TextWrap $isUser={getCookie('user') === item.who} key={i}>
                 {getCookie('user') !== item.who && <p>{item.nickname}</p>}
-                <ChatMsg
-                  $isUser={getCookie('user') === item.who ? true : false}
-                >
+                <ChatMsg $isUser={getCookie('user') === item.who}>
                   {item.content}
                 </ChatMsg>
               </TextWrap>
