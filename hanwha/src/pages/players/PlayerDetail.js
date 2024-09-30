@@ -7,6 +7,7 @@ import { mediaMax, mediaMin } from '../../utils/media';
 import useIntersectionObserver from '../../hooks/useIntersectionObserver';
 import CustomLink from '../../components/common/CustomLink';
 import { getPlayerProfile, getPlayerScore } from '../../services/players';
+import Chart from '../../components/common/Chart';
 
 const fadeInUp = `
   @keyframes fadeInUp {
@@ -216,9 +217,13 @@ const SeasonWrap = styled(AnimatedWrap)`
     margin-bottom: 30px;
   `};
 `;
-const ScoreImg = styled.div`
+const ScoreGraph = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: ${COLORS.dark};
   border-radius: 20px;
+  padding: 10px;
   width: 30%;
   height: 350px;
   ${mediaMax.medium`
@@ -270,15 +275,20 @@ const PlayerDetail = () => {
   const [searchParams] = useSearchParams();
   const [playerProfile, setPlayerProfile] = useState(null);
   const [playerScore, setPlayerScore] = useState(null);
+  const posCd = Number(searchParams.get('posCd'));
   const seasonRef = useRef(null);
   const isSeasonInViewport = useIntersectionObserver(seasonRef);
+  const labels =
+    posCd === 1
+      ? ['평균자책점', '탈삼진', '승', '홀드', '세이브']
+      : ['타율', '타점', '도루', '홈런', '안타'];
 
   useEffect(() => {
     getPlayerProfile(searchParams.get('pCd'))
       .then((response) => setPlayerProfile(response.data))
       .catch((e) => console.log(e));
 
-    getPlayerScore(searchParams.get('pCd'), searchParams.get('posCd'))
+    getPlayerScore(searchParams.get('pCd'))
       .then((response) => setPlayerScore(response.data))
       .catch((e) => console.log(e));
   }, [searchParams]);
@@ -337,64 +347,43 @@ const PlayerDetail = () => {
           </ProfileWrap>
         </ProfileSection>
       )}
+
       <SeasonSection>
         <h1>2024 SEASON</h1>
         <SeasonWrap
           ref={seasonRef}
           className={isSeasonInViewport ? 'animation' : ''}
         >
-          <ScoreImg></ScoreImg>
+          {playerScore && (
+            <ScoreGraph>
+              <Chart labels={labels} stats={playerScore} posCd={posCd} />
+            </ScoreGraph>
+          )}
           {playerScore && (
             <ScoreWrap>
               <ScoreDetail>
-                <h3>
-                  {searchParams.get('posCd') === '1'
-                    ? playerScore.era
-                    : playerScore.avg}
-                </h3>
-                <p>
-                  {searchParams.get('posCd') === '1' ? '평균자책점' : '타율'}
-                </p>
+                <h3>{posCd === 1 ? playerScore.era : playerScore.avg}</h3>
+                <p>{posCd === 1 ? '평균자책점' : '타율'}</p>
               </ScoreDetail>
               <ScoreDetail>
-                <h3>
-                  {searchParams.get('posCd') === '1'
-                    ? playerScore.win
-                    : playerScore.ops}
-                </h3>
-                <p>{searchParams.get('posCd') === '1' ? '승' : 'OPS'}</p>
+                <h3>{posCd === 1 ? playerScore.win : playerScore.ops}</h3>
+                <p>{posCd === 1 ? '승' : 'OPS'}</p>
               </ScoreDetail>
               <ScoreDetail>
-                <h3>
-                  {searchParams.get('posCd') === '1'
-                    ? playerScore.lose
-                    : playerScore.rbi}
-                </h3>
-                <p>{searchParams.get('posCd') === '1' ? '패' : '타점'}</p>
+                <h3>{posCd === 1 ? playerScore.lose : playerScore.rbi}</h3>
+                <p>{posCd === 1 ? '패' : '타점'}</p>
               </ScoreDetail>
               <ScoreDetail>
-                <h3>
-                  {searchParams.get('posCd') === '1'
-                    ? playerScore.so
-                    : playerScore.h}
-                </h3>
-                <p>{searchParams.get('posCd') === '1' ? '탈삼진' : '안타'}</p>
+                <h3>{posCd === 1 ? playerScore.so : playerScore.h}</h3>
+                <p>{posCd === 1 ? '탈삼진' : '안타'}</p>
               </ScoreDetail>
               <ScoreDetail>
-                <h3>
-                  {searchParams.get('posCd') === '1'
-                    ? playerScore.ip
-                    : playerScore.hr}
-                </h3>
-                <p>{searchParams.get('posCd') === '1' ? '이닝' : '홈런'}</p>
+                <h3>{posCd === 1 ? playerScore.hld : playerScore.hr}</h3>
+                <p>{posCd === 1 ? '홀드' : '홈런'}</p>
               </ScoreDetail>
               <ScoreDetail>
-                <h3>
-                  {searchParams.get('posCd') === '1'
-                    ? playerScore.sv
-                    : playerScore.sb}
-                </h3>
-                <p>{searchParams.get('posCd') === '1' ? '세이브' : '도루'}</p>
+                <h3>{posCd === 1 ? playerScore.sv : playerScore.sb}</h3>
+                <p>{posCd === 1 ? '세이브' : '도루'}</p>
               </ScoreDetail>
             </ScoreWrap>
           )}

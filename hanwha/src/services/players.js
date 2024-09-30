@@ -14,11 +14,10 @@ export const getPlayerProfile = async (pCd) => {
   return response;
 };
 
-export const getPlayerScore = async (pCd, posCd) => {
+export const getPlayerScore = async (pCd) => {
   const response = await privateApi.get('/players/score', {
     params: {
       pCd,
-      posCd,
     },
   });
   return response;
