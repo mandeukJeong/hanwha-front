@@ -124,9 +124,7 @@ const PositionWrap = styled.div`
     margin-bottom: 2em;
   `};
 `;
-const PositionImg = styled.div`
-  background-color: ${COLORS.dark};
-  border-radius: 10px;
+const PositionImg = styled.img`
   width: 80px;
   height: 80px;
   ${mediaMax.small`
@@ -299,7 +297,10 @@ const PlayerDetail = () => {
               </NameWrap>
             </InfoWrap>
             <PositionWrap>
-              <PositionImg></PositionImg>
+              <PositionImg
+                src={playerProfile.posImg}
+                alt={playerProfile.posDetail}
+              />
               <PositionText>
                 <h3>{playerProfile.posNm}</h3>
                 <p>{playerProfile.posDetail}</p>
