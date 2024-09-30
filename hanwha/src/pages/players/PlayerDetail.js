@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 import { SIZES } from '../../constants/size';
 import { mediaMax, mediaMin } from '../../utils/media';
 import useIntersectionObserver from '../../hooks/useIntersectionObserver';
-import CustomLink from '../../components/common/CustomLink';
+import CustomBtn from '../../components/common/CustomBtn';
 import { getPlayerProfile, getPlayerScore } from '../../services/players';
 import Chart from '../../components/common/Chart';
 
@@ -272,6 +272,7 @@ const ScoreDetail = styled.div`
 `;
 
 const PlayerDetail = () => {
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [playerProfile, setPlayerProfile] = useState(null);
   const [playerScore, setPlayerScore] = useState(null);
@@ -388,8 +389,8 @@ const PlayerDetail = () => {
             </ScoreWrap>
           )}
         </SeasonWrap>
-        <CustomLink
-          to="/players/pitcher"
+        <CustomBtn
+          onClick={() => navigate(-1)}
           $border={COLORS.grey}
           $fontColor={COLORS.white}
           $bgColor={COLORS.orange}
