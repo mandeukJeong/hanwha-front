@@ -83,6 +83,7 @@ const NavWrap = styled.nav`
 `;
 const NavItem = styled.li`
   font-weight: 700;
+  color: ${(props) => (props.$isMain ? COLORS.orange : COLORS.white)};
   a {
     display: inline-block;
     height: ${SIZES.toolbar};
@@ -96,7 +97,6 @@ const NavItem = styled.li`
     `};
   }
   &:first-child {
-    color: ${COLORS.orange};
     font-family: 'Audiowide', sans-serif;
   }
   ${mediaMin.large`
@@ -191,11 +191,12 @@ const HanwhaImg = styled.img`
 
 const Header = () => {
   const user = useSelector((state) => state.user);
+  const header = useSelector((state) => state.header);
   const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
 
-  const onLogout = (e) => {
+  const onLogout = () => {
     logout()
       .then((response) => {
         if (response.status === 200) {
@@ -243,27 +244,27 @@ const Header = () => {
         </MobileMenu>
         <NavWrap>
           <ul>
-            <NavItem>
+            <NavItem $isMain={header.nowPage === 'home'}>
               <Link to="/" onClick={() => setIsMenuOpen(false)}>
                 EAGLES
               </Link>
             </NavItem>
-            <NavItem>
+            <NavItem $isMain={header.nowPage === 'players'}>
               <Link to="/players" onClick={() => setIsMenuOpen(false)}>
                 PLAYERS
               </Link>
             </NavItem>
-            <NavItem>
+            <NavItem $isMain={header.nowPage === 'vote'}>
               <Link to="/vote" onClick={() => setIsMenuOpen(false)}>
                 VOTE
               </Link>
             </NavItem>
-            <NavItem>
+            <NavItem $isMain={header.nowPage === 'chat'}>
               <Link to="/chat" onClick={() => setIsMenuOpen(false)}>
                 CHAT
               </Link>
             </NavItem>
-            <NavItem>
+            <NavItem $isMain={header.nowPage === 'gallery'}>
               <Link to="/gallery" onClick={() => setIsMenuOpen(false)}>
                 GALLERY
               </Link>

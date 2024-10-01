@@ -26,6 +26,7 @@ import ScrollToTop from './hooks/ScrollToTop';
 import PublicRoute from './pages/routes/PublicRoute';
 import PrivateRoute from './pages/routes/PrivateRoute';
 import { useDispatch } from 'react-redux';
+import { changeNowPage } from './store/header';
 import { changeUserInfo } from './store/user';
 import { getUser } from './services/auth';
 
@@ -37,7 +38,23 @@ const App = () => {
     if (!location.pathname.startsWith('/vote/list')) {
       sessionStorage.clear();
     }
-  }, [location]);
+
+    const pageMap = {
+      '/players': 'players',
+      '/vote': 'vote',
+      '/chat': 'chat',
+      '/gallery': 'gallery',
+      '/': 'home',
+    };
+
+    const matchedPage = Object.keys(pageMap).find((path) =>
+      location.pathname.startsWith(path)
+    );
+
+    if (matchedPage) {
+      dispatch(changeNowPage({ nowPage: pageMap[matchedPage] }));
+    }
+  }, [dispatch, location]);
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
