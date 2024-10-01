@@ -229,7 +229,13 @@ const Header = () => {
       <MenuWrap $isMenuOpen={isMenuOpen}>
         <MobileMenu>
           <h1>
-            <FontAwesomeIcon onClick={() => navigate('/')} icon={faHouse} />
+            <FontAwesomeIcon
+              onClick={() => {
+                navigate('/');
+                setIsMenuOpen(false);
+              }}
+              icon={faHouse}
+            />
           </h1>
           <h1>
             <FontAwesomeIcon onClick={() => setIsMenuOpen(false)} icon={faX} />
@@ -238,19 +244,29 @@ const Header = () => {
         <NavWrap>
           <ul>
             <NavItem>
-              <Link to="/">EAGLES</Link>
+              <Link to="/" onClick={() => setIsMenuOpen(false)}>
+                EAGLES
+              </Link>
             </NavItem>
             <NavItem>
-              <Link to="/players">PLAYERS</Link>
+              <Link to="/players" onClick={() => setIsMenuOpen(false)}>
+                PLAYERS
+              </Link>
             </NavItem>
             <NavItem>
-              <Link to="/vote">VOTE</Link>
+              <Link to="/vote" onClick={() => setIsMenuOpen(false)}>
+                VOTE
+              </Link>
             </NavItem>
             <NavItem>
-              <Link to="/chat">CHAT</Link>
+              <Link to="/chat" onClick={() => setIsMenuOpen(false)}>
+                CHAT
+              </Link>
             </NavItem>
             <NavItem>
-              <Link to="/gallery">GALLERY</Link>
+              <Link to="/gallery" onClick={() => setIsMenuOpen(false)}>
+                GALLERY
+              </Link>
             </NavItem>
           </ul>
         </NavWrap>
@@ -261,12 +277,21 @@ const Header = () => {
               {user.isLogin ? (
                 <Link>{user.userInfo.nickname}</Link>
               ) : (
-                <Link to="/login">LOGIN</Link>
+                <Link to="/login" onClick={() => setIsMenuOpen(false)}>
+                  LOGIN
+                </Link>
               )}
             </AuthItem>
             <AuthItem $fontcolor={COLORS.grey}>
               {user.isLogin ? (
-                <Link onClick={onLogout}>LOGOUT</Link>
+                <Link
+                  onClick={() => {
+                    onLogout();
+                    setIsMenuOpen(false);
+                  }}
+                >
+                  LOGOUT
+                </Link>
               ) : (
                 <Link to="/register">JOIN US</Link>
               )}
