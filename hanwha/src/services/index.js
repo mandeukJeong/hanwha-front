@@ -23,7 +23,7 @@ privateApi.interceptors.response.use(
       const originRequest = config;
 
       try {
-        const response = await axios.get('/user/refresh');
+        const response = await axios.get('/api/user/refresh');
 
         if (response.status === 200) {
           const newAccessToken = response.data.accessToken;

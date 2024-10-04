@@ -1,12 +1,12 @@
 import { privateApi } from './index';
 
 export const getTeamInfo = async () => {
-  const response = await privateApi.get('/chat/team');
+  const response = await privateApi.get('/api/chat/team');
   return response;
 };
 
 export const makeChatRoom = async (ourTeam, vsTeam, startDate) => {
-  const response = await privateApi.post('/chat/new', {
+  const response = await privateApi.post('/api/chat/new', {
     ourTeam,
     vsTeam,
     startDate,
@@ -15,26 +15,26 @@ export const makeChatRoom = async (ourTeam, vsTeam, startDate) => {
 };
 
 export const getChatRoomList = async () => {
-  const response = await privateApi.get('/chat/list');
+  const response = await privateApi.get('/api/chat/list');
   return response;
 };
 
 export const getOneChatRoom = async (id) => {
-  const response = await privateApi.get(`/chat/room?id=${id}`);
+  const response = await privateApi.get(`/api/chat/room?id=${id}`);
   return response;
 };
 
 export const increaseMember = async (id) => {
-  const response = await privateApi.put(`/chat/member?id=${id}`);
+  const response = await privateApi.put(`/api/chat/member?id=${id}`);
   return response;
 };
 
 export const removeMember = async (id) => {
-  const response = await privateApi.put(`/chat/remove?id=${id}`);
+  const response = await privateApi.put(`/api/chat/remove?id=${id}`);
   return response;
 };
 
 export const getChatMessage = async (id) => {
-  const response = await privateApi.get(`/chat/message?id=${id}`);
+  const response = await privateApi.get(`/api/chat/message?id=${id}`);
   return response;
 };

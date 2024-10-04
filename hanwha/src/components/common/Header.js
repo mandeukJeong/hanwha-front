@@ -190,11 +190,12 @@ const HanwhaImg = styled.img`
 `;
 
 const Header = () => {
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const header = useSelector((state) => state.header);
-  const dispatch = useDispatch();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const navigate = useNavigate();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const onLogout = () => {
     logout()

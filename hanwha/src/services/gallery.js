@@ -1,7 +1,7 @@
 import { privateApi } from './index';
 
 export const postGalleryImages = async (formData) => {
-  const response = await privateApi.post('/gallery/upload', formData, {
+  const response = await privateApi.post('/api/gallery/upload', formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
@@ -10,7 +10,7 @@ export const postGalleryImages = async (formData) => {
 };
 
 export const getGalleryImages = async (pageNum, order, renderNum) => {
-  const response = await privateApi.get('/gallery/lists', {
+  const response = await privateApi.get('/api/gallery/lists', {
     params: {
       pageNum,
       order,
@@ -21,7 +21,7 @@ export const getGalleryImages = async (pageNum, order, renderNum) => {
 };
 
 export const getPostDetail = async (id) => {
-  const response = await privateApi.get('/gallery/detail', {
+  const response = await privateApi.get('/api/gallery/detail', {
     params: {
       id,
     },
@@ -30,6 +30,6 @@ export const getPostDetail = async (id) => {
 };
 
 export const increaseHeart = async (id) => {
-  const response = await privateApi.put(`/gallery/heart?id=${id}`);
+  const response = await privateApi.put(`/api/gallery/heart?id=${id}`);
   return response;
 };

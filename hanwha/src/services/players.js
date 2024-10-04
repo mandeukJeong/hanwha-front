@@ -1,7 +1,7 @@
 import { privateApi } from './index';
 
 export const getPlayerList = async (posCd) => {
-  const response = await privateApi.get('/players', {
+  const response = await privateApi.get('/api/players', {
     params: {
       posCd,
     },
@@ -10,12 +10,12 @@ export const getPlayerList = async (posCd) => {
 };
 
 export const getPlayerProfile = async (pCd) => {
-  const response = await privateApi.get(`/players/${pCd}`);
+  const response = await privateApi.get(`/api/players/${pCd}`);
   return response;
 };
 
 export const getPlayerScore = async (pCd) => {
-  const response = await privateApi.get('/players/score', {
+  const response = await privateApi.get('/api/players/score', {
     params: {
       pCd,
     },
