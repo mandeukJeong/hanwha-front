@@ -1,4 +1,4 @@
-import { privateApi } from './index';
+import { privateApi, publicApi } from './index';
 
 export const postGalleryImages = async (formData) => {
   const response = await privateApi.post('/api/gallery/upload', formData, {
@@ -10,7 +10,7 @@ export const postGalleryImages = async (formData) => {
 };
 
 export const getGalleryImages = async (pageNum, order, renderNum) => {
-  const response = await privateApi.get('/api/gallery/lists', {
+  const response = await publicApi.get('/api/gallery/lists', {
     params: {
       pageNum,
       order,
